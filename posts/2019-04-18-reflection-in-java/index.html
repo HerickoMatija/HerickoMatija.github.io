@@ -10,6 +10,19 @@
   <title>Reflection in Java - Devflection</title>
   <meta property="og:title" content="Reflection in Java" />
   <meta name="twitter:title" content="Reflection in Java" />
+  <meta name="description" content="Reflection is the ability of an application to inspect and modify the code in the system.
+
+If an application can only inspect but not also modify the code then it only has the ability of introspection.
+
+So for an application to be reflective it must also be able to modify its code at runtime.">
+  <meta property="og:description" content="Reflection is the ability of an application to inspect and modify the code in the system.
+
+If an application can only inspect but not also modify the code then it only has the ability of introspection.
+
+So for an application to be reflective it must also be able to modify its code at runtime.">
+  <meta name="twitter:description" content="Reflection is the ability of an application to inspect and modify the code in the system.
+
+If an application can only inspect but not also modify the code then it only has the ability of …">
   <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -58,13 +71,13 @@
     "name" : "Matija Heričko"
   },
   "headline": "Reflection in Java",
-  "description" : "",
+  "description" : "Reflection is the ability of an application to inspect and modify the code in the system.\nIf an application can only inspect but not also modify the code then it only has the ability of introspection.\nSo for an application to be reflective it must also be able to modify its code at runtime.\n",
   "inLanguage" : "en",
-  "wordCount":  0 ,
+  "wordCount":  1477 ,
   "datePublished" : "2019-04-18T08:00:00",
   "dateModified" : "2019-04-18T08:00:00",
   "image" : "https:\/\/devflection.com\/profile_mid.jpg",
-  "keywords" : [ "" ],
+  "keywords" : [ "java, reflection" ],
   "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2019-04-18-reflection-in-java\/",
   "publisher" : {
     "@type": "Organization",
@@ -80,11 +93,19 @@
 </script>
 
 <meta property="og:title" content="Reflection in Java" />
+<meta property="og:description" content="Reflection is the ability of an application to inspect and modify the code in the system.
+
+If an application can only inspect but not also modify the code then it only has the ability of introspection.
+
+So for an application to be reflective it must also be able to modify its code at runtime.">
 <meta property="og:image" content="https://devflection.com/profile_mid.jpg" />
 <meta property="og:url" content="https://devflection.com/posts/2019-04-18-reflection-in-java/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Devflection" />
   <meta name="twitter:title" content="Reflection in Java" />
+  <meta name="twitter:description" content="Reflection is the ability of an application to inspect and modify the code in the system.
+
+If an application can only inspect but not also modify the code then it only has the ability of …">
   <meta name="twitter:image" content="https://devflection.com/profile_mid.jpg" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@Devflection" />
@@ -244,10 +265,10 @@
   <i class="fas fa-calendar"></i>&nbsp;Posted on April 18, 2019
   
   
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;7&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1477&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
@@ -270,11 +291,7 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        
-
-<h2 id="introduction">Introduction</h2>
-
-<p>Reflection is the ability of an application to inspect <b>and</b> modify the code in the system.</p>
+        <p>Reflection is the ability of an application to inspect <b>and</b> modify the code in the system.</p>
 
 <p>If an application can only inspect but not also modify the code then it only has the ability of introspection.</p>
 
@@ -346,32 +363,7 @@ system class path and therefore not visible to application level classes.
 then executing it, which could be used to test private methods in a class although this is not recommended, since you should
 only be testing the public methods to ensure the correctness of your classes API.</p>
 
-<p><br /></p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// We have to create an instance of our class
-</span><span class="c1"></span><span class="n">PrivateMethodClass</span> <span class="n">privateMethodClassInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrivateMethodClass</span><span class="o">();</span>
-<span class="c1">// we get the private method using the name and parameters
-</span><span class="c1"></span><span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">PrivateMethodClass</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&#34;privateMethod&#34;</span><span class="o">,</span> <span class="kt">int</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="c1">// we make the method accessible so we do not get an IllegalAccessException when invoking the method
-</span><span class="c1"></span><span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-<span class="c1">// we trigger the method on our instance of the class with the desired parameters and get the result
-</span><span class="c1"></span><span class="n">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">privateMethodClassInstance</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span></code></pre></td></tr></table>
-</div>
-</div>
-
-<p><br /></p>
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/95137565663a4777b04fb6cc66520485.js?file=private-method-reflection.java"></script>
 
 <p>The full example of using reflection to test a private method is in this
 <i>
@@ -393,44 +385,7 @@ This then also helps cut down on unnecessary functionality and space required by
 
 <p>The first thing we need to do is to define an interface, which our plugins will need to implement:</p>
 
-<p><br /></p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DevflectionPlugin</span> <span class="o">{</span>
-
-    <span class="k">default</span> <span class="kt">void</span> <span class="nf">startPlugin</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; :Starting plugin &#34;</span> <span class="o">+</span> <span class="n">getPluginName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;....&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="k">default</span> <span class="kt">void</span> <span class="nf">stopPlugin</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Stopping plugin &#34;</span> <span class="o">+</span> <span class="n">getPluginName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;....&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="n">String</span> <span class="nf">getPluginName</span><span class="o">();</span>
-<span class="o">}</span></code></pre></td></tr></table>
-</div>
-</div>
-
-<p><br /></p>
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/95137565663a4777b04fb6cc66520485.js?file=DevflectionPlugin.java"></script>
 
 <p>We defined a really simple interface with three methods that:</p>
 
@@ -453,123 +408,7 @@ control to the main program as soon as possible, so in the startPlugin method we
 the plugin logic will periodically run and in the stopPlugin method we want to gracefully shutdown the plugin worker thread
 (let it finish the current execution cycle), so we will set a  flag to tell the plugin it is time to shut down.</p>
 
-<p><br /></p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Plugin1</span> <span class="kd">implements</span> <span class="n">DevflectionPlugin</span> <span class="o">{</span>
-
-   <span class="kd">private</span> <span class="n">Plugin1WorkerThread</span> <span class="n">pluginThread</span><span class="o">;</span>
-
-   <span class="nd">@Override</span>
-   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startPlugin</span><span class="o">()</span> <span class="o">{</span>
-      <span class="n">pluginThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Plugin1WorkerThread</span><span class="o">();</span>
-      <span class="n">pluginThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-   <span class="o">}</span>
-
-   <span class="nd">@Override</span>
-   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopPlugin</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">pluginThread</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-         <span class="n">pluginThread</span><span class="o">.</span><span class="na">stopExecution</span><span class="o">();</span>
-      <span class="o">}</span>
-   <span class="o">}</span>
-
-   <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPluginName</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">return</span> <span class="s">&#34;Plugin1&#34;</span><span class="o">;</span>
-   <span class="o">}</span>
-<span class="o">}</span></code></pre></td></tr></table>
-</div>
-</div>
-
-<p><br /></p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Plugin1WorkerThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">stop</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">while</span> <span class="o">(!</span><span class="n">stop</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Plugin1 is executing some logic...&#34;</span><span class="o">);</span>
-
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5000</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Plugin1 is shutting down execution...&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopExecution</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">stop</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre></td></tr></table>
-</div>
-</div>
-
-<p><br /></p>
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/95137565663a4777b04fb6cc66520485.js?file=Plugin1WorkerThread.java"></script>
 
 <p>The worker thread in our example plugin prints a statement and goes to sleep, but you can easily imagine replacing
 this with some business logic that was actually useful here. This might be some batch analytics logic or logging of the
@@ -584,30 +423,7 @@ it is in our plugin loader project although the interface definition is the same
 
 <p>The reflective part of our DevflectionPluginLoader is in the lines 113-119.</p>
 
-<p><br /></p>
-
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">113
-</span><span class="lnt">114
-</span><span class="lnt">115
-</span><span class="hl"><span class="lnt">116
-</span></span><span class="hl"><span class="lnt">117
-</span></span><span class="hl"><span class="lnt">118
-</span></span><span class="hl"><span class="lnt">119
-</span></span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">className</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">urlClassLoader</span><span class="o">);</span>
-
-<span class="k">if</span> <span class="o">(</span><span class="n">DevflectionPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">aClass</span><span class="o">)</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">aClass</span> <span class="o">!=</span> <span class="n">DevflectionPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
-<span class="hl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Found class &#39;&#34;</span> <span class="o">+</span> <span class="n">aClass</span> <span class="o">+</span> <span class="s">&#34;&#39; that implements the plugin interface.&#34;</span><span class="o">);</span>
-</span><span class="hl">    <span class="n">DevflectionPlugin</span> <span class="n">devflectionPlugin</span> <span class="o">=</span> <span class="o">(</span><span class="n">DevflectionPlugin</span><span class="o">)</span> <span class="n">aClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
-</span><span class="hl">    <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">new</span> <span class="n">DevflectionPluginHolder</span><span class="o">(</span><span class="n">className</span><span class="o">,</span> <span class="n">devflectionPlugin</span><span class="o">,</span> <span class="n">urlClassLoader</span><span class="o">));</span>
-</span><span class="hl"><span class="o">}</span></span></code></pre></td></tr></table>
-</div>
-</div>
-
-<p><br /></p>
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/95137565663a4777b04fb6cc66520485.js?file=DevflectionPluginLoader.java"></script>
 
 <p>Here we first load the class from the classname we got from the jar we are currently checking using the classloader that contains the jar file.</p>
 
@@ -642,14 +458,18 @@ This is it for our example reflection project. Thank you for reading through, I 
     <li>Create a backend that exposes these methods via a rest API and a frontend that consumes it and make a SPA (single page application) to manage the plugins</li>
 </ul>
 
-
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/reflection/">reflection</a>&nbsp;
+            
+          </div>
         
 
         
 
-        
-          
-          
         
       </article>
 

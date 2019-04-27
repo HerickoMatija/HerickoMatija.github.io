@@ -19,10 +19,11 @@
       <pubDate>Thu, 18 Apr 2019 08:00:00 +0200</pubDate>
       <author>matija@devflection.com (Matija Heričko)</author>
       <guid>https://devflection.com/posts/2019-04-18-reflection-in-java/</guid>
-      <description>Introduction Reflection is the ability of an application to inspect and modify the code in the system.
-If an application can only inspect but not also modify the code then it only has the ability of introspection.
-So for an application to be reflective it must also be able to modify its code at runtime.
-Java is a language that supports reflection which allows us to do some nice things, such as examine classes at runtime, create instances of the class, look at its fields and methods, and modify or execute them without knowing anything about the classes in advance at compile time.</description>
+      <description>&lt;p&gt;Reflection is the ability of an application to inspect &lt;b&gt;and&lt;/b&gt; modify the code in the system.&lt;/p&gt;
+
+&lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;
+
+&lt;p&gt;So for an application to be reflective it must also be able to modify its code at runtime.&lt;/p&gt;</description>
     </item>
     
     <item>

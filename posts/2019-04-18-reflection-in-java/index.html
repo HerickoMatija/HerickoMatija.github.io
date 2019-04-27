@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Reflection in Java - Devflection</title>
+  <meta property="og:title" content="Reflection in Java" />
+  <meta name="twitter:title" content="Reflection in Java" />
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2019-04-18-reflection-in-java\/",
+          "name": "Reflection in java"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Reflection in Java",
+  "description" : "",
+  "inLanguage" : "en",
+  "wordCount":  0 ,
+  "datePublished" : "2019-04-18T08:00:00",
+  "dateModified" : "2019-04-18T08:00:00",
+  "image" : "https:\/\/devflection.com\/profile_mid.jpg",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2019-04-18-reflection-in-java\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_mid.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Reflection in Java" />
+<meta property="og:image" content="https://devflection.com/profile_mid.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2019-04-18-reflection-in-java/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+  <meta name="twitter:title" content="Reflection in Java" />
+  <meta name="twitter:image" content="https://devflection.com/profile_mid.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:image" content="https://devflection.com/profile_mid.jpg" />
+  <meta name="twitter:image" content="https://devflection.com/profile_mid.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:url" content="https://devflection.com/posts/2019-04-18-reflection-in-java/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devflection" />
+
+  <meta name="generator" content="Hugo 0.55.4" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_mid.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Reflection in Java</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 18, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;0&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;0&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Reflection is the ability of an application to inspect <b>and</b> modify the code in the system.</p>
+
+<p>If an application can only inspect but not also modify the code then it only has the ability of introspection.</p>
+
+<p>So for an application to be reflective it must also be able to modify its code at runtime.</p>
+
+<p>Java is a language that supports reflection which allows us to do some nice things,
+such as examine classes at runtime, create instances of the class, look at its fields and methods,
+and modify or execute them without knowing anything about the classes in advance at compile time.</p>
+
+<p>What this means is that one can look at the internals of any class that is in the classpath,
+list its properties (such as annotations, modifiers, methods, fields, constructors, etc…), execute the class’
+methods or constructors, and modify the qualifiers of fields/methods..</p>
+
+<p>The base for all of these actions is the aptly named
+<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a> class in the java.lang package.</p>
+
+<p>We can see it has methods to:</p>
+
+<ul>
+    <li>List all constructors => #getAllConstructors</li>
+    <li>List all public methods => #getAllMethods</li>
+    <li>List all methods => #getAllDeclaredMethods</li>
+    <li>List all public fields => #getAllFields</li>
+    <li>List all fields => #getAllDeclaredFields</li>
+    <li>List all annotations => #getAllAnnotations</li>
+    <li>And many more</li>
+</ul>
+
+<p>With these methods available to us, we can load a class in our Java application, get the information about its methods
+and constructors, and then use this information to create an instance of the class and execute the methods or change the class’ modifiers.</p>
+
+<p>Reflection is a powerful tool in the programmers toolbox, but because of its dynamic resolving nature at runtime,
+it has the drawback of IDEs not being able to assist you in this area much since they mostly rely on static analysis,
+so you have to take care when dealing with reflective code.</p>
+
+<p>I have encountered the scenario multiple times, where an IDE suggests that the method/class is not used and can be removed, but it
+was ultimately used via reflective calls, so removing this “unused” piece of code would be bad. In my cases this did
+not lead to multiple big issues and I was able to avoid problems because I kept looking around and/or testing the area after making
+the changes and before pushing the change to production, so the reflective use of the class/method was revealed.</p>
+
+<p>My advice is that you should clearly document in code which areas are relying on reflection to get the job done and where/how
+the reflection is used to avoid problems that arise only at specific points during runtime, when the reflective logic fails to find its
+targets because they were removed/changed.</p>
+
+<p>Reflection in the real world is used in very specific cases. Most of the time you can and should write code without using
+reflection for performance reasons, because reflection’ dynamic resolving brings some overhead.</p>
+
+<p>So we, developers, must have a good reason to introduce reflection.</p>
+
+<p>For instance, in Tomcat, reflection is used to load all the Tomcat classes, which is not a straightforward way, but it enables the
+Tomcat app itself to keep the classes “hidden” from the applications that we want to run in the Tomcat container.
+From their documentation on the base class that loads everything - the org.apache.catalina.startup.Bootstrap class:</p>
+
+<p><i>
+Bootstrap loader for Catalina. This application constructs a class loader for use in loading the Catalina
+internal classes (by accumulating all of the JAR files found in the &ldquo;server&rdquo; directory under &ldquo;catalina.home&rdquo;),
+and starts the regular execution of the container. The purpose of this roundabout approach is to keep the
+Catalina internal classes (and any other classes they depend on, such as an XML parser) out of the
+system class path and therefore not visible to application level classes.
+</i></p>
+
+<hr />
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="example-1-testing-private-methods">Example 1: Testing private methods</h3>
+
+<p>The most common example outside of frameworks and testing libraries is the example of modifying a private method into a public one and
+then executing it, which could be used to test private methods in a class although this is not recommended, since you should
+only be testing the public methods to ensure the correctness of your classes API.</p>
+
+<p><br /></p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="c1">// We have to create an instance of our class
+</span><span class="c1"></span><span class="n">PrivateMethodClass</span> <span class="n">privateMethodClassInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrivateMethodClass</span><span class="o">();</span>
+<span class="c1">// we get the private method using the name and parameters
+</span><span class="c1"></span><span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">PrivateMethodClass</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">&#34;privateMethod&#34;</span><span class="o">,</span> <span class="kt">int</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="c1">// we make the method accessible so we do not get an IllegalAccessException when invoking the method
+</span><span class="c1"></span><span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="c1">// we trigger the method on our instance of the class with the desired parameters and get the result
+</span><span class="c1"></span><span class="n">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">privateMethodClassInstance</span><span class="o">,</span> <span class="n">1</span><span class="o">);</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<p><br /></p>
+
+<p>The full example of using reflection to test a private method is in this
+<i>
+<a href="https://github.com/HerickoMatija/devflection-reflection-private-method-testing">github repository</a>.
+</i></p>
+
+<hr />
+
+<h3 id="example-2-real-world-project">Example 2: “Real world” project</h3>
+
+<p>In our example we will create a project that dynamically loads plugins while running and starts them on demand.</p>
+
+<p>The idea is that you can build a mechanism into your application to be able to extend it with some plugins while your application
+is running without restarting it. You can also use the plugin architecture to separate your program into a basic module that you
+offer and then develop extra functionality in the form of plugins which you can easily add or remove based on your customer requirements.
+This then also helps cut down on unnecessary functionality and space required by your application, but again, it might incur some performance overhead.</p>
+
+<p>So let&rsquo;s dive into the example:</p>
+
+<p>The first thing we need to do is to define an interface, which our plugins will need to implement:</p>
+
+<p><br /></p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">DevflectionPlugin</span> <span class="o">{</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">startPlugin</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34; :Starting plugin &#34;</span> <span class="o">+</span> <span class="n">getPluginName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;....&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="k">default</span> <span class="kt">void</span> <span class="nf">stopPlugin</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Stopping plugin &#34;</span> <span class="o">+</span> <span class="n">getPluginName</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;....&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="n">String</span> <span class="nf">getPluginName</span><span class="o">();</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<p><br /></p>
+
+<p>We defined a really simple interface with three methods that:</p>
+
+<ul>
+    <li>start the plugin => #startPlugin</li>
+    <li>stop the plugin => #stopPlugin</li>
+    <li>identify the plugin => #getPluginName</li>
+</ul>
+
+<p>Our plugins will need to implement this interface since we will be reflectively looking for classes that are assignable
+from this interface (classes that are implementing it).</p>
+
+<p>What is important here is that our plugin implementations have this interface in the same package (com.devflection.reflection)
+since the interface is identified with the combination of package name + class name - in our example “com.devflection.reflection.DevflectionPlugin”.</p>
+
+<p>First we will implement a sample plugin, that we will very creatively call Plugin1 :) .</p>
+
+<p>Plugin1 will be started and stopped using methods from the DevflectionPlugin interface. Those methods should return
+control to the main program as soon as possible, so in the startPlugin method we will create a new thread in which
+the plugin logic will periodically run and in the stopPlugin method we want to gracefully shutdown the plugin worker thread
+(let it finish the current execution cycle), so we will set a  flag to tell the plugin it is time to shut down.</p>
+
+<p><br /></p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Plugin1</span> <span class="kd">implements</span> <span class="n">DevflectionPlugin</span> <span class="o">{</span>
+
+   <span class="kd">private</span> <span class="n">Plugin1WorkerThread</span> <span class="n">pluginThread</span><span class="o">;</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startPlugin</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">pluginThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Plugin1WorkerThread</span><span class="o">();</span>
+      <span class="n">pluginThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopPlugin</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">pluginThread</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">pluginThread</span><span class="o">.</span><span class="na">stopExecution</span><span class="o">();</span>
+      <span class="o">}</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPluginName</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="s">&#34;Plugin1&#34;</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<p><br /></p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="nn">com.devflection.reflection</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Plugin1WorkerThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">boolean</span> <span class="n">stop</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(!</span><span class="n">stop</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Plugin1 is executing some logic...&#34;</span><span class="o">);</span>
+
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">5000</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Plugin1 is shutting down execution...&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopExecution</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">stop</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></td></tr></table>
+</div>
+</div>
+
+<p><br /></p>
+
+<p>The worker thread in our example plugin prints a statement and goes to sleep, but you can easily imagine replacing
+this with some business logic that was actually useful here. This might be some batch analytics logic or logging of the
+current state of the system at particular moments in time or something else you might need. This is it for the implementation of our first plugin.</p>
+
+<p>In our project we have two more plugin implementations, that are there to showcase a bit how the classes can be located in packages in our plugin implementations.</p>
+
+<p>Plugin2 shows that our plugin implementation can be in a different package than the plugin interface.</p>
+
+<p>And Plugin3 shows that the interface is not considered the same if the interface is put in a different package than
+it is in our plugin loader project although the interface definition is the same - ‘com.devflection.reflection’ vs. ‘com.devflection.plugin3’.</p>
+
+<p>The reflective part of our DevflectionPluginLoader is in the lines 113-119.</p>
+
+<p><br /></p>
+
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="hl"><span class="lnt">116
+</span></span><span class="hl"><span class="lnt">117
+</span></span><span class="hl"><span class="lnt">118
+</span></span><span class="hl"><span class="lnt">119
+</span></span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">className</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">urlClassLoader</span><span class="o">);</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">DevflectionPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">aClass</span><span class="o">)</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">aClass</span> <span class="o">!=</span> <span class="n">DevflectionPlugin</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+<span class="hl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;: Found class &#39;&#34;</span> <span class="o">+</span> <span class="n">aClass</span> <span class="o">+</span> <span class="s">&#34;&#39; that implements the plugin interface.&#34;</span><span class="o">);</span>
+</span><span class="hl">    <span class="n">DevflectionPlugin</span> <span class="n">devflectionPlugin</span> <span class="o">=</span> <span class="o">(</span><span class="n">DevflectionPlugin</span><span class="o">)</span> <span class="n">aClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+</span><span class="hl">    <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">new</span> <span class="n">DevflectionPluginHolder</span><span class="o">(</span><span class="n">className</span><span class="o">,</span> <span class="n">devflectionPlugin</span><span class="o">,</span> <span class="n">urlClassLoader</span><span class="o">));</span>
+</span><span class="hl"><span class="o">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<p><br /></p>
+
+<p>Here we first load the class from the classname we got from the jar we are currently checking using the classloader that contains the jar file.</p>
+
+<p>Then we check if the class implements our plugin interface, and if so, we reflectively create an instance.</p>
+
+<p>The full instructions to build and run the example project are in the project readme file in the
+<i>
+<a href="https://github.com/HerickoMatija/devflection-reflection">github repository</a>.
+</i></p>
+
+<p>When the application is running you can play then play around with adding and removing plugins to the application.
+The app will scan for new jars every 30 seconds in the &ldquo;plugins&rdquo; directory of the project.
+When it finds a new plugin implementation it adds it to the list of current plugins and all the plugins can then be started or stopped.
+To then remove a jar from the &ldquo;plugins&rdquo; directory, you have to stop the plugin and remove it,
+which removes it from the list of current plugins. This makes it possible to remove the jar from the folder before the scan executes again.</p>
+
+<hr />
+
+<p><i>
+This is it for our example reflection project. Thank you for reading through, I hope you found my (first ever) post about reflection in Java useful.
+</i>
+<hr /></p>
+
+<h2 id="improvements-to-do-for-practice">Improvements to do for practice:</h2>
+
+<p>Things that could be improved and/or extended for practice:</p>
+
+<ul>
+    <li>Extracting the plugin interface into a jar, that you reference as a library in all the projects, so you can more easily track versions</li>
+    <li>Improve the lifecycle management of the plugins (start, stop, remove) and add some actual business logic into the plugin implementations</li>
+    <li>Create a GUI to manage the plugins instead of the CLI</li>
+    <li>Create a backend that exposes these methods via a rest API and a frontend that consumes it and make a SPA (single page application) to manage the plugins</li>
+</ul>
+
+
+        
+
+        
+
+        
+          
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/MatijaHericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

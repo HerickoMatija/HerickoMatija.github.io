@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pages on Devflection</title>
+    <link>https://devflection.com/page/</link>
+    <description>Recent content in Pages on Devflection</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
+    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
+    
+	<atom:link href="https://devflection.com/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About me</title>
+      <link>https://devflection.com/page/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/page/about/</guid>
+      <description>My name is Matija Heričko, I am a 27 year old software developer from Slovenia, currently living in Zürich in the beautiful country of Switzerland. A proud father of one very lively son, husband to a lovely wife and a very enthusiastic basketball player.
+I started this blog to learn more by teaching, become a better software developer and hopefully along the way help other software developers also become better at their profession.</description>
+    </item>
+    
+    <item>
+      <title>Book reviews</title>
+      <link>https://devflection.com/page/book-reviews/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/page/book-reviews/</guid>
+      <description>General Code complete 2 Code complete is another book that is extremely valuable and is probably one of the classics in the field. This book is a must read for any developer that wants to improve on their craft. It offers a lot of advice on writing more robust, maintainable, readable, better architected and overall more effective and efficient code. It is one of the best books on programming that exist.</description>
+    </item>
+    
+  </channel>
+</rss>

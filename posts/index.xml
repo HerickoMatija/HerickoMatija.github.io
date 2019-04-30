@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Devflection</title>
+    <title>Devflection</title>
     <link>https://devflection.com/posts/</link>
-    <description>Recent content in Posts on Devflection</description>
+    <description>Recent content on Devflection</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
     <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Thu, 18 Apr 2019 08:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 30 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devflection.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Reflection in Java</title>
-      <link>https://devflection.com/posts/2019-04-18-reflection-in-java/</link>
-      <pubDate>Thu, 18 Apr 2019 08:00:00 +0200</pubDate>
+      <title>Java Archive file - JAR</title>
+      <link>https://devflection.com/posts/2019-04-30-java-archive-file/</link>
+      <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
       <author>matija@devflection.com (Matija Heričko)</author>
-      <guid>https://devflection.com/posts/2019-04-18-reflection-in-java/</guid>
-      <description>&lt;p&gt;Reflection is the ability of an application to inspect &lt;b&gt;and&lt;/b&gt; modify the code in the system.&lt;/p&gt;
+      <guid>https://devflection.com/posts/2019-04-30-java-archive-file/</guid>
+      <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the &lt;b&gt;J&lt;/b&gt;ava &lt;b&gt;AR&lt;/b&gt;chive or as it is more known, the &lt;b&gt;JAR&lt;/b&gt; file.&lt;/p&gt;
+
+&lt;p&gt;We will describe what it is and how to create one.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Reflection in Java</title>
+      <link>https://devflection.com/posts/2019-04-14-reflection-in-java/</link>
+      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2019-04-14-reflection-in-java/</guid>
+      <description>&lt;p&gt;&lt;b&gt;Reflection&lt;/b&gt; is the ability of an application to inspect &lt;b&gt;and&lt;/b&gt; modify the code in the system.&lt;/p&gt;
 
 &lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;
 

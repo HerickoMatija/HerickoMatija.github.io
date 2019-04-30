@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Java Archive file - JAR - Devflection</title>
+  <meta property="og:title" content="Java Archive file - JAR" />
+  <meta name="twitter:title" content="Java Archive file - JAR" />
+  <meta name="description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the Java ARchive or as it is more known, the JAR file.
+
+We will describe what it is and how to create one.">
+  <meta property="og:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the Java ARchive or as it is more known, the JAR file.
+
+We will describe what it is and how to create one.">
+  <meta name="twitter:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the Java ARchive or as it is more known, the JAR file.
+
+We will describe what it is and how to …">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2019-04-30-java-archive-file\/",
+          "name": "Java archive file j a r"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Java Archive file - JAR",
+  "description" : "In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem - the Java ARchive or as it is more known, the JAR file.\nWe will describe what it is and how to create one.\n",
+  "inLanguage" : "en",
+  "wordCount":  2074 ,
+  "datePublished" : "2019-04-30T00:00:00",
+  "dateModified" : "2019-04-30T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "java, jars" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2019-04-30-java-archive-file\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Java Archive file - JAR" />
+<meta property="og:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the Java ARchive or as it is more known, the JAR file.
+
+We will describe what it is and how to create one.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2019-04-30-java-archive-file/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+  <meta name="twitter:title" content="Java Archive file - JAR" />
+  <meta name="twitter:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the Java ARchive or as it is more known, the JAR file.
+
+We will describe what it is and how to …">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:url" content="https://devflection.com/posts/2019-04-30-java-archive-file/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devflection" />
+
+  <meta name="generator" content="Hugo 0.55.4" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Java Archive file - JAR</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 30, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;10&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2074&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
+the <b>J</b>ava <b>AR</b>chive or as it is more known, the <b>JAR</b> file.</p>
+
+<p>We will describe what it is and how to create one.</p>
+
+<h2 id="what-is-a-jar-file">What is a JAR file?</h2>
+
+<p>A jar file is a bundle of files that might be needed by the application.
+It primarily holds java class files, but it can also contain other files that your application might need (such as configuration files, images or fonts).</p>
+
+<p>The jar file provides us with some useful functionality, such as:
+<ul>
+    <li><b>compression</b>; jar files compress the contents, so the size of the file is smaller</li>
+    <li><b>security</b>; jar files can be digitally signed, so users can verify them and grant them permission accordingly</li>
+    <li><b>package sealing</b>; packages in jars can be sealed, which means that all the classes from one package must come from the same jar file</li>
+</ul></p>
+
+<p>Jar files use the ZIP file format, so we can use a file archiver (such as WinRAR or 7-Zip) to browse and view the contents of a jar file.</p>
+
+<h2 id="java-compiler-and-class-files">Java compiler and class files</h2>
+
+<p>But before we start creating executable JAR files, we should also have a look at how to create java class files (files with the extension <i>.class</i>)
+from the source code files (files with the extension <i>.java</i>).</p>
+
+<p>Java class files contain Java byte code that can be executed by the <b>J</b>ava <b>V</b>irtual <b>M</b>achine (<b>JVM</b>).
+In order to get Java class files from the source files, we need to compile the source files.
+To do that we can use the java compiler which is packaged in the <b>J</b>ava <b>D</b>evelopment <b>K</b>it (<b>JDK</b>) and is executed using the <i>javac</i> command.</p>
+
+<p>The command has the format:</p>
+
+<pre><code>javac [ options ] [ sourcefiles ] [ classes ] [ @argfiles ]
+</code></pre>
+
+<p>For this example, we will make use of the <i>-sourcepath</i> flag, which tells the compiler in which directory to search for source files,
+the <i>-cp</i> flag, which adds paths to check for classes and sources when compiling
+and <i>-d</i> flag, which changes the current directory.</p>
+
+<p>So we will be executing something like:</p>
+
+<pre><code>javac path/to/srcFiles/package/Example.java -sourcepath path/to/srcFiles -cp path/to/libraries -d outputDirectory
+</code></pre>
+
+<p>You can read more about the other options of the java compiler and how to use them in the official <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javac.html">documentation</a>.</p>
+
+<p>When the compilation completes successfully we end up with class files that are ready to be included in the JAR file.</p>
+
+<h2 id="java-archive-tool-and-jar-files">Java Archive Tool and JAR files</h2>
+
+<p>To create a jar file we can use the Java Archive Tool, which is also bundled in the <b>J</b>ava <b>D</b>evelopment <b>K</b>it and is executed with the <i>jar</i> command.</p>
+
+<p>The jar command has the following format:</p>
+
+<pre><code>jar [options] [jar-file-name] [manifest-file] [input-files]
+</code></pre>
+
+<p>Where options can have the following arguments:
+<ul>
+    <li>c - signals the jar tool to create a jar file</li>
+    <li>u - signals the jar tool to update a jar file</li>
+    <li>x - signals the jar tool to extract the contents of the jar file</li>
+    <li>t - signals the jar tool to print the table of contents for the jar file</li>
+    <li>i - signals the jar tool to create a index for the jar file</li>
+    <li>f - signals the jar tool to output to a file instead of stdout</li>
+    <li>v - signals the jar tool to run in verbose mode</li>
+    <li>0 - signals the jar tool to not compress the jar file</li>
+    <li>M - signals the jar tool that the default manifest file should not be generated</li>
+    <li>m - signals the jar tool to create a manifest file using the specified file as input</li>
+    <li>e - signals the jar tool to add an entry point header in the manifest file</li>
+    <li>C - signals the jar tool to change directories when creating the jar</li>
+</ul></p>
+
+<h4 id="create-a-jar-file">Create a jar file</h4>
+
+<p>The simplest way to create a jar file is to execute the command:</p>
+
+<pre><code>jar cf MyJar.jar *
+</code></pre>
+
+<p>The wildcard (<i>*</i>) signals the jar tool to match all files, so this will take all the files that are in the folder and put them in the jar file with the same folder structure.
+The wildcard option truly takes all files in the folder and puts them into the jar file,
+so usually, we want to filter and specify the files that we actually want in the jar file.</p>
+
+<p>For example, in our accompanying project, we are using GIT for versioning and we are editing the project with IntelliJ, so we have the folders .git and .idea
+which we would not want in the final jar file, since they would not serve any purpose in the jar, only take up space.
+So to make things easier, build tools usually prepare a separate folder (most of the time named <i>target</i>), which is used to create the final JAR files.
+It prepares the folders by pointing the compiler to that folder and copying any other files that should be included in the JAR, such as the properties files, xml config files, etc.
+After that, a jar command with a wildcard can be executed with that directory.</p>
+
+<h4 id="view-jar-file-contents">View jar file contents</h4>
+
+<p>The command to view the contents of a jar file is:</p>
+
+<pre><code>jar tf MyJar.jar
+</code></pre>
+
+<p>This command will print out the table of contents for the jar file and we can make it display more information with the <i>-v</i> flag.</p>
+
+<h4 id="extract-jar-file-contents">Extract jar file contents</h4>
+
+<p>We can also extract specific files from the jar with:</p>
+
+<pre><code>jar xf MyJar.jar [files]    
+</code></pre>
+
+<p>or extract all files if no files are specified:</p>
+
+<pre><code>jar xf MyJar.jar
+</code></pre>
+
+<h4 id="update-jar-file-contents">Update jar file contents</h4>
+
+<p>Another command when working with jar files is the update command, where we can update specific files within a jar file.</p>
+
+<pre><code>jar uf MyJar.jar [files]
+</code></pre>
+
+<h4 id="run-jar-file">Run jar file</h4>
+
+<p>And finally, to run a jar file we have to execute the command:</p>
+
+<pre><code>java -jar MyJar.jar
+</code></pre>
+
+<p>But in order to run the jar file, it has to be executable. This means the jar has to contain information about the entry point of the application (e.g. the main class).
+This is supplied in the <i>manifest file</i> inside the jar.</p>
+
+<h3 id="manifest-file">Manifest file</h3>
+
+<p>A manifest file is a file in the jar that contains metadata about all the other files in the jar.
+The manifest file is what supports and where we can configure all the different functionalities of the jar file.</p>
+
+<p>If we don&rsquo;t specify a manifest file with the <i>-m</i> flag when creating the jar file, a default manifest file (<i>MANIFEST.MF</i>) is added to the jar file in the folder <i>META-INF</i>.
+The default manifest file contains only the information about the manifest version and the JDK that was used to create the jar file:</p>
+
+<pre><code>Manifest-Version: 1.0
+Created-By: 1.8.0_131 (Oracle Corporation)
+</code></pre>
+
+<p>But since the manifest file enables us to do many things, we usually want to configure and modify the content of the manifest file.
+To do so we can use the <i>-m</i> flag of the jar tool and specify which file it should take as input to generate the final <i>MANIFEST.MF</i> file.</p>
+
+<p>If we include the -m option then the format of the jar command is:</p>
+
+<pre><code>jar cfm [jar-file-name] [manifest-file] [input-files]
+</code></pre>
+
+<p>where the manifest file is a simple text file that contains the manifest headers in the format</p>
+
+<pre><code>key: value
+</code></pre>
+
+<p>where each of the manifest headers is on a separate line and the file has to end with an empty line.</p>
+
+<p>The important thing with supplying a manifest text file is that the order of <i>-m</i> and <i>-f</i> flags match the order of arguments for the manifest text file and jar file name.
+So either</p>
+
+<pre><code>jar cmf ExampleManifest.txt Example.jar *
+</code></pre>
+
+<p>or</p>
+
+<pre><code>jar cfm Example.jar ExampleManifest.txt *
+</code></pre>
+
+<p>If we supply our own manifest file, we can set many different things, such as:</p>
+
+<h4 id="entry-point">Entry point</h4>
+
+<p>We can configure an entry point of the jar file in the manifest text file if we add a header:</p>
+
+<pre><code>Main-Class: com.devflection.jars.App
+</code></pre>
+
+<p>With this, we specify that the jar should be executable and its entry point is the supplied class.</p>
+
+<p>If this is the only thing we want to configure there is a convenience flag <i>-e</i>, which we can use instead of creating a manifest file:</p>
+
+<pre><code>jar cfe MyJar.jar com.devflection.jars.App *
+</code></pre>
+
+<h3 id="external-jars">External jars</h3>
+
+<p>We can also add external jar files to the jars classpath.
+If our jar depends on other external jars, we need to specify those jars on the classpath.
+We can add the external jar files to the classpath with the header:</p>
+
+<pre><code>Class-path: MySecondJar.jar lib/commons-lang3-3.8.1.jar
+</code></pre>
+
+<p>This will then load all the classes from MySecond.jar and commons-lang3-3.8.1.jar when our jar is started.</p>
+
+<h3 id="version-information">Version information</h3>
+
+<p>We can also supply information about the version and vendor for each package in the manifest file.
+To do so we can add a set of version headers for each package in the manifest text file. The headers are:</p>
+
+<pre><code>Name: com/devflection/jars
+Specification-Title: Devflection jar example classes
+Specification-Version: 1.0
+Specification-Vendor: Devflection
+Implementation-Title: com.devflection.jars
+Implementation-Version: snapshot
+Implementation-Vendor: Devflection
+</code></pre>
+
+<h3 id="seal-packages">Seal packages</h3>
+
+<p>To seal packages (enforce that all classes from the same package have to come from the same jar file) we can add the following headers:</p>
+
+<pre><code>Name: com.devflection.jars/
+Sealed: true
+</code></pre>
+
+<p>We can seal individual by specifying a name or if we just add the <i>Sealed: true</i> line without specifying any package we can seal the whole jar file.
+The important thing here is that the package name ends with a <i>&rsquo;/&rsquo;</i>.</p>
+
+<h3 id="security-configurations">Security configurations</h3>
+
+<p>There are also a number of headers that define security constraints. They apply only for signed applets, Java Web Start applications and JavaFX applications that are
+embedded in a web page or launched from a browser. They are ignored for standalone and self-contained applications, so we will not go into detail about them here.
+You can read and find out more about them <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/manifest.html">here</a>.</p>
+
+<h2 id="example">Example</h2>
+
+<p>Now, let&rsquo;s use all of the information above to create an executable jar of our example application.</p>
+
+<p>Our application will be a standalone executable JAR file that will depend on multiple external libraries - Apache commons, Logback and SLF4j.
+We downloaded all three library JAR files from the Maven central repository and placed them in the <i>lib</i> folder of our example project.</p>
+
+<p>Since our application will be executable it has an entry point; in our case, that is the class <b>App.</b></p>
+
+<p>Because of these two things we have to create a manifest input file with the headers (the <i>ManifestInput.txt</i> file in our project):</p>
+
+<pre><code>Main-Class: com.devflection.jars.App
+Class-path: lib/commons-lang3-3.8.1.jar lib/logback-classic-1.2.3.jar lib/logback-core-1.2.3.jar lib/slf4j-api-1.7.26.jar
+</code></pre>
+
+<p><b>IMPORTANT:</b> the manifest input file must end with an empty line, otherwise, the jar tool does not parse it correctly.</p>
+
+<p>Our application also depends on another resource - the log config file - so we also need to make sure that this file is included in our JAR as well.</p>
+
+<p>We will create our JAR as we mentioned earlier:
+<ol>
+    <li>Create a new folder called <i>target</i></li>
+    <li>Compile our source files from <i>src/main/java</i> into <i>target</i></li>
+    <li>Copy the log config file from <i>src/main/resources</i> into <i>target</i></li>
+    <li>Call the jar tool and suply the manifest input file</li>
+</ol></p>
+
+<p>After these steps, we should have an executable jar that we can then run with the <i>java -jar</i> command.</p>
+
+<p>To start we should <i>cd</i> into the example project base directory.</p>
+
+<p>Then we create a new folder with</p>
+
+<pre><code>mkdir target
+</code></pre>
+
+<p>After that, we compile our source files with</p>
+
+<pre><code>javac src/main/java/com/devflection/jars/App.java -cp lib/* -sourcepath src/main/java -d target
+</code></pre>
+
+<p>or if we fully write out the full library names</p>
+
+<pre><code>javac src/main/java/com/devflection/jars/App.java -cp lib/commons-lang3-3.8.1.jar;lib/logback-classic-1.2.3.jar;lib/logback-core-1.2.3.jar;lib/slf4j-api-1.7.26.jar -sourcepath src/main/java -d target
+</code></pre>
+
+<p>Then let&rsquo;s copy the log config file</p>
+
+<pre><code>cp src/main/resources/logback.xml target/logback.xml
+</code></pre>
+
+<p>After that, we need to create the JAR with</p>
+
+<pre><code>jar cfm DevflectionExampleJar.jar ManifestInput.txt -C target .
+</code></pre>
+
+<p><b>IMPORTANT:</b> the flag <i>-C</i> needs to end with <i>.</i> (a full stop).</p>
+
+<p>This should create an executable jar in our base directory which we can execute by calling</p>
+
+<pre><code>java -jar DevflectionExampleJar.jar
+</code></pre>
+
+<p>And this should then output</p>
+
+<pre><code>2019-04-28 08:02:49 - Hello from the logger! This is out sample JAR project.
+2019-04-28 08:02:49 - Hello world! First class sure is enjoyable...
+2019-04-28 08:02:49 - Hello world! Economy class sure is crowded and unpleasant...
+</code></pre>
+
+<p>From these messages we can see that we successfully included the referenced libraries and from the format, we can also tell that the log config file is used because the default
+log messages would look like this:</p>
+
+<pre><code>07:52:19.929 [main] INFO com.devflection.jars.App - Hello from the logger! This is out sample JAR project.
+07:52:19.940 [main] INFO com.devflection.jars.packages.first.FirstClass - Hello world! First class sure is enjoyable...
+07:52:19.940 [main] INFO com.devflection.jars.packages.second.EconomyClass - Hello world! Economy class sure is crowded and unpleasant...
+</code></pre>
+
+<hr />
+
+<p><i>
+This is it for an introduction to jar files.
+You can check out the full example project <a href="https://github.com/HerickoMatija/devflection-jars">on github</a>.
+</i></p>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/jars/">jars</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2019-04-14-reflection-in-java/" data-toggle="tooltip" data-placement="top" title="Reflection in Java">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/MatijaHericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

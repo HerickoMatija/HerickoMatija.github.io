@@ -73,7 +73,7 @@ If an application can only inspect but not also modify the code then it only has
   "headline": "Reflection in Java",
   "description" : "Reflection is the ability of an application to inspect and modify the code in the system.\nIf an application can only inspect but not also modify the code then it only has the ability of introspection.\nSo for an application to be reflective it must also be able to modify its code at runtime.\n",
   "inLanguage" : "en",
-  "wordCount":  1477 ,
+  "wordCount":  1476 ,
   "datePublished" : "2019-04-14T00:00:00",
   "dateModified" : "2019-04-14T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -279,7 +279,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;7&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1477&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1476&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
@@ -302,7 +302,7 @@ if (!doNotTrack) {
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p><b>Reflection</b> is the ability of an application to inspect <b>and</b> modify the code in the system.</p>
+        <p><strong>Reflection</strong> is the ability of an application to inspect <strong>and</strong> modify the code in the system.</p>
 
 <p>If an application can only inspect but not also modify the code then it only has the ability of introspection.</p>
 
@@ -322,13 +322,13 @@ methods or constructors, and modify the qualifiers of fields/methods..</p>
 <p>We can see it has methods to:</p>
 
 <ul>
-    <li>List all constructors => #getAllConstructors</li>
-    <li>List all public methods => #getAllMethods</li>
-    <li>List all methods => #getAllDeclaredMethods</li>
-    <li>List all public fields => #getAllFields</li>
-    <li>List all fields => #getAllDeclaredFields</li>
-    <li>List all annotations => #getAllAnnotations</li>
-    <li>And many more</li>
+<li>List all constructors =&gt; #getAllConstructors</li>
+<li>List all public methods =&gt; #getAllMethods</li>
+<li>List all methods =&gt; #getAllDeclaredMethods</li>
+<li>List all public fields =&gt; #getAllFields</li>
+<li>List all fields =&gt; #getAllDeclaredFields</li>
+<li>List all annotations =&gt; #getAllAnnotations</li>
+<li>And many more</li>
 </ul>
 
 <p>With these methods available to us, we can load a class in our Java application, get the information about its methods
@@ -356,13 +356,11 @@ reflection for performance reasons, because reflection’ dynamic resolving brin
 Tomcat app itself to keep the classes “hidden” from the applications that we want to run in the Tomcat container.
 From their documentation on the base class that loads everything - the org.apache.catalina.startup.Bootstrap class:</p>
 
-<p><i>
-Bootstrap loader for Catalina. This application constructs a class loader for use in loading the Catalina
+<p><em>Bootstrap loader for Catalina. This application constructs a class loader for use in loading the Catalina
 internal classes (by accumulating all of the JAR files found in the &ldquo;server&rdquo; directory under &ldquo;catalina.home&rdquo;),
 and starts the regular execution of the container. The purpose of this roundabout approach is to keep the
 Catalina internal classes (and any other classes they depend on, such as an XML parser) out of the
-system class path and therefore not visible to application level classes.
-</i></p>
+system class path and therefore not visible to application level classes.</em></p>
 
 <hr />
 
@@ -377,9 +375,7 @@ only be testing the public methods to ensure the correctness of your classes API
 <script type="application/javascript" src="//gist.github.com/HerickoMatija/95137565663a4777b04fb6cc66520485.js?file=private-method-reflection.java"></script>
 
 <p>The full example of using reflection to test a private method is in this
-<i>
-<a href="https://github.com/HerickoMatija/devflection-reflection-private-method-testing">github repository</a>.
-</i></p>
+<a href="https://github.com/HerickoMatija/devflection-reflection-private-method-testing"><em>github repository</em></a>.</p>
 
 <hr />
 
@@ -401,9 +397,9 @@ This then also helps cut down on unnecessary functionality and space required by
 <p>We defined a really simple interface with three methods that:</p>
 
 <ul>
-    <li>start the plugin => #startPlugin</li>
-    <li>stop the plugin => #stopPlugin</li>
-    <li>identify the plugin => #getPluginName</li>
+<li>start the plugin =&gt; #startPlugin</li>
+<li>stop the plugin =&gt; #stopPlugin</li>
+<li>identify the plugin =&gt; #getPluginName</li>
 </ul>
 
 <p>Our plugins will need to implement this interface since we will be reflectively looking for classes that are assignable
@@ -441,11 +437,9 @@ it is in our plugin loader project although the interface definition is the same
 <p>Then we check if the class implements our plugin interface, and if so, we reflectively create an instance.</p>
 
 <p>The full instructions to build and run the example project are in the project readme file in the
-<i>
-<a href="https://github.com/HerickoMatija/devflection-reflection">github repository</a>.
-</i></p>
+<a href="https://github.com/HerickoMatija/devflection-reflection"><em>github repository</em></a>.</p>
 
-<p>When the application is running you can play then play around with adding and removing plugins to the application.
+<p>When the application is running you can then play around with adding and removing plugins to the application.
 The app will scan for new jars every 30 seconds in the &ldquo;plugins&rdquo; directory of the project.
 When it finds a new plugin implementation it adds it to the list of current plugins and all the plugins can then be started or stopped.
 To then remove a jar from the &ldquo;plugins&rdquo; directory, you have to stop the plugin and remove it,
@@ -453,20 +447,19 @@ which removes it from the list of current plugins. This makes it possible to rem
 
 <hr />
 
-<p><i>
-This is it for our example reflection project. Thank you for reading through, I hope you found my (first ever) post about reflection in Java useful.
-</i>
-<hr /></p>
+<p><em>This is it for our example reflection project. Thank you for reading through, I hope you found my (first ever) post about reflection in Java useful.</em></p>
+
+<hr />
 
 <h2 id="improvements-to-do-for-practice">Improvements to do for practice:</h2>
 
 <p>Things that could be improved and/or extended for practice:</p>
 
 <ul>
-    <li>Extracting the plugin interface into a jar, that you reference as a library in all the projects, so you can more easily track versions</li>
-    <li>Improve the lifecycle management of the plugins (start, stop, remove) and add some actual business logic into the plugin implementations</li>
-    <li>Create a GUI to manage the plugins instead of the CLI</li>
-    <li>Create a backend that exposes these methods via a rest API and a frontend that consumes it and make a SPA (single page application) to manage the plugins</li>
+<li>Extracting the plugin interface into a jar, that you reference as a library in all the projects, so you can more easily track versions</li>
+<li>Improve the lifecycle management of the plugins (start, stop, remove) and add some actual business logic into the plugin implementations</li>
+<li>Create a GUI to manage the plugins instead of the CLI</li>
+<li>Create a backend that exposes these methods via a rest API and a frontend that consumes it and make a SPA (single page application) to manage the plugins</li>
 </ul>
 
         

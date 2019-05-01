@@ -12,15 +12,12 @@
   <meta name="twitter:title" content="Java Archive file - JAR" />
   <meta name="description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the Java ARchive or as it is more known, the JAR file.
-
 We will describe what it is and how to create one.">
   <meta property="og:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the Java ARchive or as it is more known, the JAR file.
-
 We will describe what it is and how to create one.">
   <meta name="twitter:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the Java ARchive or as it is more known, the JAR file.
-
 We will describe what it is and how to …">
   <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
 {
@@ -94,7 +91,6 @@ We will describe what it is and how to …">
 <meta property="og:title" content="Java Archive file - JAR" />
 <meta property="og:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the Java ARchive or as it is more known, the JAR file.
-
 We will describe what it is and how to create one.">
 <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
 <meta property="og:url" content="https://devflection.com/posts/2019-04-30-java-archive-file/" />
@@ -103,7 +99,6 @@ We will describe what it is and how to create one.">
   <meta name="twitter:title" content="Java Archive file - JAR" />
   <meta name="twitter:description" content="In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the Java ARchive or as it is more known, the JAR file.
-
 We will describe what it is and how to …">
   <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
   <meta name="twitter:card" content="summary" />
@@ -302,41 +297,40 @@ if (!doNotTrack) {
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         <p>In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
-the <b>J</b>ava <b>AR</b>chive or as it is more known, the <b>JAR</b> file.</p>
-
-<p>We will describe what it is and how to create one.</p>
+the <strong>J</strong>ava <strong>AR</strong>chive or as it is more known, the <b>JAR</b> file.<br />
+We will describe what it is and how to create one.</p>
 
 <h2 id="what-is-a-jar-file">What is a JAR file?</h2>
 
 <p>A jar file is a bundle of files that might be needed by the application.
 It primarily holds java class files, but it can also contain other files that your application might need (such as configuration files, images or fonts).</p>
 
-<p>The jar file provides us with some useful functionality, such as:
+<p>The jar file provides us with some useful functionality, such as:</p>
+
 <ul>
-    <li><b>compression</b>; jar files compress the contents, so the size of the file is smaller</li>
-    <li><b>security</b>; jar files can be digitally signed, so users can verify them and grant them permission accordingly</li>
-    <li><b>package sealing</b>; packages in jars can be sealed, which means that all the classes from one package must come from the same jar file</li>
-</ul></p>
+<li><strong>compression</strong>; jar files compress the contents, so the size of the file is smaller</li>
+<li><strong>security</strong>; jar files can be digitally signed, so users can verify them and grant them permission accordingly</li>
+<li><strong>package sealing</strong>; packages in jars can be sealed, which means that all the classes from one package must come from the same jar file</li>
+</ul>
 
 <p>Jar files use the ZIP file format, so we can use a file archiver (such as WinRAR or 7-Zip) to browse and view the contents of a jar file.</p>
 
 <h2 id="java-compiler-and-class-files">Java compiler and class files</h2>
 
-<p>But before we start creating executable JAR files, we should also have a look at how to create java class files (files with the extension <i>.class</i>)
-from the source code files (files with the extension <i>.java</i>).</p>
+<p>But before we start creating executable JAR files, we should also have a look at how to create java class files (files with the extension <em>.class</em>)
+from the source code files (files with the extension <em>.java</em>).</p>
 
-<p>Java class files contain Java byte code that can be executed by the <b>J</b>ava <b>V</b>irtual <b>M</b>achine (<b>JVM</b>).
-In order to get Java class files from the source files, we need to compile the source files.
-To do that we can use the java compiler which is packaged in the <b>J</b>ava <b>D</b>evelopment <b>K</b>it (<b>JDK</b>) and is executed using the <i>javac</i> command.</p>
-
-<p>The command has the format:</p>
+<p>Java class files contain Java byte code that can be executed by the <strong>J</strong>ava <strong>V</strong>irtual <strong>M</strong>achine (<strong>JVM</strong>).
+In order to get Java class files from the source files, we need to compile the source files.<br />
+To do that we can use the java compiler which is packaged in the <strong>J</strong>ava <strong>D</strong>evelopment <strong>K</strong>it (<strong>JDK</strong>) and is executed using the <em>javac</em> command.
+The command has the format:</p>
 
 <pre><code>javac [ options ] [ sourcefiles ] [ classes ] [ @argfiles ]
 </code></pre>
 
-<p>For this example, we will make use of the <i>-sourcepath</i> flag, which tells the compiler in which directory to search for source files,
-the <i>-cp</i> flag, which adds paths to check for classes and sources when compiling
-and <i>-d</i> flag, which changes the current directory.</p>
+<p>For this example, we will make use of the <em>-sourcepath</em> flag, which tells the compiler in which directory to search for source files,
+the <em>-cp</em> flag, which adds paths to check for classes and sources when compiling
+and <em>-d</em> flag, which changes the current directory.</p>
 
 <p>So we will be executing something like:</p>
 
@@ -349,28 +343,29 @@ and <i>-d</i> flag, which changes the current directory.</p>
 
 <h2 id="java-archive-tool-and-jar-files">Java Archive Tool and JAR files</h2>
 
-<p>To create a jar file we can use the Java Archive Tool, which is also bundled in the <b>J</b>ava <b>D</b>evelopment <b>K</b>it and is executed with the <i>jar</i> command.</p>
+<p>To create a jar file we can use the Java Archive Tool, which is also bundled in the <strong>J</strong>ava <strong>D</strong>evelopment <strong>K</strong>it and is executed with the <em>jar</em> command.</p>
 
 <p>The jar command has the following format:</p>
 
 <pre><code>jar [options] [jar-file-name] [manifest-file] [input-files]
 </code></pre>
 
-<p>Where options can have the following arguments:
+<p>Where options can have the following arguments:</p>
+
 <ul>
-    <li>c - signals the jar tool to create a jar file</li>
-    <li>u - signals the jar tool to update a jar file</li>
-    <li>x - signals the jar tool to extract the contents of the jar file</li>
-    <li>t - signals the jar tool to print the table of contents for the jar file</li>
-    <li>i - signals the jar tool to create a index for the jar file</li>
-    <li>f - signals the jar tool to output to a file instead of stdout</li>
-    <li>v - signals the jar tool to run in verbose mode</li>
-    <li>0 - signals the jar tool to not compress the jar file</li>
-    <li>M - signals the jar tool that the default manifest file should not be generated</li>
-    <li>m - signals the jar tool to create a manifest file using the specified file as input</li>
-    <li>e - signals the jar tool to add an entry point header in the manifest file</li>
-    <li>C - signals the jar tool to change directories when creating the jar</li>
-</ul></p>
+<li>c - signals the jar tool to create a jar file</li>
+<li>u - signals the jar tool to update a jar file</li>
+<li>x - signals the jar tool to extract the contents of the jar file</li>
+<li>t - signals the jar tool to print the table of contents for the jar file</li>
+<li>i - signals the jar tool to create a index for the jar file</li>
+<li>f - signals the jar tool to output to a file instead of stdout</li>
+<li>v - signals the jar tool to run in verbose mode</li>
+<li>0 - signals the jar tool to not compress the jar file</li>
+<li>M - signals the jar tool that the default manifest file should not be generated</li>
+<li>m - signals the jar tool to create a manifest file using the specified file as input</li>
+<li>e - signals the jar tool to add an entry point header in the manifest file</li>
+<li>C - signals the jar tool to change directories when creating the jar</li>
+</ul>
 
 <h4 id="create-a-jar-file">Create a jar file</h4>
 
@@ -384,9 +379,9 @@ The wildcard option truly takes all files in the folder and puts them into the j
 so usually, we want to filter and specify the files that we actually want in the jar file.</p>
 
 <p>For example, in our accompanying project, we are using GIT for versioning and we are editing the project with IntelliJ, so we have the folders .git and .idea
-which we would not want in the final jar file, since they would not serve any purpose in the jar, only take up space.
-So to make things easier, build tools usually prepare a separate folder (most of the time named <i>target</i>), which is used to create the final JAR files.
-It prepares the folders by pointing the compiler to that folder and copying any other files that should be included in the JAR, such as the properties files, xml config files, etc.
+which we would not want in the final jar file, since they would not serve any purpose in the jar, only take up space.<br />
+So to make things easier, build tools usually prepare a separate folder (most of the time named <em>target</em>), which is used to create the final JAR files.
+It prepares the folders by pointing the compiler to that folder and copying any other files that should be included in the JAR, such as the properties files, xml config files, etc.<br />
 After that, a jar command with a wildcard can be executed with that directory.</p>
 
 <h4 id="view-jar-file-contents">View jar file contents</h4>
@@ -396,7 +391,7 @@ After that, a jar command with a wildcard can be executed with that directory.</
 <pre><code>jar tf MyJar.jar
 </code></pre>
 
-<p>This command will print out the table of contents for the jar file and we can make it display more information with the <i>-v</i> flag.</p>
+<p>This command will print out the table of contents for the jar file and we can make it display more information with the <em>-v</em> flag.</p>
 
 <h4 id="extract-jar-file-contents">Extract jar file contents</h4>
 
@@ -425,14 +420,14 @@ After that, a jar command with a wildcard can be executed with that directory.</
 </code></pre>
 
 <p>But in order to run the jar file, it has to be executable. This means the jar has to contain information about the entry point of the application (e.g. the main class).
-This is supplied in the <i>manifest file</i> inside the jar.</p>
+This is supplied in the <em>manifest file</em> inside the jar.</p>
 
 <h3 id="manifest-file">Manifest file</h3>
 
 <p>A manifest file is a file in the jar that contains metadata about all the other files in the jar.
 The manifest file is what supports and where we can configure all the different functionalities of the jar file.</p>
 
-<p>If we don&rsquo;t specify a manifest file with the <i>-m</i> flag when creating the jar file, a default manifest file (<i>MANIFEST.MF</i>) is added to the jar file in the folder <i>META-INF</i>.
+<p>If we don&rsquo;t specify a manifest file with the <em>-m</em> flag when creating the jar file, a default manifest file (<em>MANIFEST.MF</em>) is added to the jar file in the folder <i>META-INF</i>.
 The default manifest file contains only the information about the manifest version and the JDK that was used to create the jar file:</p>
 
 <pre><code>Manifest-Version: 1.0
@@ -440,7 +435,7 @@ Created-By: 1.8.0_131 (Oracle Corporation)
 </code></pre>
 
 <p>But since the manifest file enables us to do many things, we usually want to configure and modify the content of the manifest file.
-To do so we can use the <i>-m</i> flag of the jar tool and specify which file it should take as input to generate the final <i>MANIFEST.MF</i> file.</p>
+To do so we can use the <em>-m</em> flag of the jar tool and specify which file it should take as input to generate the final <em>MANIFEST.MF</em> file.</p>
 
 <p>If we include the -m option then the format of the jar command is:</p>
 
@@ -454,7 +449,7 @@ To do so we can use the <i>-m</i> flag of the jar tool and specify which file it
 
 <p>where each of the manifest headers is on a separate line and the file has to end with an empty line.</p>
 
-<p>The important thing with supplying a manifest text file is that the order of <i>-m</i> and <i>-f</i> flags match the order of arguments for the manifest text file and jar file name.
+<p>The important thing with supplying a manifest text file is that the order of <em>-m</em> and <em>-f</em> flags match the order of arguments for the manifest text file and jar file name.<br />
 So either</p>
 
 <pre><code>jar cmf ExampleManifest.txt Example.jar *
@@ -474,9 +469,8 @@ So either</p>
 <pre><code>Main-Class: com.devflection.jars.App
 </code></pre>
 
-<p>With this, we specify that the jar should be executable and its entry point is the supplied class.</p>
-
-<p>If this is the only thing we want to configure there is a convenience flag <i>-e</i>, which we can use instead of creating a manifest file:</p>
+<p>With this, we specify that the jar should be executable and its entry point is the supplied class.<br />
+If this is the only thing we want to configure there is a convenience flag <em>-e</em>, which we can use instead of creating a manifest file:</p>
 
 <pre><code>jar cfe MyJar.jar com.devflection.jars.App *
 </code></pre>
@@ -495,7 +489,8 @@ We can add the external jar files to the classpath with the header:</p>
 <h3 id="version-information">Version information</h3>
 
 <p>We can also supply information about the version and vendor for each package in the manifest file.
-To do so we can add a set of version headers for each package in the manifest text file. The headers are:</p>
+To do so we can add a set of version headers for each package in the manifest text file.<br />
+The headers are:</p>
 
 <pre><code>Name: com/devflection/jars
 Specification-Title: Devflection jar example classes
@@ -514,45 +509,47 @@ Implementation-Vendor: Devflection
 Sealed: true
 </code></pre>
 
-<p>We can seal individual by specifying a name or if we just add the <i>Sealed: true</i> line without specifying any package we can seal the whole jar file.
-The important thing here is that the package name ends with a <i>&rsquo;/&rsquo;</i>.</p>
+<p>We can seal individual by specifying a name or if we just add the <em>Sealed: true</em> line without specifying any package we can seal the whole jar file.<br />
+The important thing here is that the package name ends with a <em>&rsquo;/&rsquo;</em>.</p>
 
 <h3 id="security-configurations">Security configurations</h3>
 
-<p>There are also a number of headers that define security constraints. They apply only for signed applets, Java Web Start applications and JavaFX applications that are
-embedded in a web page or launched from a browser. They are ignored for standalone and self-contained applications, so we will not go into detail about them here.
+<p>There are also a number of headers that define security constraints.
+They apply only for signed applets, Java Web Start applications and JavaFX applications that are embedded in a web page or launched from a browser.<br />
+They are ignored for standalone and self-contained applications, so we will not go into detail about them here.
 You can read and find out more about them <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/deploy/manifest.html">here</a>.</p>
 
 <h2 id="example">Example</h2>
 
 <p>Now, let&rsquo;s use all of the information above to create an executable jar of our example application.</p>
 
-<p>Our application will be a standalone executable JAR file that will depend on multiple external libraries - Apache commons, Logback and SLF4j.
-We downloaded all three library JAR files from the Maven central repository and placed them in the <i>lib</i> folder of our example project.</p>
+<p>Our application will be a standalone executable JAR file that will depend on multiple external libraries - Apache commons, Logback and SLF4j.<br />
+We downloaded all three library JAR files from the Maven central repository and placed them in the <em>lib</em> folder of our example project.</p>
 
-<p>Since our application will be executable it has an entry point; in our case, that is the class <b>App.</b></p>
+<p>Since our application will be executable it has an entry point; in our case, that is the class <strong>App.</strong></p>
 
-<p>Because of these two things we have to create a manifest input file with the headers (the <i>ManifestInput.txt</i> file in our project):</p>
+<p>Because of these two things we have to create a manifest input file with the headers (the <em>ManifestInput.txt</em> file in our project):</p>
 
 <pre><code>Main-Class: com.devflection.jars.App
 Class-path: lib/commons-lang3-3.8.1.jar lib/logback-classic-1.2.3.jar lib/logback-core-1.2.3.jar lib/slf4j-api-1.7.26.jar
 </code></pre>
 
-<p><b>IMPORTANT:</b> the manifest input file must end with an empty line, otherwise, the jar tool does not parse it correctly.</p>
+<p><strong>IMPORTANT:</strong> the manifest input file must end with an empty line, otherwise, the jar tool does not parse it correctly.</p>
 
 <p>Our application also depends on another resource - the log config file - so we also need to make sure that this file is included in our JAR as well.</p>
 
-<p>We will create our JAR as we mentioned earlier:
+<p>We will create our JAR as we mentioned earlier:</p>
+
 <ol>
-    <li>Create a new folder called <i>target</i></li>
-    <li>Compile our source files from <i>src/main/java</i> into <i>target</i></li>
-    <li>Copy the log config file from <i>src/main/resources</i> into <i>target</i></li>
-    <li>Call the jar tool and suply the manifest input file</li>
-</ol></p>
+<li>Create a new folder called <em>target</em></li>
+<li>Compile our source files from <em>src/main/java</em> into <em>target</em></li>
+<li>Copy the log config file from <em>src/main/resources</em> into <em>target</em></li>
+<li>Call the jar tool and suply the manifest input file</li>
+</ol>
 
-<p>After these steps, we should have an executable jar that we can then run with the <i>java -jar</i> command.</p>
+<p>After these steps, we should have an executable jar that we can then run with the <em>java -jar</em> command.</p>
 
-<p>To start we should <i>cd</i> into the example project base directory.</p>
+<p>To start we should <em>cd</em> into the example project base directory.</p>
 
 <p>Then we create a new folder with</p>
 
@@ -579,7 +576,7 @@ Class-path: lib/commons-lang3-3.8.1.jar lib/logback-classic-1.2.3.jar lib/logbac
 <pre><code>jar cfm DevflectionExampleJar.jar ManifestInput.txt -C target .
 </code></pre>
 
-<p><b>IMPORTANT:</b> the flag <i>-C</i> needs to end with <i>.</i> (a full stop).</p>
+<p><strong>IMPORTANT:</strong> the flag <em>-C</em> needs to end with <em>.</em>  (a full stop).</p>
 
 <p>This should create an executable jar in our base directory which we can execute by calling</p>
 
@@ -593,8 +590,8 @@ Class-path: lib/commons-lang3-3.8.1.jar lib/logback-classic-1.2.3.jar lib/logbac
 2019-04-28 08:02:49 - Hello world! Economy class sure is crowded and unpleasant...
 </code></pre>
 
-<p>From these messages we can see that we successfully included the referenced libraries and from the format, we can also tell that the log config file is used because the default
-log messages would look like this:</p>
+<p>From these messages we can see that we successfully included the referenced libraries and from the format,
+we can also tell that the log config file is used because the default log messages would look like this:</p>
 
 <pre><code>07:52:19.929 [main] INFO com.devflection.jars.App - Hello from the logger! This is our sample JAR project.
 07:52:19.940 [main] INFO com.devflection.jars.packages.first.FirstClass - Hello world! First class sure is enjoyable...
@@ -603,10 +600,10 @@ log messages would look like this:</p>
 
 <hr />
 
-<p><i>
-This is it for an introduction to jar files.
-You can check out the full example project <a href="https://github.com/HerickoMatija/devflection-jars">on github</a>.
-</i></p>
+<p><em>This is it for an introduction to jar files.
+You can check out the full example project <a href="https://github.com/HerickoMatija/devflection-jars">on github</a>.</em></p>
+
+<hr />
 
         
           <div class="blog-tags">

@@ -20,9 +20,8 @@
       <author>matija@devflection.com (Matija Heričko)</author>
       <guid>https://devflection.com/posts/2019-04-30-java-archive-file/</guid>
       <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
-the &lt;b&gt;J&lt;/b&gt;ava &lt;b&gt;AR&lt;/b&gt;chive or as it is more known, the &lt;b&gt;JAR&lt;/b&gt; file.&lt;/p&gt;
-
-&lt;p&gt;We will describe what it is and how to create one.&lt;/p&gt;</description>
+the &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;AR&lt;/strong&gt;chive or as it is more known, the &lt;b&gt;JAR&lt;/b&gt; file.&lt;br /&gt;
+We will describe what it is and how to create one.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -31,7 +30,7 @@ the &lt;b&gt;J&lt;/b&gt;ava &lt;b&gt;AR&lt;/b&gt;chive or as it is more known, t
       <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
       <author>matija@devflection.com (Matija Heričko)</author>
       <guid>https://devflection.com/posts/2019-04-14-reflection-in-java/</guid>
-      <description>&lt;p&gt;&lt;b&gt;Reflection&lt;/b&gt; is the ability of an application to inspect &lt;b&gt;and&lt;/b&gt; modify the code in the system.&lt;/p&gt;
+      <description>&lt;p&gt;&lt;strong&gt;Reflection&lt;/strong&gt; is the ability of an application to inspect &lt;strong&gt;and&lt;/strong&gt; modify the code in the system.&lt;/p&gt;
 
 &lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;
 

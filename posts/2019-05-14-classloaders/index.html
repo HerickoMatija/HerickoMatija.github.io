@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Classloaders in Java - Devflection</title>
+  <meta property="og:title" content="Classloaders in Java" />
+  <meta name="twitter:title" content="Classloaders in Java" />
+  <meta name="description" content="In this post, we will be looking at a very important part of the
+Java Runtime Environment (or JRE) - Class loaders.
+
+We will look at what they are, how they work and how we can implement our own custom class loader.">
+  <meta property="og:description" content="In this post, we will be looking at a very important part of the
+Java Runtime Environment (or JRE) - Class loaders.
+
+We will look at what they are, how they work and how we can implement our own custom class loader.">
+  <meta name="twitter:description" content="In this post, we will be looking at a very important part of the
+Java Runtime Environment (or JRE) - Class loaders.
+
+We will look at what they are, how they work and how we can implement our own …">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2019-05-14-classloaders\/",
+          "name": "Classloaders in java"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Classloaders in Java",
+  "description" : "In this post, we will be looking at a very important part of the\nJava Runtime Environment (or JRE) - Class loaders.\nWe will look at what they are, how they work and how we can implement our own custom class loader.\n",
+  "inLanguage" : "en",
+  "wordCount":  1196 ,
+  "datePublished" : "2019-05-16T00:00:00",
+  "dateModified" : "2019-05-16T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "java, classloaders" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2019-05-14-classloaders\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Classloaders in Java" />
+<meta property="og:description" content="In this post, we will be looking at a very important part of the
+Java Runtime Environment (or JRE) - Class loaders.
+
+We will look at what they are, how they work and how we can implement our own custom class loader.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2019-05-14-classloaders/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+  <meta name="twitter:title" content="Classloaders in Java" />
+  <meta name="twitter:description" content="In this post, we will be looking at a very important part of the
+Java Runtime Environment (or JRE) - Class loaders.
+
+We will look at what they are, how they work and how we can implement our own …">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:url" content="https://devflection.com/posts/2019-05-14-classloaders/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devflection" />
+
+  <meta name="generator" content="Hugo 0.55.4" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Classloaders in Java</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on May 16, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1196&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In this post, we will be looking at a very important part of the<br />
+<strong>J</strong>ava <strong>R</strong>untime <strong>E</strong>nvironment (or <strong>JRE</strong>) - <strong>Class loaders.</strong></p>
+
+<p>We will look at what they are, how they work and how we can implement our own custom class loader.</p>
+
+<h2 id="what-is-a-class-loader">What is a class loader?</h2>
+
+<p>Class loaders in Java are objects that have the responsibility of locating and loading the class definitions that are needed by the application.<br />
+They take a fully classified class name as a string input, meaning a class name with the full package path.<br />
+Some examples of fully classified names are:</p>
+
+<ul>
+<li>com.devflection.package.ExampleClass</li>
+<li>com.devflection.package.ExampleClass$ExampleInnerClass</li>
+</ul>
+
+<p>From this class name input, they try to find or generate the data that represents the definition of the class.<br />
+That is why every class that was loaded in the application has a reference to the class loader that loaded it
+and we can get that information by invoking the method <em>getClassLoader()</em> on the class object.</p>
+
+<h2 id="how-class-loaders-work">How class loaders work</h2>
+
+<p>The entry point for loading classes is the <em>loadClass(String name)</em> method.<br />
+Every class loader does the following steps:</p>
+
+<ol>
+<li>Check if the class has already been loaded
+
+<ul>
+<li>If the class has been loaded, return it here<br /></li>
+</ul></li>
+<li>Delegate the loading to the parent classloader
+
+<ul>
+<li>If parent returns a class, return it</li>
+</ul></li>
+<li>Try to load the class by calling the <em>#findClass</em> method
+
+<ul>
+<li>If the class was found return it, otherwise throw a <em>ClassNotFoundException</em></li>
+</ul></li>
+</ol>
+
+<p>So we can see that all the class loaders follow the delegation model, which means they first delegate the loading of the class to the parent class loader
+and only if that did not find the class do they try to load it themselves.<br />
+By following this model the class loading API guarantees that the classes are unique and that they are not loaded multiple times.</p>
+
+<h2 id="types-of-classloaders">Types of ClassLoaders</h2>
+
+<p>There are <strong>three types of classloaders</strong> when the JVM starts up:</p>
+
+<h3 id="bootstrap-class-loader">Bootstrap class loader</h3>
+
+<p>The bootstrap or primordial class loader is executed by the JVM to load all the core Java libraries that are in the <em>$JAVA_HOME/jre/lib</em> folder.<br />
+This class loader is written in native code and because of that has no Java class representation.
+That is why all the core Java library classes that are loaded by this classloader have their classloader set to <em>null</em>.<br />
+For example, all the classes in the packages <em>java.util</em> (ArrayList, HashMap, etc)
+and <em>java.lang</em> (Boolean, Byte, Char, etc…) return <em>null</em> if you invoke their <em>getClassLoader()</em> method.</p>
+
+<pre><code>System.out.println(ArrayList.class.getClassLoader()); // prints null
+System.out.println(HashMap.class.getClassLoader()); // prints null
+System.out.println(HashSet.class.getClassLoader()); // prints null
+
+System.out.println(Boolean.class.getClassLoader()); // prints null
+System.out.println(Byte.class.getClassLoader()); // prints null
+System.out.println(Character.class.getClassLoader()); // prints null
+</code></pre>
+
+<h3 id="extension-class-loader">Extension class loader</h3>
+
+<p>The extension class loader is used to load extension classes that are located in the <em>ext</em> folder of the JRE (so <em>$JAVA_HOME/jre/lib/ext</em>)
+or other folders specified by the system property <em>java.ext.dirs</em>.<br />
+For example, on my current machine, there are jars <em>access-bridge-64.jar</em>, <em>jfxrt.jar</em> and <em>nashorn.jar</em> among others in the <em>lib/ext</em> folder,
+and all the classes from those jars are loaded using the extension class loader, as we can see by calling the <em>getClassLoader()</em> method on some of
+the classes that are located in these jars.</p>
+
+<pre><code>System.out.println(AccessBridge.class.getClassLoader()); 
+// prints sun.misc.Launcher$ExtClassLoader@45ee12a7
+
+System.out.println(DynamicLinker.class.getClassLoader()); 
+// prints sun.misc.Launcher$ExtClassLoader@45ee12a7
+
+System.out.println(Logging.class.getClassLoader()); 
+// prints sun.misc.Launcher$ExtClassLoader@45ee12a7
+</code></pre>
+
+<h3 id="system-or-application-class-loader">System or application class loader</h3>
+
+<p>The application class loader loads all the classes that are on the classpath of the application.
+The classpath can either come from the <em>java.class.path</em> environment variable
+or it can be passed directly to the application via <em>-classpath</em> or <em>-cp</em> arguments.<br />
+Therefore all the classes that are loaded from the classpath are loaded with the application class loader, for example:</p>
+
+<pre><code>System.out.println(MyAppClass1.class.getClassLoader()); 
+// prints sun.misc.Launcher$AppClassLoader@18b4aac2
+
+System.out.println(MyAppClass2.class.getClassLoader()); 
+// prints sun.misc.Launcher$AppClassLoader@18b4aac2
+
+System.out.println(MyAppClass3.class.getClassLoader()); 
+// prints sun.misc.Launcher$AppClassLoader@18b4aac2
+</code></pre>
+
+<h2 id="extending-the-classloader">Extending the ClassLoader</h2>
+
+<p>The described three class loaders are usually enough to cover most use cases, where you have all the external jars that you will use locally.<br />
+But in case you do not have all the files in the file system, or you will need to load some JAR dynamically from alternate sources
+when the app is running there are also other options available for you to do that.<br />
+One of the most common examples is when you don&rsquo;t have the external JAR files locally, but need to load them over the network.
+This was done a lot when applets were around so Java already has a nice prepared solution for this problem - the <a href="https://docs.oracle.com/javase/10/docs/api/java/net/URLClassLoader.html"><em>URLClassLoader</em></a> class.<br />
+The URLClassLoader takes an array of URLs from where to load jars, so it is perfect for loading classes over the network.<br />
+The advantage of using the URLClassLoader is that you do not have to implement all the logic that is required when loading classes.
+You just hand the classloader the URLs where the JAR files are located, and it takes care of correctly loading the classes from there.</p>
+
+<p>If your use case is different and the URLClassLoader does not provide the right functionality, you can also extend the class loader.<br />
+To create your own custom class loader, you need to extend the <a href="https://docs.oracle.com/javase/10/docs/api/java/lang/ClassLoader.html"><em>ClassLoader</em></a> class and implement the <em>findClass</em> method with your custom logic for loading classes.</p>
+
+<h2 id="example-custom-class-loader">Example custom class loader</h2>
+
+<p>In our example, we will write and use a class loader that will load classes from a database.<br />
+The example contains:</p>
+
+<ul>
+<li>A <strong>HSQLDB</strong> file based <strong>instance</strong></li>
+<li>A simple <strong>source</strong> and <strong>class file</strong> that is not on the final application classpath, which our custom class loader will load</li>
+<li>A <strong>custom class loader</strong> that uses the HSQLDB instance to try and load the classes</li>
+</ul>
+
+<p>Our example class that will supply a message that we will print out is pretty simple:</p>
+
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/aad337351af04f217efc8ae5a12a2059.js?file=ClassFromDatabase.java"></script>
+
+<p>From this source file, we compiled the <em>.class</em> file which the application loads into the database.
+Both are included in the <em>classes</em> folder in the project.</p>
+
+<p>Next, we have our link to the database - the <em>ClassDAO</em> class. It has three methods</p>
+
+<ul>
+<li><em>createClassTable()</em> - creates the table in the database that has two columns, <em>className</em> and <em>data</em></li>
+<li><em>insertClass(String, byte[])</em> - inserts the passed byte array data in the database under the key string that is passed in</li>
+<li><em>getClass(String)</em> - method to retrieve the data associated with the passed in key string</li>
+</ul>
+
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/aad337351af04f217efc8ae5a12a2059.js?file=ClassDAO.java"></script>
+
+<p>And finally our custom class loader.
+The class loader itself is pretty straight forward, we extend the <em>ClassLoader</em> class and override the <em>findClass</em> function,
+where we implement our custom class loading logic.
+We simply call the <em>getClass()</em> method on the <em>ClassDAO</em>, and if we find anything we define the class with the data,
+otherwise we throw a ClassNotFoundException.</p>
+
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/aad337351af04f217efc8ae5a12a2059.js?file=DevflectionClassLoader.java"></script>
+
+<p>If we run the main method in the Main class, we get the following messages printed out in the console:</p>
+
+<script type="application/javascript" src="//gist.github.com/HerickoMatija/aad337351af04f217efc8ae5a12a2059.js?file=ClassLoaderExampleOutput"></script>
+
+<p>From this, we can see that we successfully loaded the class from the DB using our custom class loader,
+while the default application class loader was unable to load the class since it is not on the application classpath.</p>
+
+<p>You can check out the full project on <a href="https://github.com/HerickoMatija/devflection-classloaders">GitHub</a>.</p>
+
+<hr />
+
+<p><em>This is it for our classloader post, I hope you found it informative.</em></p>
+
+<hr />
+
+<h2 id="improvements-to-do-for-practice">Improvements to do for practice:</h2>
+
+<p>Things that could be improved and/or extended for practice:</p>
+
+<ul>
+<li>Split the application into a provider and client applications, where the provider inserts the classes into the database
+and the client loads them so you can load the classes into the DB asynchronously from the client</li>
+</ul>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/classloaders/">classloaders</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2019-04-30-java-archive-file/" data-toggle="tooltip" data-placement="top" title="Java Archive file - JAR">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/MatijaHericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

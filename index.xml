@@ -8,10 +8,22 @@
     <language>en-us</language>
     <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
     <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Tue, 30 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Classloaders in Java</title>
+      <link>https://devflection.com/posts/2019-05-14-classloaders/</link>
+      <pubDate>Thu, 16 May 2019 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2019-05-14-classloaders/</guid>
+      <description>&lt;p&gt;In this post, we will be looking at a very important part of the&lt;br /&gt;
+&lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;R&lt;/strong&gt;untime &lt;strong&gt;E&lt;/strong&gt;nvironment (or &lt;strong&gt;JRE&lt;/strong&gt;) - &lt;strong&gt;Class loaders.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We will look at what they are, how they work and how we can implement our own custom class loader.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Java Archive file - JAR</title>

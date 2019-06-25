@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Apache Maven Part 1 - Introduction and basics - Devflection</title>
+  <meta property="og:title" content="Apache Maven Part 1 - Introduction and basics" />
+  <meta name="twitter:title" content="Apache Maven Part 1 - Introduction and basics" />
+  <meta name="description" content="This multi-post series will be looking at Apache Maven.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.">
+  <meta property="og:description" content="This multi-post series will be looking at Apache Maven.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.">
+  <meta name="twitter:description" content="This multi-post series will be looking at Apache Maven.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2019-06-25-maven-part-1\/",
+          "name": "Apache maven part 1 introduction and basics"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Apache Maven Part 1 - Introduction and basics",
+  "description" : "This multi-post series will be looking at Apache Maven. In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.\n",
+  "inLanguage" : "en",
+  "wordCount":  2209 ,
+  "datePublished" : "2019-06-25T00:00:00",
+  "dateModified" : "2019-06-25T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "java, maven" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2019-06-25-maven-part-1\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Apache Maven Part 1 - Introduction and basics" />
+<meta property="og:description" content="This multi-post series will be looking at Apache Maven.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2019-06-25-maven-part-1/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+  <meta name="twitter:title" content="Apache Maven Part 1 - Introduction and basics" />
+  <meta name="twitter:description" content="This multi-post series will be looking at Apache Maven.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:url" content="https://devflection.com/posts/2019-06-25-maven-part-1/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devflection" />
+
+  <meta name="generator" content="Hugo 0.55.4" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Apache Maven Part 1 - Introduction and basics</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on June 25, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;11&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2209&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>This multi-post series will be looking at <strong>Apache Maven</strong>.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.</p>
+
+<p>But since Apache Maven is a complex tool with a lot of possibilities, this post will focus on using Maven for a simple project without a complex hierarchical structure or a complex build process.<br />
+If you already understand the concepts of artifacts, repositories, dependencies and Maven properties,
+you can skip to the second part, which will cover more complex setups and configurations.</p>
+
+<hr />
+
+<p><em>This post is part of a series about Apache Maven.<br />
+The next posts will be published soon.</em></p>
+
+<hr />
+
+<h1 id="what-is-apache-maven">What is Apache Maven?</h1>
+
+<p>Apache Maven is a software tool that helps developers manage and build any Java-based project.
+The idea behind maven was to try and solve the issue of different build results on different machines,
+which were cause by subtle differences in versions of the tools used.<br />
+It solved this problem by providing a central place to formally define and configure the build process,
+which is called the <strong>Project Object Model</strong> (POM).<br />
+The project object model controls the versions of the tools used and the steps taken and the result is a replicable build process.
+This eliminates the problem of different build results on different machines and also simplifies developers&rsquo; life because we do not have to learn a new build process every time we switch between projects.</p>
+
+<h1 id="how-to-configure-a-project-to-be-managed-by-maven">How to configure a project to be managed by Maven</h1>
+
+<p>A maven project is a normal Java project that also contains POM files (<em>pom.xml</em> files),
+which describe and define different things related to the build process.<br />
+They are always located in the project root folder and they define the current project&rsquo; build process.<br />
+We can also nest the projects and pom files to create complex hierarchical structures and multi-module projects,
+where each module has a specific build process but the build process for all of them is triggered by running a single Maven build from the parent project.
+We will look more thoroughly at these kinds of setups in the second post of this series.<br />
+To sum up, in order to have a project managed by Maven, you just need a <em>pom.xml</em> file in your project folder that describes the build process
+and Maven can take it from there.</p>
+
+<h1 id="pom-files">POM files</h1>
+
+<p>As mentioned, the Project Object Model or POM is the unit of work for Maven
+and <em>pom.xml</em> files are where everything is defined and configured.<br />
+An important note is that every Maven version has a <strong>super POM</strong> from which every POM inherits unless it has a parent specified.
+The super POM file has a lot of defaults configured, such as the central repository, default output directory for compiled classes, the final name of the artifact, etc.<br />
+What is important to know is that everything is inherited from the super POM and can be overwritten if needed.<br />
+We can find the full content of the super POM in the <a href="https://maven.apache.org/ref/3.6.1/maven-model-builder/super-pom.html">reference documentation</a> of Maven
+or in our local Maven install directory inside the jar <em>lib/maven-model-builder-{version}.jar</em> in the folder <em>org/apache/maven/model</em>.</p>
+
+<h3 id="what-does-a-pom-file-look-like">What does a POM file look like?</h3>
+
+<p>Since all POM files inherit from the super POM, project POM files vary significantly from project to project, depending on the build complexity.<br />
+POM files are XML files that start with a base <em>project</em> element.
+The <em>project</em> element can be empty or we can add schema references to it to have validation of the file.
+Nested inside the <em>project</em> element are all the elements that are used to configure Maven.<br />
+And like we mentioned since the super POM defines a lot of default values there are only four elements mandatory for every Maven project, the rest are optional to add as needed.<br />
+The ordering of the elements in the POM file is not important so we can order them as we like.<br />
+An example of a <em>pom.xml</em> with the schema defined and all the elements looks like this:</p>
+
+<pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;!-- Mandatory elements --&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;   
+    &lt;groupId&gt;...&lt;/groupId&gt;
+    &lt;artifactId&gt;...&lt;/artifactId&gt;
+    &lt;version&gt;...&lt;/version&gt;
+
+    &lt;!-- Optional elements --&gt;      
+    &lt;dependencies&gt;...&lt;/dependencies&gt;
+    &lt;dependencyManagement&gt;...&lt;/dependencyManagement&gt;
+    &lt;modules&gt;...&lt;/modules&gt;
+    &lt;packaging&gt;...&lt;/packaging&gt;
+    &lt;parent&gt;...&lt;/parent&gt;
+    &lt;properties&gt;...&lt;/properties&gt;
+
+    &lt;!-- Build Settings --&gt;
+    &lt;build&gt;...&lt;/build&gt;
+    &lt;reporting&gt;...&lt;/reporting&gt;
+
+    &lt;!-- Information about the project --&gt;
+    &lt;contributors&gt;...&lt;/contributors&gt;
+    &lt;description&gt;...&lt;/description&gt;
+    &lt;developers&gt;...&lt;/developers&gt;
+    &lt;inceptionYear&gt;...&lt;/inceptionYear&gt;
+    &lt;licenses&gt;...&lt;/licenses&gt;
+    &lt;name&gt;...&lt;/name&gt;
+    &lt;organization&gt;...&lt;/organization&gt;
+    &lt;url&gt;...&lt;/url&gt;
+
+    &lt;!-- Environment Settings --&gt;
+    &lt;ciManagement&gt;...&lt;/ciManagement&gt;
+    &lt;distributionManagement&gt;...&lt;/distributionManagement&gt;
+    &lt;issueManagement&gt;...&lt;/issueManagement&gt;
+    &lt;mailingLists&gt;...&lt;/mailingLists&gt;
+    &lt;pluginRepositories&gt;...&lt;/pluginRepositories&gt;
+    &lt;prerequisites&gt;...&lt;/prerequisites&gt;
+    &lt;profiles&gt;...&lt;/profiles&gt;
+    &lt;repositories&gt;...&lt;/repositories&gt;
+    &lt;scm&gt;...&lt;/scm&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>The mandatory fields are <em>modelVersion</em>, <em>groupId</em>, <em>artifactId</em> and <em>version</em>, and the rest are optional.<br />
+<em>modelVersion</em> is used to specify which POM model version and currently only the model version 4.0.0 is supported in Maven 2 &amp; 3.<br />
+The other three mandatory fields are used to uniquely identify artifacts in the Maven repositories.</p>
+
+<h1 id="maven-repository">Maven repository</h1>
+
+<p>Maven repository holds the build artifacts and dependencies of varying types.
+It is basically a file directory, where the dependency artifacts are located.<br />
+There are two types of repositories - local and remote.
+The local repository is located on the computer where Maven is run and it caches the dependencies that have already been downloaded.
+The default location of the local repository is:</p>
+
+<pre><code>// Windows
+C:\Users\&lt;User_Name&gt;\.m2 
+// Linux
+/home/&lt;User_Name&gt;/.m2
+// Mac
+/Users/&lt;user_name&gt;/.m2
+</code></pre>
+
+<p>But we can also modify this default location by changing the <em>localRepository</em> field in the file <em>settings.xml</em> that is located in the Maven install directory in the <em>conf</em> directory, like this:</p>
+
+<pre><code>&lt;localRepository&gt;C:\Users\Devflection\newMavenRepositoryDirectory&lt;/localRepository&gt;
+</code></pre>
+
+<p>Any other repository is a remote repository, and they are usually published on a server and are accessed via HTTP.<br />
+When Maven finds a dependency it does not have in the local repository,
+it tries to find it in the specified remote repository, downloads it and caches it in the local repository.
+If there is no repository specified in the <em>repository</em> field in the POM file,
+Maven defaults to the Maven <a href="http://repo.maven.apache.org/maven2/">central repository</a>, which is specified in the parent super POM.</p>
+
+<h1 id="identifying-artifacts">Identifying artifacts</h1>
+
+<p>To locate artifacts in the Maven repositories the three mandatory fields are used - <em>groupId</em>, <em>artifactId</em> and <em>version</em>.<br />
+This trio appears often in the Maven landscape,
+and it is used to uniquely identify a project (groupId and artifactId) at a specific point in time (version).</p>
+
+<ul>
+<li><em>groupId</em> represents the organization or the project top level name (e.g. <em>com.devflection</em>).</li>
+<li><em>artifactId</em> represents the name of the project (e.g. <em>maven-example-project</em>).</li>
+<li><em>version</em> represents the version of the project (e.g. <em>1.2.3</em>).</li>
+</ul>
+
+<p>The values inside all three fields point to a location in the directory structure in the repository where we can find the artifact or where it should be uploaded.<br />
+For example, a POM with the values:</p>
+
+<pre><code>&lt;groupId&gt;com.devflection&lt;/groupId&gt;
+&lt;artifactId&gt;maven-example-project&lt;artifactId&gt;
+&lt;version&gt;1.0&lt;/version&gt;
+</code></pre>
+
+<p>will mean that in the Maven repository (<em>$M2_REPO</em>), our maven-example-project artifact version 1.0 should be located in the folder</p>
+
+<pre><code>$M2_REPO/com/devflection/maven-example-project/1.0
+</code></pre>
+
+<p>Another important field is the <em>packaging</em> field since it tells Maven how we want our project to be packaged.
+The value of the element can be any of the following: <em>pom, jar, maven-plugin, ejb, war, ear, rar</em>, and if nothing is present it defaults to <em>jar</em>.</p>
+
+<h1 id="dependencies">Dependencies</h1>
+
+<p>Now that we know what a Maven repository is and how Maven locates artifacts, we can begin to imagine how Maven manages dependencies for projects.
+We can list dependencies of our project in the POM file, and then Maven searches for the artifacts in the Maven repository
+and includes them in our build process at the specified point.
+The drawback of this is that Maven only supports dependencies that are in a Maven repository.<br />
+The project&rsquo; dependencies are listed in the <em>dependencies</em> field in the POM file using the identifying trio (<em>groupId</em>, <em>artifactId</em> and <em>version</em>),
+which are again mandatory.<br />
+The dependencies can also have other fields set:</p>
+
+<ul>
+<li><p><strong>type</strong><br />
+what kind of dependency we want to include. If nothing is present it defaults to jar.</p></li>
+
+<li><p><strong>classifier</strong><br />
+with the classifier, we can distinguish between artifacts that were built from the same POM but are different in content.<br />
+For example, some projects use the classifiers <em>sources</em> and <em>javadoc</em> to share the project source files and the API documentation.</p></li>
+
+<li><p><strong>scope</strong><br />
+The scope element refers to the classpath of the task that is currently executing.
+There are five scope values available:</p>
+
+<ul>
+<li><p><strong>compile</strong><br />
+This scope is the default one.
+Compile dependencies are available in all classpaths.</p></li>
+
+<li><p><strong>provided</strong><br />
+With this scope, we indicate that we expect the JDK or container to provide the dependency.
+The dependency is available in compile and test classpaths, and it is not transitive.</p></li>
+
+<li><p><strong>runtime</strong><br />
+With this scope, we indicate that the dependency is not needed for compiling, but is for running.
+The dependency is available in the runtime and test classpaths, but not in compile classpath.</p></li>
+
+<li><p><strong>test</strong><br />
+With this scope, we indicate that this dependency is not needed for normal application execution, but that this dependency is only available in the test classpath.
+This scope is also not transitive.</p></li>
+
+<li><p><strong>system</strong><br />
+With this scope, we indicate that the dependency is always there and we have to supply the jar which contains it.</p></li>
+</ul></li>
+
+<li><p><strong>systemPath</strong><br />
+This element is used only if the dependency scope is <em>system</em>.
+The value of the element should be the absolute path to the jar containing this dependency.</p></li>
+
+<li><p><strong>optional</strong><br />
+With the optional element, we mark dependencies that are not necessary.
+This is used in specific cases when our project is used as a dependency on another project and our project is dependent on some other project to compile some code that is not used at runtime.
+Then we can mark the project we are depending on as optional since the project that depends on our project does not need it.</p></li>
+
+<li><p><strong>exclusions</strong><br />
+With this element, we tell Maven we do not want to include this specific transitive dependency in our project.
+We could also remove all transitive dependencies by putting the wildcard character (*) in both the groupId and artifactId.</p></li>
+</ul>
+
+<p>A complete dependency example looks like this:</p>
+
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;...&lt;/groupId&gt;
+      &lt;artifactId&gt;...&lt;/artifactId&gt;
+      &lt;version&gt;...&lt;/version&gt;
+      &lt;type&gt;...&lt;/type&gt;
+      &lt;scope&gt;...&lt;/scope&gt;
+      &lt;classifier&gt;...&lt;/classifier&gt;
+      &lt;optional&gt;...&lt;/optional&gt;
+      &lt;systemPath&gt;...&lt;/systemPath&gt;
+      &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;...&lt;/groupId&gt;
+            &lt;artifactId&gt;...&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+      &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+    ...
+
+&lt;/dependencies&gt;
+</code></pre>
+
+<h1 id="properties">Properties</h1>
+
+<p>One final thing we are going to look at in this post are the Maven properties.<br />
+We can add a <em>properties</em> field to the POM file where we can define all the properties in one place and reuse them in other places in the same POM or the child POM files.<br />
+To access a property we listed in the <em>properties</em> field we can use the notation <strong>${<em>PROPERTY_NAME</em>}</strong>.<br />
+For example, if we define a property like this:</p>
+
+<pre><code>&lt;properties&gt;
+    &lt;deflection-utils.version&gt;1.0.2&lt;/deflection-utils.version&gt;
+&lt;/properties&gt;
+</code></pre>
+
+<p>We can reuse it in the dependencies list like so:</p>
+
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+            &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+            &lt;artifactId&gt;utils-collections&lt;/artifactId&gt;
+            &lt;version&gt;${deflection-utils.version}&lt;/version&gt;
+    &lt;/dependency&gt;       
+    &lt;dependency&gt;
+            &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+            &lt;artifactId&gt;utils-io&lt;/artifactId&gt;
+            &lt;version&gt;${deflection-utils.version}&lt;/version&gt;
+    &lt;/dependency&gt;   
+&lt;/dependencies&gt;
+</code></pre>
+
+<p>And then later, when we want to upgrade to a newer version of utils, we just update the property value and all the new dependencies will be used.</p>
+
+<p>There are also four other groups of properties we can access in the POM files and they are accessed by using a prefix in the notation.
+The groups are:</p>
+
+<ul>
+<li><p><strong>Environment</strong><br />
+Environment properties are accessible under the prefix <em>env</em>; e.g. <em>${env.PATH}</em>.</p></li>
+
+<li><p><strong>Project</strong><br />
+Project properties are accessible under the prefix <em>project</em>; e.g. <em>${project.version}</em>.</p></li>
+
+<li><p><strong>Settings</strong><br />
+Properties that are defined in a <em>settings.xml</em> file are accessible with the prefix <em>settings</em>; e.g. <em>${settings.localRepository}</em>.</p></li>
+
+<li><p><strong>Java</strong><br />
+Java specific properties are accessible with the prefix <em>java</em>; e.g. <em>${java.home}</em>.</p></li>
+</ul>
+
+<h1 id="example">Example</h1>
+
+<p>Now that we learned some of the basics of Maven, let us put it all together and look at a POM file of a simple example project.
+The POM file that we are using for our example project is:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+    &lt;artifactId&gt;simple-maven-example&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;properties&gt;        
+        &lt;apache.commons.lang3.version&gt;3.9&lt;/apache.commons.lang3.version&gt;
+        &lt;junit.version&gt;4.11&lt;/junit.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;${junit.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+            &lt;version&gt;${apache.commons.lang3.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>This is almost the simplest project setup we might see.
+We have the mandatory trio to identify the project - groupId, artifactId and version, together with the packaging which specifies that we want to build a jar file.
+Then we have a couple of properties, that are used later in the dependencies to set the versions of the dependencies.<br />
+Our POM file relies a lot on the super POM to provide the default settings.<br />
+For example some of the settings in the super POM that we are counting on are:</p>
+
+<ul>
+<li><strong>Maven central repository</strong><br />
+The maven central repository is used to search for the listed dependencies</li>
+<li><strong>Output location for build things</strong><br />
+Everything is built into the <em>target</em> folder in the project root folder</li>
+<li><strong>Output location for compiled class files</strong><br />
+All the classes are compiled into the <em>classes</em> folder in the <em>target</em> folder</li>
+<li><strong>Final artifact build name</strong><br />
+The final build artifact name is used by joing the artifactId and version fields together with a <em>-</em> between them.</li>
+</ul>
+
+<p>The part of the super POM that defines this is</p>
+
+<pre><code>&lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;central&lt;/id&gt;
+      &lt;name&gt;Central Repository&lt;/name&gt;
+      &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt;
+      &lt;layout&gt;default&lt;/layout&gt;
+      &lt;snapshots&gt;
+        &lt;enabled&gt;false&lt;/enabled&gt;
+      &lt;/snapshots&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+
+    ...
+
+    &lt;build&gt;
+        &lt;directory&gt;${project.basedir}/target&lt;/directory&gt;
+        &lt;outputDirectory&gt;${project.build.directory}/classes&lt;/outputDirectory&gt;
+        &lt;finalName&gt;${project.artifactId}-${project.version}&lt;/finalName&gt;
+        ...
+    &lt;/build&gt;
+
+    ...
+&lt;/project&gt;
+</code></pre>
+
+<p>These are just some of the settings in the super POM that we are relying on and there are more, so make sure to check the super POM in your Maven version to see what is defined there
+and to get a better understanding to why Maven does things a particular way.</p>
+
+<p>As always, the full project is on <a href="https://github.com/HerickoMatija/devflection-maven/tree/master/simple-maven-example">GitHub</a>.</p>
+
+<hr />
+
+<p><em>This is it for our Maven basics post.<br />
+Thank you for reading through, I hope you found it useful and be sure to check out the next post, where we will dive deeper into the more complex configurations possible with Maven.</em></p>
+
+<hr />
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/maven/">maven</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2019-05-14-classloaders/" data-toggle="tooltip" data-placement="top" title="Classloaders in Java">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/MatijaHericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

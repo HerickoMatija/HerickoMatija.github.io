@@ -8,10 +8,20 @@
     <language>en-us</language>
     <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
     <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Thu, 16 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Apache Maven Part 1 - Introduction and basics</title>
+      <link>https://devflection.com/posts/2019-06-25-maven-part-1/</link>
+      <pubDate>Tue, 25 Jun 2019 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2019-06-25-maven-part-1/</guid>
+      <description>&lt;p&gt;This multi-post series will be looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
+In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Classloaders in Java</title>

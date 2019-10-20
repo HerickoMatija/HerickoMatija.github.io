@@ -19,10 +19,8 @@
       <pubDate>Sun, 20 Oct 2019 00:00:00 +0000</pubDate>
       <author>matija@devflection.com (Matija Heričko)</author>
       <guid>https://devflection.com/posts/2019-10-20-maven-part-2/</guid>
-      <description>This multi-post series is looking at Apache Maven. In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.
-This post is part of a series about Apache Maven.
-You can read part one - an introduction to Maven here.
-Introduction As mentioned in the first post, the idea of Maven was to solve the issue of different build results on different machines.</description>
+      <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
+In the second part, we will take a closer look at the build lifecycle and the workers in Maven - &lt;strong&gt;Maven Plugins&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     
     <item>

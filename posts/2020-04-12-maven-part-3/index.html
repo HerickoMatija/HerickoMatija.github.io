@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Apache Maven Part 3 - Inheritance, aggregation and multi-module projects - Devflection</title>
+  <meta property="og:title" content="Apache Maven Part 3 - Inheritance, aggregation and multi-module projects" />
+  <meta name="twitter:title" content="Apache Maven Part 3 - Inheritance, aggregation and multi-module …" />
+  <meta name="description" content="This multi-post series is looking at Apache Maven.
+In this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together
+to form multi-module Maven projects.">
+  <meta property="og:description" content="This multi-post series is looking at Apache Maven.
+In this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together
+to form multi-module Maven projects.">
+  <meta name="twitter:description" content="This multi-post series is looking at Apache Maven.
+In this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together
+to form multi-module Maven …">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2020-04-12-maven-part-3\/",
+          "name": "Apache maven part 3 inheritance, aggregation and multi module projects"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Apache Maven Part 3 - Inheritance, aggregation and multi-module projects",
+  "description" : "This multi-post series is looking at Apache Maven.\nIn this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together to form multi-module Maven projects.\n",
+  "inLanguage" : "en",
+  "wordCount":  2087 ,
+  "datePublished" : "2020-04-12T00:00:00",
+  "dateModified" : "2020-04-12T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "java, maven" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2020-04-12-maven-part-3\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Apache Maven Part 3 - Inheritance, aggregation and multi-module projects" />
+<meta property="og:description" content="This multi-post series is looking at Apache Maven.
+In this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together
+to form multi-module Maven projects.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2020-04-12-maven-part-3/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+  <meta name="twitter:title" content="Apache Maven Part 3 - Inheritance, aggregation and multi-module …" />
+  <meta name="twitter:description" content="This multi-post series is looking at Apache Maven.
+In this third part, we will have a look at inheritance and aggregation in Maven and how everything comes together
+to form multi-module Maven …">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta property="og:url" content="https://devflection.com/posts/2020-04-12-maven-part-3/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Devflection" />
+
+  <meta name="generator" content="Hugo 0.55.4" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Apache Maven Part 3 - Inheritance, aggregation and multi-module projects</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 12, 2020
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;10&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2087&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>This multi-post series is looking at <strong>Apache Maven</strong>.<br />
+In this third part, we will have a look at <strong>inheritance</strong> and <strong>aggregation</strong> in Maven and how everything comes together
+to form multi-module Maven projects.</p>
+
+<hr />
+
+<p><em>This post is part of a series about Apache Maven.<br />
+You can read part one - an introduction to Maven <a href="https://devflection.com/posts/2019-06-25-maven-part-1/">here</a>.<br />
+You can read part two - Maven plugins <a href="https://devflection.com/posts/2019-10-20-maven-part-2/">here</a>.</em></p>
+
+<hr />
+
+<h1 id="introduction">Introduction</h1>
+
+<p>So far in this series, we have been exploring Maven in the context of a single project that has one POM file.
+This is great to get to know the basic Maven functionalities,
+however, real-world projects are usually actually multiple projects working together.<br />
+To support this, Maven comes with two features we can use - <strong>inheritance</strong> and <strong>aggregation</strong>.</p>
+
+<h2 id="inheritance">Inheritance</h2>
+
+<p><strong>Inheritance</strong> is a concept that should be familiar to most programmers and it works as expected in Maven.<br />
+To inherit configuration from a parent project, we add the element <strong>parent</strong> to our child project POM.
+Inside the parent element, we have the trio of <em>groupId</em>, <em>artifactId</em> and <em>version</em>, that uniquely identify the parent project.<br />
+The last element (<em>relativePath</em>) is optional, and it signals Maven to first search for the parent project
+in the relative directory that we specify before searching in the local and remote repositories.</p>
+
+<p>An example of a child project POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;!-- Here we define the parent --&gt;
+    &lt;parent&gt;
+        &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-parent-project&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+        &lt;!-- This is optional --&gt;
+        &lt;relativePath&gt;../maven-parent-project&lt;/relativePath&gt;
+    &lt;/parent&gt;
+
+    &lt;artifactId&gt;maven-inheritance-example&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>Once we add the parent element to our project, it inherits most of the configuration that is done in the parent POM.
+In our simple example, we see that since we inherit the groupId and version,
+we only need to add the artifactId and packaging elements and we have a working POM file.<br />
+We also inherit most of the other configurations that are done in the parent POM.
+The only configuration that is <strong>not</strong> inherited are the <strong>artifactId</strong>, <strong>name</strong> and <strong>prerequisites</strong> elements.</p>
+
+<p>On the other side, we have the parent project, where the only thing that we have to set is the packaging,
+which has to have the value <strong>pom</strong>.</p>
+
+<p>An example of a parent project POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-parent-project&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;!-- This needs to be set for parent and aggregator projects --&gt;
+    &lt;packaging&gt;pom&lt;/packaging&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>Another example of inheritance in Maven, which we already mentioned in part 1, is the <strong>super POM</strong>.
+We talked about how every Maven project is inheriting from this project and it contains a lot of default configurations.<br />
+And since every project is inheriting all the configuration from the super POM, we need to add very little configuration
+to have a running basic default build process managed by Maven.</p>
+
+<h2 id="dependency-management-and-plugin-management">Dependency management and plugin management</h2>
+
+<p>Two things that deserve a special mention when talking about inheritance in Maven are dependency management and plugin management.<br />
+The idea behind them is simple.
+It allows us to configure default values for dependencies and plugins in the parent project POM
+and then we can just reference the configurations in the child project POMs and overwrite some parts of it if needed.</p>
+
+<p><strong>Dependency management</strong> allows us to configure the dependencies and their versions in the parent project POM.
+This makes managing versions easier since we need to change the versions once in the parent project and
+it applies to all our child projects that are referencing this dependency.</p>
+
+<p>And the same goes for <strong>plugin management</strong>.
+We define the plugin configuration in the parent project POM and then we just reference the plugin in the child project POMs
+and we overwrite the values we need to change.
+Again the benefit is that we can avoid duplicated configurations that are prone to be missed when changes are done.</p>
+
+<p>Here is an example parent project POM which has the dependencyManagement and pluginManagement configuration:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-parent-project&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;pom&lt;/packaging&gt;
+
+    &lt;dependencyManagement&gt;        
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;junit&lt;/groupId&gt;
+                &lt;artifactId&gt;junit&lt;/artifactId&gt;
+                &lt;version&gt;4.11&lt;/version&gt;
+                &lt;scope&gt;test&lt;/scope&gt;
+            &lt;/dependency&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+                &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+                &lt;version&gt;3.9&lt;/version&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/&lt;dependencyManagement&gt;&gt;
+
+    &lt;build&gt;
+        &lt;pluginManagement&gt;
+            &lt;plugins&gt;
+                &lt;plugin&gt;
+                    &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+                    &lt;version&gt;1.8&lt;/version&gt;
+                    &lt;executions&gt;
+                        &lt;execution&gt;
+                            &lt;phase&gt;clean&lt;/phase&gt;
+                            &lt;configuration&gt;
+                                &lt;target&gt;
+                                    &lt;echo&gt;Hello world from the antrun plugin!&lt;/echo&gt;
+                                &lt;/target&gt;
+                            &lt;/configuration&gt;
+                            &lt;goals&gt;
+                                &lt;goal&gt;run&lt;/goal&gt;
+                            &lt;/goals&gt;
+                        &lt;/execution&gt;
+                    &lt;/executions&gt;
+                &lt;/plugin&gt;
+            &lt;/plugins&gt;
+        &lt;pluginManagement&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>In this POM, we configured the dependencies and the plugin, but they are not used on every child project by default.
+The child projects still need to reference the dependency or plugin if they want to use/execute it.<br />
+The way to reference them is to just add them to the dependency or plugin element, but we need only the name of the
+dependency or plugin, since everything else is configured in the parent POM.</p>
+
+<p>An example of the child POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-parent-project&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+
+    &lt;artifactId&gt;maven-child-project&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;                    
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>We can see that we can omit the version and scope in the dependencies since it is taken from the parent project and
+in the plugin, we just configure the name of the plugin we want to run.</p>
+
+<blockquote>
+<p>If we are using dependency management, we might encounter some issues with transitive dependencies.
+An example of this might be that our project has a dependency to apache-commons library version 3.7, and we also have
+another dependency to a library, that has a dependency to apache-commons library version 3.9.
+So we are transitively depending on apache-commons version 3.9.
+But since our dependency management overrides and forces the second dependency to use an older version of apache-commons,
+we might have some failure.</p>
+</blockquote>
+
+<h2 id="aggregation">Aggregation</h2>
+
+<p>The second concept is <strong>aggregation</strong>, which allows us to execute a Maven command against the aggregator project and
+the same command then gets propagated to the modules below that are specified in the aggregator project in the <strong>module</strong> element.<br />
+Same as it was for the parent project, an aggregator project also has to have the packaging of the project set to <em>pom</em>.</p>
+
+<p>An example aggregator project POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-aggregator-project&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;pom&lt;/packaging&gt;
+
+      &lt;modules&gt;
+        &lt;module&gt;my-first-module&lt;/module&gt;
+        &lt;module&gt;my-second-module&lt;/module&gt;
+    &lt;/modules&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>If we run <strong>mvn package</strong> against the aggregator project, it will propagate the same command to <em>my-first-module</em> and
+<em>my-second-module</em>.<br />
+An important point is that the order of how the modules appear in the POM does not matter
+because Maven will figure out the dependencies between them and build them in the correct order based on that.</p>
+
+<p>So if in our example, the project <em>my-first-module</em> depends on the project <em>my-second-module</em>, Maven will first run the
+command against project <em>my-second-module</em> and then against the project <em>my-first-module</em>, which is the opposite order
+of how we wrote them in the modules element.</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>We can see that <strong>inheritance</strong> is useful when we have some base configuration that is shared across multiple projects.
+We can extract the configuration to a parent project and have all of the child projects inherit from the parent.
+This makes configuration easier to manage since we only need to make changes on one file (the parent POM),
+and it also simplifies the child project POM files.</p>
+
+<p>On the other hand <strong>aggregation</strong> is useful when we have multiple projects that are somehow linked
+(maybe they depend on each other or they form a logical unit together) and it makes sense for them to all be built together.</p>
+
+<p>A lot of real-world projects often use both concepts in the same project.<br />
+This means that the same root project is both a parent and an aggregator.
+So what we have is a parent aggregator project that contains the shared configuration of all the child projects
+and also lists all the child projects as modules.
+Then we can execute a Maven command against this root aggregator project and the Maven command is forwarded to all the
+child projects that are specified as modules.</p>
+
+<p>The benefit of this approach is that we can separate our big project into multiple smaller modules, which are still built
+together by executing a single Maven command against the root aggregator project.</p>
+
+<h1 id="example">Example</h1>
+
+<p>For our example, we will pretend we are working for a bank that specializes in calculating mortgages.<br />
+We will create a monorepo that will contain all of our separate projects for different parts.
+The project structure will look like:</p>
+
+<pre><code>&gt;devflection-bank
+    &gt;devflection-bank-core
+    &gt;devflection-bank-desktop
+    &gt;devflection-bank-web
+</code></pre>
+
+<p>The root project <em>devflection-bank</em> will be a parent and aggregator project.
+The core module will contain our business logic (i.e. calculating mortgages),
+the desktop module will contain the desktop app GUI code and
+the web-app module will contain the web application code.
+Both of the app modules will depend on the core module.</p>
+
+<p>Let us have a look at the POMs and we will note down the important parts for this article.</p>
+
+<h3 id="parent-pom">Parent POM</h3>
+
+<p>The parent POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+    &lt;artifactId&gt;devflection-bank&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;pom&lt;/packaging&gt;
+
+    &lt;modules&gt;
+        &lt;module&gt;devflection-bank-core&lt;/module&gt;
+        &lt;module&gt;devflection-bank-desktop&lt;/module&gt;
+        &lt;module&gt;devflection-bank-web&lt;/module&gt;
+    &lt;/modules&gt;
+
+    &lt;properties&gt;        
+        &lt;apache.commons.lang3.version&gt;3.9&lt;/apache.commons.lang3.version&gt;
+        &lt;junit.version&gt;4.11&lt;/junit.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;junit&lt;/groupId&gt;
+                &lt;artifactId&gt;junit&lt;/artifactId&gt;
+                &lt;version&gt;${junit.version}&lt;/version&gt;
+                &lt;scope&gt;test&lt;/scope&gt;
+            &lt;/dependency&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+                &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+                &lt;version&gt;${apache.commons.lang3.version}&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+                &lt;artifactId&gt;devflection-bank-core&lt;/artifactId&gt;
+                &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+
+    &lt;build&gt;
+        &lt;pluginManagement&gt;
+            &lt;plugins&gt;
+                &lt;plugin&gt;
+                    &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+                    &lt;version&gt;1.8&lt;/version&gt;
+                    &lt;executions&gt;
+                        &lt;execution&gt;
+                            &lt;phase&gt;clean&lt;/phase&gt;
+                            &lt;configuration&gt;
+                                &lt;target&gt;
+                                    &lt;echo&gt;Hello from the antrun plugin!&lt;/echo&gt;
+                                &lt;/target&gt;
+                            &lt;/configuration&gt;
+                            &lt;goals&gt;
+                                &lt;goal&gt;run&lt;/goal&gt;
+                            &lt;/goals&gt;
+                        &lt;/execution&gt;
+                    &lt;/executions&gt;
+                &lt;/plugin&gt;
+            &lt;/plugins&gt;
+        &lt;/pluginManagement&gt;
+    &lt;/build&gt;    
+
+&lt;/project&gt;
+</code></pre>
+
+<p>The important parts for this example are:</p>
+
+<ul>
+<li>Packaging type is set to POM</li>
+<li>All three child projects are listed as modules</li>
+<li>Dependency management specifies the versions for the shared dependencies (Apache commons, JUnit and our core module)</li>
+<li>Plugin management configures an example maven-antrun-plugin with some defaults</li>
+</ul>
+
+<h3 id="core-module-pom">Core module POM</h3>
+
+<p>Next, lets look at the core module POM:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+        &lt;artifactId&gt;devflection-bank&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+
+    &lt;artifactId&gt;devflection-bank-core&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!-- This is the plugin we configured in the parent and is reused by all modules --&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;configuration&gt;
+                            &lt;target&gt;
+                                &lt;echo&gt;Hello from devflection-bank-core!&lt;/echo&gt;
+                            &lt;/target&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>Here the important points are:</p>
+
+<ul>
+<li>We defined the parent project</li>
+<li>We defined the dependencies (JUnit and Apache commons), but without the version, since this is managed by the parent</li>
+<li>We defined the example plugin, but we only have to define the name and the things we want to override (in this case we want to change the actual message)</li>
+</ul>
+
+<h3 id="dekstop-app-pom">Dekstop app POM</h3>
+
+<p>Next up is the desktop module:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+        &lt;artifactId&gt;devflection-bank&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+
+    &lt;artifactId&gt;devflection-bank-desktop&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+            &lt;artifactId&gt;devflection-bank-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!-- This plugin is used to create an executable jar file for the desktop app--&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;single&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+                &lt;configuration&gt;
+                    &lt;archive&gt;
+                        &lt;manifest&gt;
+                            &lt;mainClass&gt;com.devflection.bank.desktop.DevflectionBankGUI&lt;/mainClass&gt;
+                        &lt;/manifest&gt;
+                    &lt;/archive&gt;
+                    &lt;descriptorRefs&gt;
+                        &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                    &lt;/descriptorRefs&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;!-- This is the plugin we configured in the parent and is reused by all modules --&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+
+<p>For the desktop app, the important points are:</p>
+
+<ul>
+<li>We defined the parent</li>
+<li>We defined the dependencies (here we also depend on the core module) without versions since they are managed by the parent</li>
+<li>We reference the example plugin that is in the parent, except here we are not overriding anything</li>
+</ul>
+
+<h3 id="webapp-pom">Webapp POM</h3>
+
+<p>And finally we have our webapp:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+        &lt;artifactId&gt;devflection-bank&lt;/artifactId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+
+    &lt;artifactId&gt;devflection-bank-web&lt;/artifactId&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;
+                &lt;version&gt;2.2.6.RELEASE&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+            &lt;artifactId&gt;devflection-bank-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+            &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;!-- This plugin is used to package the Spring Boot application into an executable jar file --&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;mainClass&gt;com.devflection.DevflectionBankWebapp&lt;/mainClass&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;repackage&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;!-- This is the plugin we are overriding from the parent POM --&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;configuration&gt;
+                            &lt;target&gt;
+                                &lt;echo&gt;Hello from devflection-bank-webapp!&lt;/echo&gt;
+                            &lt;/target&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+
+&lt;/project&gt;
+</code></pre>
+
+<p>The important points here are:</p>
+
+<ul>
+<li>We defined the parent</li>
+<li>Dependency management is defined so we can inherit the version for Spring. More about this <a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies">here</a></li>
+<li>We defined the dependencies without versions</li>
+<li>We defined the example plugin as well and overrode the message here as well</li>
+</ul>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>I hope this article brought some more clarity to the Maven inheritance and aggregation concepts and that we illustrated
+some benefits of using dependency and plugin management from the parent.</p>
+
+<p>As always, the full project is on <a href="https://github.com/HerickoMatija/devflection-maven/tree/master/maven-inheritance-aggregation-example">GitHub</a>.</p>
+
+<hr />
+
+<p><em>This is it for our Maven inheritance and aggregation post.<br />
+Thank you for reading through, I hope you found this article and the whole series on Maven useful.</em></p>
+
+<hr />
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/maven/">maven</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2019-10-20-maven-part-2/" data-toggle="tooltip" data-placement="top" title="Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/MatijaHericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2020
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

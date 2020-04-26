@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Devflection</title>
+    <link>https://devflection.com/tags/python/</link>
+    <description>Recent content in python on Devflection</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
+    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
+    <lastBuildDate>Sun, 26 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://devflection.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Learning python: My Sudoku game - Pydoku</title>
+      <link>https://devflection.com/posts/2020-04-26-python-sudoku/</link>
+      <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2020-04-26-python-sudoku/</guid>
+      <description>&lt;p&gt;This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

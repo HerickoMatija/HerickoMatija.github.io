@@ -4,25 +4,42 @@
   
   <url>
     <loc>https://devflection.com/</loc>
-    <lastmod>2020-04-12T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://devflection.com/posts/</loc>
-    <lastmod>2020-04-12T00:00:00+00:00</lastmod>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devflection.com/posts/2020-04-26-python-sudoku/</loc>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devflection.com/tags/</loc>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devflection.com/tags/pygame/</loc>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devflection.com/tags/python/</loc>
+    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://devflection.com/posts/2020-04-12-maven-part-3/</loc>
     <lastmod>2020-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devflection.com/tags/</loc>
-    <lastmod>2020-04-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

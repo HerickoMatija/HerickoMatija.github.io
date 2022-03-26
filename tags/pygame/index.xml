@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pygame on Devflection</title>
@@ -8,11 +8,7 @@
     <language>en-us</language>
     <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
     <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Sun, 26 Apr 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devflection.com/tags/pygame/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 26 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/pygame/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learning python: My Sudoku game - Pydoku</title>
       <link>https://devflection.com/posts/2020-04-26-python-sudoku/</link>

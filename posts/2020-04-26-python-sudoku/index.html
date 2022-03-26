@@ -8,11 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <title>Learning python: My Sudoku game - Pydoku - Devflection</title>
-  <meta property="og:title" content="Learning python: My Sudoku game - Pydoku" />
-  <meta name="twitter:title" content="Learning python: My Sudoku game - Pydoku" />
   <meta name="description" content="This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.">
-  <meta property="og:description" content="This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.">
-  <meta name="twitter:description" content="This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.">
   <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -63,7 +59,7 @@
   "headline": "Learning python: My Sudoku game - Pydoku",
   "description" : "This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.\n",
   "inLanguage" : "en",
-  "wordCount":  2794 ,
+  "wordCount":  2796 ,
   "datePublished" : "2020-04-26T00:00:00",
   "dateModified" : "2020-04-26T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -88,22 +84,14 @@
 <meta property="og:url" content="https://devflection.com/posts/2020-04-26-python-sudoku/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Devflection" />
+
   <meta name="twitter:title" content="Learning python: My Sudoku game - Pydoku" />
   <meta name="twitter:description" content="This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.">
   <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@Devflection" />
   <meta name="twitter:creator" content="@Devflection" />
-  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
-  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@Devflection" />
-  <meta name="twitter:creator" content="@Devflection" />
-  <meta property="og:url" content="https://devflection.com/posts/2020-04-26-python-sudoku/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Devflection" />
-
-  <meta name="generator" content="Hugo 0.55.4" />
+  <meta name="generator" content="Hugo 0.96.0" />
   <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -263,10 +251,12 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;14&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2794&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2796&nbsp;words
   
   
-    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
   
   
 </span>
@@ -287,77 +277,64 @@ if (!doNotTrack) {
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
         <p>This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.</p>
-
 <h1 id="introduction">Introduction</h1>
-
-<p>At my job we recently got a project handed to us that is written in Python.<br />
+<p>At my job we recently got a project handed to us that is written in Python.<br>
 This means there might be some Python programming in my future, so I decided to have a better look at the language.
-And after some initial reading and trying things out, I decided to do a small project.<br />
+And after some initial reading and trying things out, I decided to do a small project.<br>
 The project is a graphical Sudoku game, which can also visualize a backtracking algorithm that solves the Sudoku puzzle.
-And in this post, I will go over most of the source code that is on <a href="https://github.com/HerickoMatija/pydoku">GitHub</a>.</p>
-
+And in this post, I will go over most of the source code that is on [GitHub] (<a href="https://github.com/HerickoMatija/pydoku)">https://github.com/HerickoMatija/pydoku)</a>.</p>
 <h1 id="gameplan">Gameplan</h1>
-
 <p>To start let us define the goals that I set:</p>
-
 <ol>
 <li>Implement an algorithm that can solve a Sudoku puzzle</li>
 <li>Create a graphical playable Sudoku game</li>
 <li>Visualize how the Sudoku solver algorithm works</li>
 </ol>
-
 <p>To achieve these goals, the steps I took were:</p>
-
 <ol>
 <li>Implemented a Sudoku solver algorithm</li>
 <li>Implemented a GUI that allows the user to play Sudoku</li>
 <li>Merged the Sudoku solver into the GUI and added the visualization</li>
 </ol>
-
 <h1 id="sudoku-solver-algorithm">Sudoku solver algorithm</h1>
-
 <h2 id="concept">Concept</h2>
-
-<p>The first step was to implement an algorithm that could solve any Sudoku puzzle.<br />
+<p>The first step was to implement an algorithm that could solve any Sudoku puzzle.<br>
 The idea for the algorithm is that we go through the board and try filling empty cells with one of the possible numbers
-until we find a combination that correctly solves the board.<br />
+until we find a combination that correctly solves the board.<br>
 Put in a more structured way, we have an algorithm that:</p>
-
 <ol>
 <li>Finds the next empty cell
-
 <ul>
 <li>if there is no empty cell, we are done with the puzzle</li>
-</ul></li>
+</ul>
+</li>
 <li>Finds a candidate number that is valid in this cell
-
 <ul>
 <li>if there is no valid number go back to the previous empty cell and try the next candidate number</li>
-</ul></li>
+</ul>
+</li>
 <li>Sets the candidate number in the cell</li>
 <li>Continues again with the first step</li>
 </ol>
-
 <h2 id="implementation">Implementation</h2>
-
 <p>The logic of the algorithm is not that hard, the tricky part is to keep track of the previously visited cells.
 I decided to use the call stack to keep track of the previous cells.
 So I implemented a method that gets called recursively.
 My method gets called for every cell in the board, so the method is split into two logical parts based on the value:</p>
-
 <ol>
-<li><p><em>The value is already there (there is a value between 1 and 9)</em><br />
+<li>
+<p><em>The value is already there (there is a value between 1 and 9)</em><br>
 In this case, we simply forward the call and return the result.
-Or we return True if we are at the last cell</p></li>
-
-<li><p><em>The value is not there yet (the value is 0)</em><br />
+Or we return True if we are at the last cell</p>
+</li>
+<li>
+<p><em>The value is not there yet (the value is 0)</em><br>
 In this case, we try to find the next candidate number for this cell that is valid.
 If we find a candidate, we set the number and continue with the next cell.
-If no number is a candidate, we reset the cell and return False.</p></li>
+If no number is a candidate, we reset the cell and return False.</p>
+</li>
 </ol>
-
 <p>The full method to solve the Sudoku looks like:</p>
-
 <pre><code>def solveSudokuHelper(board, rowIdx, columnIdx):
     lastColumnIdx = len(board[rowIdx]) - 1
     lastRowIdx = len(board) - 1
@@ -391,26 +368,20 @@ If no number is a candidate, we reset the cell and return False.</p></li>
 
     return False
 </code></pre>
-
 <p>We can see that it takes three parameters:</p>
-
 <ul>
 <li><strong>board</strong> - the 9x9 matrix that represents the Sudoku puzzle</li>
 <li><strong>rowIdx</strong> - the 0-based row index</li>
 <li><strong>columnIdx</strong> - the 0-based column index</li>
 </ul>
-
-<p>The indexes tell us at which cell we want to look at in this call, and we are solving the puzzle from left to right and from top to bottom.<br />
+<p>The indexes tell us at which cell we want to look at in this call, and we are solving the puzzle from left to right and from top to bottom.<br>
 So we start the solving by calling <strong>solveSudokuHelper(board, 0, 0)</strong>, which is wrapped in a convenience method.</p>
-
 <pre><code>def solveSudoku(board):
     solveSudokuHelper(board, 0, 0)
 </code></pre>
-
 <p>The second thing that we need is the logic that checks if the candidate number is valid in the current cell.
-Sudoku rules say that a number is valid if the same number does not appear in the same row, column, or 3x3 square.<br />
+Sudoku rules say that a number is valid if the same number does not appear in the same row, column, or 3x3 square.<br>
 So the method to check validity does exactly that:</p>
-
 <pre><code>def isValid(number, rowIdx, columnIdx, board):
     for idx in range(9):
         if board[idx][columnIdx] == number and idx != rowIdx:
@@ -431,26 +402,20 @@ So the method to check validity does exactly that:</p>
 
     return True
 </code></pre>
-
 <p>The rest of the <em>pydoku.py</em> script creates a board, triggers the solving, and then checks that the result is valid.
 If we run the script we see that we have a working Sudoku solver algorithm and we can continue with the GUI version.</p>
-
 <h1 id="sudoku-game-with-a-gui">Sudoku game with a GUI</h1>
-
 <p>Next up, I implemented a GUI playable Sudoku puzzle.
-For the GUI version, I decided to group things into a class called <em>PydokuGUI</em>.<br />
+For the GUI version, I decided to group things into a class called <em>PydokuGUI</em>.<br>
 The class contains:</p>
-
 <ul>
 <li>the Sudoku board</li>
 <li>methods to handle user input</li>
 <li>methods to draw the Sudoku puzzle onto the screen</li>
-<li>some helper constants that are used (the width, the colors and the cell centers)<br /></li>
+<li>some helper constants that are used (the width, the colors and the cell centers)</li>
 </ul>
-
 <p>The class definition starts with some class constants and the constructor initializes three instance variables.
 The three variables are <strong>the screen</strong> on which we draw, <strong>the board</strong>, and <strong>the selected cell</strong>.</p>
-
 <pre><code>class PydokuGUI:
 
     # colors that are used
@@ -474,10 +439,8 @@ The three variables are <strong>the screen</strong> on which we draw, <strong>th
 
     ... more methods ...
 </code></pre>
-
 <p>Since we want to visualize the cells, we need some extra information for each cell, not just the number.
 To support this I created a second class called <em>PydokuCell</em>:</p>
-
 <pre><code>class PydokuCell:
 
     def __init__(self, number):
@@ -486,20 +449,16 @@ To support this I created a second class called <em>PydokuCell</em>:</p>
         self.valid = True
         self.selected = False
 </code></pre>
-
 <p>The variables should be pretty self-explanatory:</p>
-
 <ul>
 <li><em>number</em> - the actual number in this cell</li>
 <li><em>editable</em> - if the user can alter the number</li>
 <li><em>valid</em> - if the number in this cell is valid</li>
 <li><em>selected</em> - if the current cell is selected</li>
 </ul>
-
 <p>This means that the instance variable <strong>board</strong> in the class <em>SudokuGUI</em> is a matrix of <em>PydokuCell</em> instances.
 At the moment we only have one Sudoku puzzle hardcoded, but it is abstracted behind the <strong>getBoard</strong> method,
 which could be changed and extended in the future.</p>
-
 <pre><code>def getBoard(self):
     return [
         [
@@ -549,30 +508,24 @@ which could be changed and extended in the future.</p>
         ]
     ]
 </code></pre>
-
 <p>Once we have the board, we need methods that visualize it to the screen.
 In the constructor, we initialized a screen with a hardcoded width and height and saved it into the instance variable <strong>screen</strong>.
 We will render everything onto this display by calling the method <strong>drawBoard</strong>, that:</p>
-
 <ol>
 <li>Validates the board - marks valid and invalid cells</li>
 <li>Draws the lines</li>
 <li>Draws the cells - numbers plus borders if needed</li>
 <li>Refreshes the display</li>
 </ol>
-
 <p>All of the steps are just method calls to other, more specific methods.</p>
-
 <pre><code>def drawBoard(self):
     self.validateBoard()
     self.drawLines()        
     self.drawNumbers()
     pygame.display.flip()
 </code></pre>
-
 <p>To validate the board, the method goes over every cell on the board and checks if it is valid.
 For this, we reused the <strong>isValid</strong> method from the text-based solver, which checks the row, the column, and the 3x3 square.</p>
-
 <pre><code>def validateBoard(self):
     for rowIdx in range(9):
         for columnIdx in range(9):
@@ -583,17 +536,13 @@ For this, we reused the <strong>isValid</strong> method from the text-based solv
             else:
                 cell.valid = self.isValid(cell.number, rowIdx, columnIdx)
 </code></pre>
-
 <p>For this first version, I took a shortcut and hardcoded the widths/heights.
 The general idea was to have cells with a width of 39 pixels, 1 pixel wide thin lines, and 3 pixel wide thick lines.
 That is what the display constant calculation at the start of the class sums up:</p>
-
 <pre><code>WIDTH = 9 * 39 + 6 * 1 + 2 * 3
 </code></pre>
-
 <p>The <strong>drawLines</strong> method draws horizontal and vertical lines every 40 pixels,
 and makes the third line and the sixth line thicker by actually drawing three lines in a row.</p>
-
 <pre><code>def drawLines(self):
     self.screen.fill(self.COLOR_WHITE)
 
@@ -612,34 +561,28 @@ and makes the third line and the sixth line thicker by actually drawing three li
 
         x += 40
 </code></pre>
-
 <p>The <strong>drawLine</strong> is a convenience wrapper around the pygame draw line method.</p>
-
 <pre><code>def drawLine(self, startPoint, endPoint, color):
     pygame.draw.line(self.screen, color, startPoint, endPoint)
 </code></pre>
-
 <p>Next, we need to render the numbers.
-That is done by calling <strong>drawNumbers</strong>.<br />
+That is done by calling <strong>drawNumbers</strong>.<br>
 This method goes over the whole board and</p>
-
 <ol>
-<li>Draws the number<br />
-
+<li>Draws the number
 <ul>
 <li>user inputs are grey</li>
 <li>starting numbers are black</li>
-</ul></li>
+</ul>
+</li>
 <li>Colors the cell border
-
 <ul>
 <li>invalid cells are red</li>
-<li>the selected cell is light blue<br /></li>
-</ul></li>
+<li>the selected cell is light blue</li>
+</ul>
+</li>
 </ol>
-
 <p>The method looks like:</p>
-
 <pre><code> def drawNumbers(self):
     for rowIdx in range(len(self.board)):
         for columnIdx in range(len(self.board[rowIdx])):
@@ -655,9 +598,7 @@ This method goes over the whole board and</p>
             elif cell.selected:
                 self.colorCellBorder(rowIdx, columnIdx, self.COLOR_BLUE)
 </code></pre>
-
 <p>The <strong>drawNumber</strong> and <strong>colorCellBorder</strong> methods center a text into a cell and draw lines over the border of the cell, respectively.</p>
-
 <pre><code>def drawNumber(self, number, rowIdx, columnIdx, color):
     text = font.render(str(number),
                        True,
@@ -693,13 +634,11 @@ def colorCellBorder(self, rowIdx, columnIdx, color):
                   (columnCenter + 20, rowCenter + 20),
                   color)
 </code></pre>
-
 <p>Once we visualized the board, we can start adding methods to support the gameplay.
 The third instance variable that we have, <em>selectedCell</em>, is meant to keep track of the currently selected cell on the
 board.
 So our <strong>setSelectedCell</strong> method is used to handle the mouse click on the board from the user.
 We figure out which cell was clicked by the user by checking the coordinates of the click and finding out which cell the coordinates belong to.</p>
-
 <pre><code>def setSelectedCell(self, mouseClickPosition):
     clickedColumnIdx = self.getCellFromCoord(mouseClickPosition[0])
     clickedRowIdx = self.getCellFromCoord(mouseClickPosition[1])
@@ -718,9 +657,7 @@ def getCellFromCoord(self, coordinate):
 
     return -1
 </code></pre>
-
 <p>Then we have methods that allow the user to set a number in the selected cell or delete it.</p>
-
 <pre><code>def setNumber(self, number):
     if self.selectedCell is None:
         return
@@ -736,9 +673,7 @@ def delete(self):
         return
     self.setNumber(0)
 </code></pre>
-
 <p>I also added a method that allows the user to move the selected cell around using the arrow keys.</p>
-
 <pre><code>def moveSelectedCell(self, rowMove, columnMove):
     if self.selectedCell is None:
         return
@@ -753,10 +688,8 @@ def delete(self):
         self.board[oldRowIdx][oldColumnIdx].selected = False
         self.board[newRowIdx][newColumnIdx].selected = True
 </code></pre>
-
 <p>With these methods, we can play the Sudoku game.
 The only thing missing is the main method which starts everything up and runs the event loop.</p>
-
 <pre><code>def main():
     pydoku = PydokuGUI()
     pydoku.drawBoard()
@@ -782,7 +715,7 @@ The only thing missing is the main method which starts everything up and runs th
                     pydoku.moveSelectedCell(0, 1)
                 elif event.key == pygame.K_LEFT:
                     pydoku.moveSelectedCell(0, -1)
-
+    
                 pydoku.drawBoard()
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
@@ -795,16 +728,12 @@ The only thing missing is the main method which starts everything up and runs th
 
     pygame.quit()
 </code></pre>
-
 <p>We can see the <strong>main</strong> method creates a new instance of the <em>PydokuGUI</em> class and then runs an infinite loop that
 checks the events and calls the appropriate method for each of them.
 We can start the whole app by running the <em>pydoku_gui.py</em> script.</p>
-
 <h1 id="visualizing-the-sudoku-solver-algorithm">Visualizing the Sudoku solver algorithm</h1>
-
 <p>The last step was to merge the Sudoku solver into the GUI version.
 What I needed to do was add another state to the <em>PydokuCell</em> that tells us which cell the algorithm is currently solving.</p>
-
 <pre><code>class PydokuCell:
 
     def __init__(self, number):
@@ -814,9 +743,7 @@ What I needed to do was add another state to the <em>PydokuCell</em> that tells 
         self.selected = False
         self.underConsideration = False
 </code></pre>
-
 <p>I also added an extra check in the method <strong>drawNumbers</strong> to draw a green cell border if the cell is currently under consideration.</p>
-
 <pre><code>def drawNumbers(self):
     for rowIdx in range(len(self.board)):
         for columnIdx in range(len(self.board[rowIdx])):
@@ -834,10 +761,8 @@ What I needed to do was add another state to the <em>PydokuCell</em> that tells 
             elif cell.selected:
                 self.colorCellBorder(rowIdx, columnIdx, self.COLOR_BLUE)
 </code></pre>
-
 <p>Then I added a check in the main event loop to respond to a SPACE key press,
 which calls the method to start solving the board.</p>
-
 <pre><code>if event.type == pygame.KEYDOWN:
     if event.key in ALLOWED_INPUTS:
         number = int(chr(event.key))
@@ -855,26 +780,20 @@ which calls the method to start solving the board.</p>
     elif event.key == pygame.K_SPACE:
         pydoku.solveSudoku()
 </code></pre>
-
 <p>The method to solve the sudoku resets the board and solves it, starting at the first cell and then working recursively.</p>
-
 <pre><code>def solveSudoku(self):
     self.board = self.getBoard()
     self.solveSudokuHelper(0, 0)
 </code></pre>
-
 <p>Finally, we have the methods to solve the sudoku from the text-based version - <strong>solveSudokuHelper</strong> and <strong>isValid</strong>.
 The method <strong>isValid</strong> is the same since it is used only to check for the same number, while
 <strong>solveSudokuHelper</strong> has a couple of additions:</p>
-
 <ol>
 <li>The method changes the <em>underConsideration</em> property of the cell that it is currently checking</li>
 <li>The method sleeps a bit in between so that the visualization is better visible</li>
-<li>The method calls drawBoard in between to render the changes onto the screen while it is working<br /></li>
+<li>The method calls drawBoard in between to render the changes onto the screen while it is working</li>
 </ol>
-
 <p>The full method looks like this:</p>
-
 <pre><code>def solveSudokuHelper(self, rowIdx, columnIdx):
     lastColumnIdx = len(self.board[rowIdx]) - 1
     lastRowIdx = len(self.board) - 1
@@ -923,13 +842,10 @@ The method <strong>isValid</strong> is the same since it is used only to check f
     currentCell.underConsideration = False
     return False
 </code></pre>
-
 <h1 id="conclusion">Conclusion</h1>
-
 <p>This was a nice little project to get to know Python better.
-It was cool to end up with something playable, but there are still quite some improvements that can be done as an exercise.<br />
+It was cool to end up with something playable, but there are still quite some improvements that can be done as an exercise.<br>
 Some ideas I left out because of time constraints were:</p>
-
 <ul>
 <li>Have the width and height as parameters in the constructor and dynamically calculate the cells/lines</li>
 <li>Extend the getBoard method to retrieve a random Sudoku board from some API</li>
@@ -937,15 +853,11 @@ Some ideas I left out because of time constraints were:</p>
 <li>Add some label to the screen to output messages to the user and use it to display some messages
 (like &lsquo;Congratulations you won!&rsquo; or some information that is accompanying the Sudoku solving)</li>
 </ul>
-
-<p>Again, this post just went over some parts of the source code for this project, the full project can be found on <a href="https://github.com/HerickoMatija/pydoku">GitHub</a>.</p>
-
-<hr />
-
-<p><em>This is it for the overview of Pydoku.<br />
+<p>Again, this post just went over some parts of the source code for this project, the full project can be found on [GitHub] (<a href="https://github.com/HerickoMatija/pydoku)">https://github.com/HerickoMatija/pydoku)</a>.</p>
+<hr>
+<p><em>This is it for the overview of Pydoku.<br>
 Thank you for reading through, I hope you found this article useful.</em></p>
-
-<hr />
+<hr>
 
         
           <div class="blog-tags">
@@ -970,6 +882,10 @@ Thank you for reading through, I hope you found this article useful.</em></p>
             </li>
           
           
+            <li class="next">
+              <a href="https://devflection.com/posts/2022-03-27-docker-connect-two-containers/" data-toggle="tooltip" data-placement="top" title="Connect two docker containers in different docker-compose files">Next Post &rarr;</a>
+            </li>
+          
         </ul>
       
 
@@ -983,7 +899,8 @@ Thank you for reading through, I hope you found this article useful.</em></p>
   </div>
 </div>
 
-    <footer>
+      
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -1032,7 +949,7 @@ Thank you for reading through, I hope you found this article useful.</em></p>
 
           &nbsp;&bull;&nbsp;&copy;
           
-            2020
+            2022
           
 
           
@@ -1042,7 +959,7 @@ Thank you for reading through, I hope you found this article useful.</em></p>
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="https://gohugo.io">Hugo v0.96.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
@@ -1067,6 +984,7 @@ Thank you for reading through, I hope you found this article useful.</em></p>
 
 
 
+    
   </body>
 </html>
 

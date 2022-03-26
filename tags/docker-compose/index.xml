@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker-compose on Devflection</title>
+    <link>https://devflection.com/tags/docker-compose/</link>
+    <description>Recent content in docker-compose on Devflection</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
+    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
+    <lastBuildDate>Sat, 26 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/docker-compose/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Connect two docker containers in different docker-compose files</title>
+      <link>https://devflection.com/posts/2022-03-27-docker-connect-two-containers/</link>
+      <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2022-03-27-docker-connect-two-containers/</guid>
+      <description>&lt;p&gt;This post is inspired by an issue I encountered while trying to connect two docker containers located in two different docker-compose files.
+It briefly describes how this situation can happen and how to handle it.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -8,13 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <title>Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins - Devflection</title>
-  <meta property="og:title" content="Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins" />
-  <meta name="twitter:title" content="Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins" />
   <meta name="description" content="This multi-post series is looking at Apache Maven.
-In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.">
-  <meta property="og:description" content="This multi-post series is looking at Apache Maven.
-In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.">
-  <meta name="twitter:description" content="This multi-post series is looking at Apache Maven.
 In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.">
   <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
 {
@@ -66,7 +60,7 @@ In the second part, we will take a closer look at the build lifecycle and the wo
   "headline": "Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins",
   "description" : "This multi-post series is looking at Apache Maven. In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.\n",
   "inLanguage" : "en",
-  "wordCount":  1881 ,
+  "wordCount":  1884 ,
   "datePublished" : "2019-10-20T00:00:00",
   "dateModified" : "2019-10-20T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -92,6 +86,7 @@ In the second part, we will take a closer look at the build lifecycle and the wo
 <meta property="og:url" content="https://devflection.com/posts/2019-10-20-maven-part-2/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Devflection" />
+
   <meta name="twitter:title" content="Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins" />
   <meta name="twitter:description" content="This multi-post series is looking at Apache Maven.
 In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.">
@@ -99,16 +94,7 @@ In the second part, we will take a closer look at the build lifecycle and the wo
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@Devflection" />
   <meta name="twitter:creator" content="@Devflection" />
-  <meta property="og:image" content="https://devflection.com/profile_small.jpg" />
-  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@Devflection" />
-  <meta name="twitter:creator" content="@Devflection" />
-  <meta property="og:url" content="https://devflection.com/posts/2019-10-20-maven-part-2/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Devflection" />
-
-  <meta name="generator" content="Hugo 0.55.4" />
+  <meta name="generator" content="Hugo 0.96.0" />
   <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -268,10 +254,12 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;9&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1881&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1884&nbsp;words
   
   
-    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
   
   
 </span>
@@ -293,28 +281,20 @@ if (!doNotTrack) {
       <article role="main" class="blog-post">
         <p>This multi-post series is looking at <strong>Apache Maven</strong>.
 In the second part, we will take a closer look at the build lifecycle and the workers in Maven - <strong>Maven Plugins</strong>.</p>
-
-<hr />
-
-<p><em>This post is part of a series about Apache Maven.<br />
-You can read part one - an introduction to Maven <a href="https://devflection.com/posts/2019-06-25-maven-part-1/">here</a>.<br />
+<hr>
+<p><em>This post is part of a series about Apache Maven.<br>
+You can read part one - an introduction to Maven <a href="https://devflection.com/posts/2019-06-25-maven-part-1/">here</a>.<br>
 You can read part three - Maven inheritance and aggregation <a href="https://devflection.com/posts/2020-04-12-maven-part-3/">here</a>.</em></p>
-
-<hr />
-
+<hr>
 <h1 id="introduction">Introduction</h1>
-
 <p>As mentioned in the first post, the idea of Maven was to solve the issue of different build results on different machines.
-That is why Maven is based around the concept of a build lifecycle and the process for building and distributing a project is clearly defined.<br />
+That is why Maven is based around the concept of a build lifecycle and the process for building and distributing a project is clearly defined.<br>
 There are three built-in lifecycles, and each of those lifecycles consists of multiple phases, where each phase represents a different stage in the lifecycle.</p>
-
 <h1 id="lifecycles-and-phases">Lifecycles and phases</h1>
-
 <p>The lifecycles and lifecycle phases are:</p>
-
 <ul>
-<li><p><strong>default</strong> - handles the project deployment</p>
-
+<li>
+<p><strong>default</strong> - handles the project deployment</p>
 <ul>
 <li><em>validate</em> - validate the project is correct and all the necessary information is present</li>
 <li><em>initialize</em> - initialize the build state, e.g. set variables and create directories</li>
@@ -339,143 +319,123 @@ There are three built-in lifecycles, and each of those lifecycles consists of mu
 <li><em>verify</em> - run any checks to verify the package is valid and meets the criteria</li>
 <li><em>install</em> - install the package into the local repository, so it can be used as a dependency in other projects locally</li>
 <li><em>deploy</em> - done in an integration or release environment, copies the final package to the remote repository so it can be shared with others</li>
-</ul></li>
-
-<li><p><strong>clean</strong> - handles the cleaning of the project</p>
-
+</ul>
+</li>
+<li>
+<p><strong>clean</strong> - handles the cleaning of the project</p>
 <ul>
 <li><em>pre-clean</em> - execute processes that are needed before the actual project cleaning</li>
 <li><em>clean</em> - removes all files generated by the previous build</li>
 <li><em>post-clean</em> - execute processes that to finalize the clean lifecycle</li>
-</ul></li>
-
-<li><p><strong>site</strong> - handles the creation of the documentation</p>
-
+</ul>
+</li>
+<li>
+<p><strong>site</strong> - handles the creation of the documentation</p>
 <ul>
 <li><em>pre-site</em> - execute processes that are needed before the actual project site generation</li>
 <li><em>site</em> - generate the project&rsquo;s site documentation</li>
 <li><em>post-site</em> - execute processes needed to finalize the site generation and to prepare for deployment</li>
 <li><em>site-deploy</em> - deploy the generated site documentation to the specified web server</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>We can execute phases by calling <em>mvn {phase}</em>, for example:</p>
-
 <pre><code>mvn compile
 </code></pre>
-
-<p>When a lifecycle phase is executed, the phases run sequentially up to and including the selected phase to complete the command.<br />
-The most well-known and most-used build phases are <em>clean</em>, <em>package</em> and <em>deploy</em>.<br />
+<p>When a lifecycle phase is executed, the phases run sequentially up to and including the selected phase to complete the command.<br>
+The most well-known and most-used build phases are <em>clean</em>, <em>package</em> and <em>deploy</em>.<br>
 Phases, however, do not perform the work needed to complete the build.
 The actual workhorse of Maven are plugins with their plugin goals.</p>
-
 <h1 id="plugins-and-plugin-goals">Plugins and plugin goals</h1>
-
 <p>As mentioned, Maven Plugins are the component that does the actual work that needs to be done to complete the build.
 Plugins execute specific tasks that are represented as plugin goals and each plugin goal can be bound to a specific phase to define when the task should be executed.</p>
-
 <p>To recap, plugins are artifacts that provide goals to Maven, and each plugin can have multiple plugin goals.
 For example, the Compiler plugin has the plugin goals <em>compile</em> and <em>testCompile</em>, which are bound to the <em>compile</em> and <em>testCompile</em> phases in the default lifecycle respectively.</p>
-
 <p>From this information we can conclude that phases are abstract - they do not execute any action by themselves, but rather they represent a point in time of the build.
 Each phase has zero or more plugin goals bound to it that execute some action,
 and if a phase has no plugin goals bound to it then the phase is skipped since nothing needs to be executed.</p>
-
-<p>Some plugin goals can also be executed directly from the command line, such as the <em>analyze</em> and <em>tree</em> goals from the <em>maven-dependency-plugin</em>.<br />
+<p>Some plugin goals can also be executed directly from the command line, such as the <em>analyze</em> and <em>tree</em> goals from the <em>maven-dependency-plugin</em>.<br>
 These can be triggered directly from the command line by calling</p>
-
 <pre><code>*mvn dependency:analyze* 
 </code></pre>
-
 <p>or</p>
-
 <pre><code>*mvn dependency:tree*  
 </code></pre>
-
 <p>Since we mentioned that plugin goals need to be bound to the lifecycle phases, let us look at that next.
 To bind a plugin goal to a lifecycle phase, we have two options:</p>
-
 <ol>
-<li><p><strong>Specify the packaging of the Maven project in the pom file</strong></p>
-
-<p>Each packaging has a list of goals it binds to a specific phase by default.<br />
+<li>
+<p><strong>Specify the packaging of the Maven project in the pom file</strong></p>
+<p>Each packaging has a list of goals it binds to a specific phase by default.<br>
 For example, the default <em>jar</em> packaging binds the plugin goal <em>compiler:compile</em> to the <em>compile</em> phase,
-the <em>jar:jar</em> plugin goal to the phase <em>package</em>, and others.<br />
-You can find the full list of the default bindings in the <a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference">lifecycle-documentation</a>.</p></li>
-
-<li><p><strong>Define plugins in the plugin section</strong></p>
-
-<p>The second way to add plugin goals to your build is to configure plugins.<br />
+the <em>jar:jar</em> plugin goal to the phase <em>package</em>, and others.<br>
+You can find the full list of the default bindings in the [lifecycle-documentation] (<a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)">https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)</a>.</p>
+</li>
+<li>
+<p><strong>Define plugins in the plugin section</strong></p>
+<p>The second way to add plugin goals to your build is to configure plugins.<br>
 When configuring plugins, you need to provide information about the phase you want to bind to and the plugin goal to execute.
-The goals you specify will then be added to the goals that are already bound to the phase from the type of packaging.<br />
+The goals you specify will then be added to the goals that are already bound to the phase from the type of packaging.<br>
 If there are multiple goals bound to the same phase, they will be executed in the order they appear in the POM file,
 but only after all the goals from the packaging are run.</p>
-
 <p>An example of a simple Maven project with a plugin configuration might be something like:</p>
+<!-- raw HTML omitted -->
+<pre><code> &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
 
-<p><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"></p>
+ &lt;groupId&gt;com.devflection&lt;/groupId&gt;
+ &lt;artifactId&gt;maven-plugin-configuration-example&lt;/artifactId&gt;
 
-<pre><code>&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+ &lt;packaging&gt;jar&lt;/packaging&gt;
+ &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
 
-&lt;groupId&gt;com.devflection&lt;/groupId&gt;
-&lt;artifactId&gt;maven-plugin-configuration-example&lt;/artifactId&gt;
+ &lt;dependencies&gt;
+ 	&lt;dependency&gt;
+ 		&lt;groupId&gt;junit&lt;/groupId&gt;
+ 		&lt;artifactId&gt;junit&lt;/artifactId&gt;
+ 		&lt;version&gt;3.8.1&lt;/version&gt;
+ 		&lt;scope&gt;test&lt;/scope&gt;
+ 	&lt;/dependency&gt;
+ &lt;/dependencies&gt;
 
-&lt;packaging&gt;jar&lt;/packaging&gt;
-&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;junit&lt;/groupId&gt;
-        &lt;artifactId&gt;junit&lt;/artifactId&gt;
-        &lt;version&gt;3.8.1&lt;/version&gt;
-        &lt;scope&gt;test&lt;/scope&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-&lt;build&gt;
-    &lt;plugins&gt;
-        &lt;plugin&gt;
-            &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
-            &lt;version&gt;1.8&lt;/version&gt;
-            &lt;executions&gt;
-                &lt;execution&gt;
-                    &lt;phase&gt;clean&lt;/phase&gt;
-                    &lt;configuration&gt;
-                        &lt;target&gt;
-                            &lt;echo&gt;Hello world from the antrun plugin!&lt;/echo&gt;
-                        &lt;/target&gt;
-                    &lt;/configuration&gt;
-                    &lt;goals&gt;
-                        &lt;goal&gt;run&lt;/goal&gt;
-                    &lt;/goals&gt;
-                &lt;/execution&gt;
-            &lt;/executions&gt;
-        &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
+ &lt;build&gt;
+ 	&lt;plugins&gt;
+ 		&lt;plugin&gt;
+ 			&lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+ 			&lt;version&gt;1.8&lt;/version&gt;
+ 			&lt;executions&gt;
+ 				&lt;execution&gt;
+ 					&lt;phase&gt;clean&lt;/phase&gt;
+ 					&lt;configuration&gt;
+ 						&lt;target&gt;
+ 							&lt;echo&gt;Hello world from the antrun plugin!&lt;/echo&gt;
+ 						&lt;/target&gt;
+ 					&lt;/configuration&gt;
+ 					&lt;goals&gt;
+ 						&lt;goal&gt;run&lt;/goal&gt;
+ 					&lt;/goals&gt;
+ 				&lt;/execution&gt;
+ 			&lt;/executions&gt;
+ 		&lt;/plugin&gt;
+ 	&lt;/plugins&gt;
+ &lt;/build&gt;
 </code></pre>
-
-<p></project></p>
-
-<p>This plugin will run in the <em>clean</em> phase, and it will trigger an <em><a href="https://ant.apache.org/manual/Tasks/echo.html">ant echo</a></em> task that will print out the message.</p></li>
+<!-- raw HTML omitted -->
+<p>This plugin will run in the <em>clean</em> phase, and it will trigger an <em><a href="https://ant.apache.org/manual/Tasks/echo.html">ant echo</a></em> task that will print out the message.</p>
+</li>
 </ol>
-
-<p>We can browse the available plugins on the <a href="https://mvnrepository.com/open-source/maven-plugins"><strong>Maven plugin repository</strong></a>.<br />
-All the official Maven plugins are named <em>maven-{pluginName}-plugin</em>, while the unofficial ones are named <em>{pluginName}-maven-plugin</em> or any other name.<br />
+<p>We can browse the available plugins on the [<strong>Maven plugin repository</strong>] (<a href="https://mvnrepository.com/open-source/maven-plugins)">https://mvnrepository.com/open-source/maven-plugins)</a>.<br>
+All the official Maven plugins are named <em>maven-{pluginName}-plugin</em>, while the unofficial ones are named <em>{pluginName}-maven-plugin</em> or any other name.<br>
 If we do not find a plugin that fits our needs, there is always the option of creating our own plugin and we will look at how to next.</p>
-
 <h2 id="creating-your-own-maven-plugin">Creating your own Maven plugin</h2>
-
-<p>Plugins are java projects, that contain plugin goals in the form of MOJOs (Maven plain Old Java Objects).<br />
-Each of the MOJOs represents one plugin goal, and as the name suggests they are Java objects that extend the AbstractMojo class and implement the execute method.<br />
+<p>Plugins are java projects, that contain plugin goals in the form of MOJOs (Maven plain Old Java Objects).<br>
+Each of the MOJOs represents one plugin goal, and as the name suggests they are Java objects that extend the AbstractMojo class and implement the execute method.<br>
 A simple example of a custom plugin MOJO that emits a hard-coded message:</p>
-
 <pre><code>package com.devflection.plugin;
-
+ 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
-
+ 
 /**
  * Says &quot;Hello world from our own maven plugin!&quot;
  *
@@ -489,139 +449,117 @@ public class HelloWorldMojo extends AbstractMojo {
 
 }
 </code></pre>
-
-<p>To use the plugin, we need to build it, so we need need to configure the POM file.<br />
-The important part is specifying the packaging as <em>maven-plugin</em>, and the naming of our artifact.<br />
-The recommended naming scheme is <em>{our_plugin_name}-maven-plugin</em>, which also automatically shortens the command line to directly execute your plugin.<br />
+<p>To use the plugin, we need to build it, so we need need to configure the POM file.<br>
+The important part is specifying the packaging as <em>maven-plugin</em>, and the naming of our artifact.<br>
+The recommended naming scheme is <em>{our_plugin_name}-maven-plugin</em>, which also automatically shortens the command line to directly execute your plugin.<br>
 <strong>Be careful not to name your maven plugin <em>maven-{our_plugin_name}-plugin</em>, since this is reserved for official Maven plugins and is an infringement into their trademark.</strong></p>
-
 <p>This is the pom configured for the previous MOJO that allows us to build a plugin.</p>
-
 <pre><code>&lt;project&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
-    &lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
-    &lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;packaging&gt;maven-plugin&lt;/packaging&gt;
-
-    &lt;name&gt;Our first Maven Plugin&lt;/name&gt;
-
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.maven&lt;/groupId&gt;
-            &lt;artifactId&gt;maven-plugin-api&lt;/artifactId&gt;
-            &lt;version&gt;3.0&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;!-- dependencies to annotations --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.maven.plugin-tools&lt;/groupId&gt;
-            &lt;artifactId&gt;maven-plugin-annotations&lt;/artifactId&gt;
-            &lt;version&gt;3.4&lt;/version&gt;
-            &lt;scope&gt;provided&lt;/scope&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+ 
+	&lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
+	&lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
+	&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+	&lt;packaging&gt;maven-plugin&lt;/packaging&gt;
+ 
+	&lt;name&gt;Our first Maven Plugin&lt;/name&gt;
+ 
+	&lt;dependencies&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.apache.maven&lt;/groupId&gt;
+			&lt;artifactId&gt;maven-plugin-api&lt;/artifactId&gt;
+			&lt;version&gt;3.0&lt;/version&gt;
+		&lt;/dependency&gt;
+ 
+		&lt;!-- dependencies to annotations --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.apache.maven.plugin-tools&lt;/groupId&gt;
+			&lt;artifactId&gt;maven-plugin-annotations&lt;/artifactId&gt;
+			&lt;version&gt;3.4&lt;/version&gt;
+			&lt;scope&gt;provided&lt;/scope&gt;
+		&lt;/dependency&gt;
+	&lt;/dependencies&gt;
 &lt;/project&gt;
 </code></pre>
-
 <p>After the POM file is configured we need to actually create the artifact and install it locally.
 We can achieve this by running from the project base folder:</p>
-
 <pre><code>mvn install
 </code></pre>
-
 <p>Now that our plugin is built and installed in our local Maven repository, we can also execute it.
 To achieve this, we need to add it to a calling project&rsquo; POM file, like this:</p>
-
 <pre><code>&lt;build&gt;
-    &lt;plugins&gt;
-        &lt;plugin&gt;
-            &lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
-            &lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
-            &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;      
-        &lt;/plugin&gt;
-    &lt;/plugins&gt;
+	&lt;plugins&gt;
+		&lt;plugin&gt;
+			&lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
+			&lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
+			&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;      
+		&lt;/plugin&gt;
+	&lt;/plugins&gt;
 &lt;/build&gt;
 </code></pre>
-
 <p>And then we can execute the plugin directly from the command line by calling <em>mvn groupId:artifactId:version:goal</em>, or in our case</p>
-
 <pre><code>mvn com.devflection.plugin:hello-world-maven-plugin:1.0-SNAPSHOT:helloworld
 </code></pre>
-
 <p>This is a long command, and since we followed the recommended naming scheme we can benefit from automatic shortening and call it like</p>
-
 <pre><code>mvn hello-world:helloworld
 </code></pre>
-
-<p>Our sample plugin has no properties or configurations so it only prints the hard-coded message to the log.<br />
+<p>Our sample plugin has no properties or configurations so it only prints the hard-coded message to the log.<br>
 But you can imagine, that we also want to extend the plugins and make them configurable.
-This is done by adding properties to the class and annotating them.<br />
+This is done by adding properties to the class and annotating them.<br>
 For example, we can make the message configurable by making the message a property of the class and annotating it so we can inject the content from the plugin configuration.</p>
-
 <pre><code>package com.devflection.plugin;
-
+ 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
-
+ 
 /**
  * Says a custom message that is passed to it or 
  * &quot;Hello world from our own maven plugin!&quot;
  */
 @Mojo( name = &quot;helloworld&quot;)
-public class HelloWorldMojo extends AbstractMojo {  
+public class HelloWorldMojo extends AbstractMojo {	
 
-    /**
-     * The message to display.
-     */
-    @Parameter( property = &quot;helloworld.message&quot;, defaultValue = &quot;Hello world from our own maven plugin!&quot; )
-    private String message;
-
+	/**
+	 * The message to display.
+	 */
+	@Parameter( property = &quot;helloworld.message&quot;, defaultValue = &quot;Hello world from our own maven plugin!&quot; )
+	private String message;
+	
     public void execute() throws MojoExecutionException {
         getLog().info(message);
     }
 }
 </code></pre>
-
 <p>By doing this we can configure a custom message by setting the property in the plugin configuration in our project POM file like this:</p>
-
 <pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
-    &lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;message&gt;
-            Three little birds
-            pitch by my doorstep 
-            singin' sweet songs 
-            of melodies pure and true 
-            sayin', this is my message to you
-        &lt;/message&gt;
-    &lt;/configuration&gt;
+	&lt;groupId&gt;com.devflection.plugin&lt;/groupId&gt;
+	&lt;artifactId&gt;hello-world-maven-plugin&lt;/artifactId&gt;
+	&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+	&lt;configuration&gt;
+		&lt;message&gt;
+			Three little birds
+			pitch by my doorstep 
+			singin' sweet songs 
+			of melodies pure and true 
+			sayin', this is my message to you
+		&lt;/message&gt;
+	&lt;/configuration&gt;
 &lt;/plugin&gt;
 </code></pre>
-
 <p>Now if we run the command mvn <em>hello-world:helloword</em> again, it should show the new message.</p>
-
 <h1 id="conclusion">Conclusion</h1>
-
 <p>As we saw, Maven Plugins are the actual workers behind the scenes in Maven.
 There are a lot of default plugin goals bound when we specify a packaging type for our project,
-but we can also include more plugins by configuring them in the build section of our POM file.<br />
-If needed, we can also create our own plugin that we can deploy on the Maven plugin repository and share it with others.<br />
+but we can also include more plugins by configuring them in the build section of our POM file.<br>
+If needed, we can also create our own plugin that we can deploy on the Maven plugin repository and share it with others.<br>
 All in all, we can see that Maven plugins are a very powerful and flexible tool that allows us to configure our build process exactly the way we want it to be.</p>
-
-<p>As always, the full project is on <a href="https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example">GitHub</a>.</p>
-
-<hr />
-
-<p><em>This is it for our Maven plugins post.<br />
+<p>As always, the full project is on [GitHub] (<a href="https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example)">https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example)</a>.</p>
+<hr>
+<p><em>This is it for our Maven plugins post.<br>
 Thank you for reading through, I hope you found it useful and be sure to check out the next post,
 where we will find out more about multi-module projects and managing that complexity with Maven.</em></p>
-
-<hr />
+<hr>
 
         
           <div class="blog-tags">
@@ -663,7 +601,8 @@ where we will find out more about multi-module projects and managing that comple
   </div>
 </div>
 
-    <footer>
+      
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -712,7 +651,7 @@ where we will find out more about multi-module projects and managing that comple
 
           &nbsp;&bull;&nbsp;&copy;
           
-            2020
+            2022
           
 
           
@@ -722,7 +661,7 @@ where we will find out more about multi-module projects and managing that comple
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.55.4</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="https://gohugo.io">Hugo v0.96.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
@@ -747,6 +686,7 @@ where we will find out more about multi-module projects and managing that comple
 
 
 
+    
   </body>
 </html>
 

@@ -1,118 +1,78 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://devflection.com/</loc>
-    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/posts/</loc>
-    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://devflection.com/posts/2022-03-27-docker-connect-two-containers/</loc>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/docker/</loc>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/docker-networking/</loc>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/docker-compose/</loc>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/</loc>
+    <lastmod>2022-03-26T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devflection.com/posts/2020-04-26-python-sudoku/</loc>
     <lastmod>2020-04-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devflection.com/tags/</loc>
-    <lastmod>2020-04-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/tags/pygame/</loc>
     <lastmod>2020-04-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/tags/python/</loc>
     <lastmod>2020-04-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/posts/2020-04-12-maven-part-3/</loc>
     <lastmod>2020-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/tags/java/</loc>
     <lastmod>2020-04-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/tags/maven/</loc>
     <lastmod>2020-04-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/posts/2019-10-20-maven-part-2/</loc>
     <lastmod>2019-10-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/posts/2019-06-25-maven-part-1/</loc>
     <lastmod>2019-06-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devflection.com/posts/2019-05-14-classloaders/</loc>
-    <lastmod>2019-05-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/tags/classloaders/</loc>
     <lastmod>2019-05-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devflection.com/posts/2019-04-30-java-archive-file/</loc>
-    <lastmod>2019-04-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://devflection.com/posts/2019-05-14-classloaders/</loc>
+    <lastmod>2019-05-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devflection.com/tags/jars/</loc>
     <lastmod>2019-04-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devflection.com/posts/2019-04-14-reflection-in-java/</loc>
-    <lastmod>2019-04-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://devflection.com/posts/2019-04-30-java-archive-file/</loc>
+    <lastmod>2019-04-30T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devflection.com/tags/reflection/</loc>
     <lastmod>2019-04-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://devflection.com/posts/2019-04-14-reflection-in-java/</loc>
+    <lastmod>2019-04-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devflection.com/page/about/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/page/book-reviews/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://devflection.com/page/</loc>
-    <priority>0</priority>
   </url>
-  
 </urlset>

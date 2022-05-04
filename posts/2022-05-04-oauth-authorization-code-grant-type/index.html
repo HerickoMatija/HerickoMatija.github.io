@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>OAuth 2.0: Authorization code grant type - Devflection</title>
+  <meta name="description" content="In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
+We will have a look at how it works, when it should be used, and illustrate it with an example.">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2022-05-04-oauth-authorization-code-grant-type\/",
+          "name": "Oauth 2.0 authorization code grant type"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "OAuth 2.0: Authorization code grant type",
+  "description" : "In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework. We will have a look at how it works, when it should be used, and illustrate it with an example.\n",
+  "inLanguage" : "en",
+  "wordCount":  3354 ,
+  "datePublished" : "2022-05-04T00:00:00",
+  "dateModified" : "2022-05-04T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "oauth, authorization code grant type" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2022-05-04-oauth-authorization-code-grant-type\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="OAuth 2.0: Authorization code grant type" />
+<meta property="og:description" content="In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
+We will have a look at how it works, when it should be used, and illustrate it with an example.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+
+  <meta name="twitter:title" content="OAuth 2.0: Authorization code grant type" />
+  <meta name="twitter:description" content="In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
+We will have a look at how it works, when it should be used, and illustrate it with an …">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta name="generator" content="Hugo 0.96.0" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>OAuth 2.0: Authorization code grant type</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on May 4, 2022
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;16&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3354&nbsp;words
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
+We will have a look at how it works, when it should be used, and illustrate it with an example.</p>
+<h1 id="oauth-20">OAuth 2.0</h1>
+<p>OAuth 2.0 is a protocol for authorization.
+More specifically it was designed to solve the problem of <strong>delegated authorization</strong>.
+Delegated authorization means that the owner of some resource allows an application (client) to access that resource
+on behalf of the owner.<br>
+An example of this is that you log in to a chat application and the chat application wants to suggest friends to you based
+on your e-mail contacts.
+For that, it needs access to your e-mail contact list at your e-mail service provider (e.g. Gmail).
+Using OAuth the chat application can ask for permission to see your contact list and if you consent,
+it can access your e-mail list on your behalf.<br>
+Meaning you delegated your authorization to the client chat application.</p>
+<p>There are a couple of actors in OAuth:</p>
+<ul>
+<li><strong>Resource owner</strong>
+<ul>
+<li>This is the owner of the resource that the client wants to access
+<ul>
+<li><em>The owner of the email contact list in the example</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Resource server</strong>
+<ul>
+<li>This is the server that holds the protected resource that the client wants to access
+<ul>
+<li><em>The email service provider in the example</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Authorization server</strong>
+<ul>
+<li>This is the server that checks the user, his permission and if permission is given issues access tokens
+<ul>
+<li><em>The e-mail service provider authorization server in the example</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Client</strong>
+<ul>
+<li>This is the application that wants to access the resource
+<ul>
+<li><em>The chat application in the example</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Then there are also multiple grant types in OAuth.
+Which one to use depends on how the client application looks like.
+The different grant types are:</p>
+<ul>
+<li><strong>Authorization code</strong>
+<ul>
+<li>Is used when the client application has a server and frontend part, so there is both a back-channel and front-channel</li>
+</ul>
+</li>
+<li><strong>Client credentials</strong>
+<ul>
+<li>Is used when there is no user involved, only the client server and the resource server, so just a back-channel</li>
+</ul>
+</li>
+<li><strong>PKCE</strong>
+<ul>
+<li>Is used when the client is a mobile application. It is an extension of the authorization code that prevents CSRF and authorization code injects,
+originally developed for mobile applications, but is encouraged to be used also in place of authorization code for higher security</li>
+</ul>
+</li>
+<li><strong>Device Authorization</strong>
+<ul>
+<li>Is used when the client is a device with no browser or limited input capability</li>
+</ul>
+</li>
+<li><strong>Refresh token</strong>
+<ul>
+<li>Is used when the client wants to exchange a refresh token for an access token</li>
+</ul>
+</li>
+</ul>
+<h1 id="authorization-code-grant-type">Authorization code grant type</h1>
+<p>As mentioned above the authorization code grant type is used when there is a secure back-channel and an insecure front-channel.
+This is the usual client-server architecture, with a frontend application and a backend application.</p>
+<p>The authorization code grant type has the following steps:</p>
+<ol>
+<li>The client starts the flow by redirecting the resource owner to the authorization endpoint on the authorization server</li>
+<li>The authorization server authenticates the resource owner and confirms that the resource owner grants the access request of the client</li>
+<li>Assuming the authentication is successful and access is granted, the authorization server redirects the resource owner to a callback endpoint on
+the client application also passing back an authorization code</li>
+<li>The client exchanges the authorization code for an access token at the token endpoint on the authorization server</li>
+<li>The authorization server authenticates the client and validates the authorization code and the redirect uri.
+If everything checks out, the authorization server responds with an access token that can also optionally contain a refresh token</li>
+<li>The client uses the access token to access the resource on the resource server</li>
+</ol>
+<p>Now let us take a closer look at all the steps.</p>
+<h3 id="1-the-client-redirects-the-resource-owner">1. The client redirects the resource owner</h3>
+<p>In the first step of the authorization code flow, the client application redirects the resource owner to the authorization endpoint on the authorization server.
+The redirect URL points to the authorization endpoint and contains the following URL-encoded parameters:</p>
+<ul>
+<li><strong>response_type</strong>
+<ul>
+<li>This parameter is required and has to be set to <strong>&ldquo;code&rdquo;</strong></li>
+</ul>
+</li>
+<li><strong>client_id</strong>
+<ul>
+<li>This parameter is required and identifies the client to the authorization server</li>
+</ul>
+</li>
+<li><strong>redirect_uri</strong>
+<ul>
+<li>This parameter is optional and tells the authorization server where to redirect the user after successful authentication</li>
+</ul>
+</li>
+<li><strong>scope</strong>
+<ul>
+<li>This parameter is optional and tells the authorization server for which scopes we are requesting the access token.
+It is optional because there might be default defined scopes, and in that case, we don&rsquo;t need to explicitly pass the scope</li>
+</ul>
+</li>
+<li><strong>state</strong>
+<ul>
+<li>This parameter is optional but recommended and it is used to maintain the state between the original redirect and the callback. The authorization server takes this parameter and passes it back as a parameter in the callback request</li>
+</ul>
+</li>
+</ul>
+<p>An important thing is that all the parameters should be URL encoded.</p>
+<h3 id="2-the-authorization-server-authenticates-the-resource-owner">2. The authorization server authenticates the resource owner</h3>
+<p>When the resource owner is redirected to the authorization server, the authorization server validates if the request is valid.<br>
+If the request is valid, it authenticates the user - usually, this means the user has to log in if he is not already logged in at the
+authorization server.
+After successful authentication of the user, the authorization server obtains consent from the user about the client application&rsquo;s access request.
+This happens either automatically or there is a consent form shown to the resource owner saying that the application wants to
+access certain things and the resource owner has to explicitly allow this.</p>
+<h3 id="3-the-authorization-server-redirects-the-user">3. The authorization server redirects the user</h3>
+<p>After successfully obtaining consent, the authorization server redirects the resource owner in one of two ways:</p>
+<ul>
+<li>If there was a <em>redirect_uri</em> in the initial redirect, the authorization redirects to that location</li>
+<li>If there is no <em>redirect_uri</em> in the initial redirect, the authorization redirects to a location that is configured in the authorization server itself</li>
+</ul>
+<p>On top of that it adds two parameters to the redirect:</p>
+<ul>
+<li><strong>code</strong>
+<ul>
+<li>This parameter contains the authorization code issued by the authorization server that should later be exchanged for the access token</li>
+</ul>
+</li>
+<li><strong>state</strong>
+<ul>
+<li>This parameter is added if the initial redirect contained a state parameter and the value is the same as in the initial request. So this parameter is taken from the initial request and just passed back in the callback request</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-the-client-exchanges-the-code-for-the-access-token">4. The client exchanges the code for the access token</h3>
+<p>On the callback, the client receives an authorization code that can be exchanged for an access token.
+So far everything was happening on the front channel (in the browser of the resource owner), but the exchange request
+should happen on the secure back-channel (it should be a server to server call).<br>
+The server has to make a POST request to the token endpoint and the request should contain the following parameters in the
+<em>application/x-www-form-urlencoded</em> format:</p>
+<ul>
+<li><strong>grant_type</strong>
+<ul>
+<li>This parameter is required and the value should be <strong>&ldquo;authorization_code&rdquo;</strong></li>
+</ul>
+</li>
+<li><strong>code</strong>
+<ul>
+<li>This parameter is required and should contain the code received in the callback from the authorization server</li>
+</ul>
+</li>
+<li><strong>redirect_uri</strong>
+<ul>
+<li>This parameter is required if there was a <em>redirect_uri</em> parameter in the first redirect and their values must match</li>
+</ul>
+</li>
+<li><strong>client_id</strong>
+<ul>
+<li>This parameter is required if the client is not authenticating using other means</li>
+</ul>
+</li>
+</ul>
+<p>On top of that, the client might be required to authenticate.
+So far I have seen two ways of authentication:</p>
+<ul>
+<li>Basic authentication
+<ul>
+<li>We add an <em>Authorization</em> header with the value &ldquo;Basic {credentials}&rdquo;
+<ul>
+<li>{credentials} is base64 encoded string <strong>&ldquo;clientId:clientSecret&rdquo;</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Add the client id and client secret as parameters in the body
+<ul>
+<li>In this case, we need to add the parameters <strong>client_id</strong> and <strong>client_secret</strong> with their respective values</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-the-authorization-server-issues-the-access-token">5. The authorization server issues the access token</h3>
+<p>The authorization server must validate the exchange request and if the request is valid, it returns the access token in the response.<br>
+The parameters in the response are:</p>
+<ul>
+<li><strong>access_token</strong>
+<ul>
+<li>This parameter is required and contains the access token issued by the authorization server and that we attach later on to the
+requests to protected resources</li>
+</ul>
+</li>
+<li><strong>token_type</strong>
+<ul>
+<li>This parameter is required and tells us what kind of token the access token is. The most common type is a <strong>bearer</strong> token
+but there are also other token types</li>
+</ul>
+</li>
+<li><strong>expires_in</strong>
+<ul>
+<li>This parameter is recommended and contains the lifetime of the access token in seconds</li>
+</ul>
+</li>
+<li><strong>refresh_token</strong>
+<ul>
+<li>This parameter is optional and contains the refresh token, which can be used to obtain new access tokens using the refresh token request</li>
+</ul>
+</li>
+<li><strong>scope</strong>
+<ul>
+<li>This parameter is optional if the scope is equal to the scope requested by the client, otherwise required</li>
+</ul>
+</li>
+</ul>
+<p>The response parameters are passed back in the request body in the JSON format.</p>
+<h3 id="6-the-client-uses-the-access-token-to-request-the-resource-from-the-resource-server">6. The client uses the access token to request the resource from the resource server</h3>
+<p>Once we receive the access token, we can use it to request resources from the resource server.
+The most common access token is the Bearer access token which is used by adding an <strong>Authorization</strong> header with the value
+<strong>&ldquo;Bearer {access token}&rdquo;</strong>.</p>
+<h3 id="7-the-client-uses-the-refresh-token-to-get-a-new-access-token">7. The client uses the refresh token to get a new access token</h3>
+<p>If the client was also issued a refresh token, it can use it to get a fresh access token.
+To get a new access token we need to issue a POST request to the refresh endpoint with the following parameters in the
+<em>application/x-www-form-urlencoded</em> format:</p>
+<ul>
+<li><strong>grant_type</strong>
+<ul>
+<li>This parameter is required and its value must be <strong>&ldquo;refresh_token&rdquo;</strong></li>
+</ul>
+</li>
+<li><strong>refresh_token</strong>
+<ul>
+<li>This parameter is required and its value is the refresh token issued by the authorization request</li>
+</ul>
+</li>
+<li><strong>scope</strong>
+<ul>
+<li>This parameter is optional. We can leave it out if we want to request the same scope as the original token request. We can request fewer scopes, but we must not request more scopes than in the original request</li>
+</ul>
+</li>
+</ul>
+<p>On top of that, the client should again authenticate using one of the two methods described in the token exchange request.</p>
+<h1 id="example">Example</h1>
+<p>Now that we went over the theory, let us have a look at a live example.</p>
+<p>The scenario I imagined is that we have an application that wants to show the users&rsquo; favourite players in the NBA.
+This list of favourite players is supplied by another server from a protected endpoint.
+So our application needs to be allowed to access that endpoint, which is what we use the authorization code flow for.</p>
+<p>The example setup has three parts:</p>
+<ul>
+<li>A client application
+<ul>
+<li>React frontend app served from an Express JS backend. The application can:
+<ul>
+<li>display the current access token</li>
+<li>get the list of favourite players from the Spring server</li>
+<li>initiate the OAuth flow by redirecting</li>
+<li>exchange the authorization code for the access token</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A resource server
+<ul>
+<li>Java Spring app that has a protected endpoint serving the list of favourite players. The endpoint is protected by the Keycloak authorization server</li>
+</ul>
+</li>
+<li>An authorization server
+<ul>
+<li>Keycloak instance that issues the access tokens for the client and which is used to verify the tokens on the resource server</li>
+</ul>
+</li>
+</ul>
+<p>Now let us have a look at some specifics from each of the parts.</p>
+<h3 id="resource-server">Resource server</h3>
+<p>The resource server in our example is a Spring boot backend server that is protected using OAuth.<br>
+The server has only one endpoint that is serving the list of favourite players.
+For simplicity, it is returning just a static predefined list of players.
+The controller is a standard rest controller serving GET requests to <em>/favouritePlayers</em>, nothing fancy there.</p>
+<pre><code>package com.devflection.resource.server;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class PlayersController {
+
+    @GetMapping(&quot;/favouritePlayers&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin(origins = &quot;*&quot;)
+    List&lt;String&gt; healthcheck() {
+        return List.of(
+                &quot;Michael Jordan&quot;,
+                &quot;LeBron James&quot;,
+                &quot;Kobe Bryant&quot;,
+                &quot;Luka Dončič&quot;,
+                &quot;Kyrie Irving&quot;,
+                &quot;Giannis Antetokounmpo&quot;,
+                &quot;Stephen Curry&quot;);
+    }
+
+}
+</code></pre>
+<p>A bit more interesting is how we secure the endpoint.
+There is a SecurityConfig, where we say that we want all requests to our endpoint to be authenticated and to
+have the scope <strong>devflectionPlayers</strong>.
+And the final line says that we want to use JWTs.</p>
+<pre><code>package com.devflection.resource.server;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests(
+                authorizationRequest -&gt; authorizationRequest.antMatchers(HttpMethod.GET, &quot;/favouritePlayers&quot;)
+                        .hasAuthority(&quot;SCOPE_devflectionPlayers&quot;)
+                        .anyRequest()
+                        .authenticated()
+        ).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+    }
+}
+</code></pre>
+<p>The final piece of the puzzle is to add a dependency to spring oauth2 resource server starter in the pom:</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-oauth2-resource-server&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>And we need to add the needed properties in the <em>application.properties</em> file so that the tokens can be verified.
+The two properties that are needed are the <em>issuer-uri</em>, which is checked against the <em>iss</em> field in the tokens,
+and the <em>jwk-set-uri</em>, which is the uri to the JWKS endpoint of the authorization server, where Spring can get the tokens and validate them.</p>
+<pre><code>server.port=${PORT}
+spring.security.oauth2.resourceserver.jwt.issuer-uri=${OAUTH_ISSUER_URI}
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri=${OAUTH_JWK_URI}
+logging.level.org.springframework.security=DEBUG
+</code></pre>
+<p>Usually, it is enough to only set the <em>issuer-uri</em> property, and Spring can get to the JWKS uri from that.
+But since we are running our example Keycloak from a docker-compose file,
+the issuer and docker container names are different and the issuer check was failing.
+So we need to point Spring directly to the JWKS where it can get the keys.</p>
+<h3 id="authorization-server">Authorization server</h3>
+<p>For the authorization server, I used a Keycloak instance, where I had to configure a couple of things.</p>
+<ul>
+<li>Add our custom scope
+<ul>
+<li>I added a <em>devflectionPlayers</em> scope</li>
+</ul>
+</li>
+<li>Register a client
+<ul>
+<li>I registered a client named <em>devflecton-node-js</em>, made the client confidential, allowed all redirect uris, and added our custom scope to the list of client scopes</li>
+</ul>
+</li>
+<li>Add a test user
+<ul>
+<li>I created a new test user with the username <em>test</em> and password <em>password</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="client-application">Client application</h3>
+<p>For the client application, we have a React frontend served from an Express backend.</p>
+<p>The backend does a couple of things:</p>
+<ul>
+<li>
+<p>It serves the static frontend app files</p>
+<pre><code>  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  app.use(express.static(path.join(__dirname, &quot;..&quot;, &quot;build&quot;)));
+</code></pre>
+</li>
+<li>
+<p>It makes the request to the Spring server to get the list of players</p>
+<pre><code>  app.get(&quot;/myFavouritePlayersInTheNBA&quot;, async (req, res) =&gt; {
+      await fetch(process.env.RESOURCE_SERVER_PLAYERS_ENDPOINT, {
+          method: 'GET',
+          headers: {
+              'Authorization': 'Bearer ' + accessToken
+          }
+      }).then(response =&gt; {
+          if (response.ok) {
+              return response.json();
+          }
+          throw response;
+      }).then(data =&gt; {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(data));
+      }).catch(err =&gt; res.sendStatus(err.status));
+  });
+</code></pre>
+</li>
+<li>
+<p>It starts the OAuth authorization code flow by redirecting the user</p>
+<pre><code>  app.get(&quot;/startOAuthFlow&quot;, (req, res) =&gt; {
+      const authorizeRedirectUrl = prepareAuthorizeRedirectUrl()
+      res.redirect(authorizeRedirectUrl);
+  });
+
+  function prepareAuthorizeRedirectUrl() {
+      const redirectUri = encodeURIComponent(process.env.REDIRECT_URI);
+      return `${process.env.AUTHORIZE_REQUEST_URL}?response_type=code&amp;
+      scope=${process.env.SCOPE}&amp;
+      state=xyz&amp;
+      client_id=${process.env.CLIENT_ID}
+      &amp;redirect_uri=${redirectUri}`;
+  }
+</code></pre>
+</li>
+<li>
+<p>It receives the callback from the authorization server and exchanges the code for the token</p>
+<pre><code>  app.get(&quot;/authorizationCallback&quot;, async (req, res) =&gt; {
+      await fetch(process.env.TOKEN_ENDPOINT_URL, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          },
+          body: new URLSearchParams({
+              'grant_type': 'authorization_code',
+              'code': req.query.code,
+              'client_id': process.env.CLIENT_ID,
+              'client_secret': process.env.CLIENT_SECRET,
+              'redirect_uri': process.env.REDIRECT_URI
+          })
+      }).then(response =&gt; {
+          if (response.ok) {
+              return response.json();
+          }
+          throw response;
+      }).then(data =&gt; {
+          accessToken = data.access_token;
+          res.redirect(&quot;/index.html&quot;);
+      }).catch(err =&gt; res.send(err));
+  });
+</code></pre>
+</li>
+<li>
+<p>It exposes the currently saved access token</p>
+<pre><code>  app.get(&quot;/getAccessToken&quot;, (req, res) =&gt; {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(accessToken));
+  });
+</code></pre>
+</li>
+</ul>
+<p>And on the react side we have a couple of components:</p>
+<ul>
+<li>
+<p>One to display the currently saved access token</p>
+<pre><code>  import React, { useState, useEffect } from 'react';
+  import './Token.css';
+
+  const GET_TOKEN_URL = &quot;/getAccessToken&quot;;
+
+  function Token() {
+
+      const [token, setToken] = useState(null);
+
+      useEffect(() =&gt; {
+          fetch(GET_TOKEN_URL)
+              .then(response =&gt; {
+                  if (response.ok) {
+                      return response.json();
+                  }
+                  throw response;
+              }).then(data =&gt; setToken(data))
+              .catch(err =&gt; console.log(err));
+      });
+
+      return (
+          &lt;span className=&quot;token-container&quot;&gt;
+              &lt;p className=&quot;token-message&quot;&gt;
+                  &lt;strong&gt;Current access token:&lt;/strong&gt;
+              &lt;/p&gt;
+              &lt;p className=&quot;token-message&quot;&gt;
+                  {getTokenMessage()}
+              &lt;/p&gt;
+          &lt;/span&gt;
+      );
+
+      function getTokenMessage() {
+          if (token) {
+              return token;
+          } else {
+              return &quot;There is currently no access token&quot;;
+          }
+      }
+  }
+
+  export default Token;
+</code></pre>
+</li>
+<li>
+<p>One component to get the players list from the express backend</p>
+<pre><code>  import React, { useState, useCallback } from 'react';
+  import './Players.css';
+
+  const GET_FAVOURITE_PLAYERS_URL = &quot;/myFavouritePlayersInTheNBA&quot;;
+
+  function Players() {
+      const [favouritePlayers, setFavouritePlayers] = useState([]);
+      const [error, setError] = useState('');
+
+      const fetchData = useCallback(
+          () =&gt; {
+              fetch(GET_FAVOURITE_PLAYERS_URL)
+                  .then(response =&gt; {
+                      if (response.ok) {
+                          return response.json();
+                      }
+                      throw response;
+                  }).then(data =&gt; setFavouritePlayers(data))
+                  .catch(err =&gt; {
+                      if (err.status === 401) {
+                          setError(&quot;The request was rejected as unathorized!&quot;);
+                      } else {
+                          setError(&quot;There was a problem with the request!&quot;);
+                      }
+                  });
+          });
+
+      return (
+          &lt;div className='players-container'&gt;
+              &lt;span className='players-message'&gt;
+                  &lt;button className=&quot;btn&quot; onClick={fetchData}&gt;Get favourite players!&lt;/button&gt;
+              &lt;/span&gt;
+              &lt;span className='players-message'&gt;
+                  {getPlayers()}
+              &lt;/span&gt;
+          &lt;/div&gt;
+      );
+
+      function getPlayers() {
+          if (error) {
+              return &lt;p&gt;{error}&lt;/p&gt;
+          }
+
+          if (favouritePlayers.length &gt; 0) {
+              let playerList = favouritePlayers.map(player =&gt; { return &lt;li&gt;{player}&lt;/li&gt; });
+              return &lt;ul&gt;{playerList}&lt;/ul&gt;;
+          } else {
+              return &lt;p&gt;No favourite players!&lt;/p&gt;;
+          }
+      }
+  }
+
+  export default Players;
+</code></pre>
+</li>
+<li>
+<p>And one component to trigger the authorization code flow</p>
+<pre><code>  import './Auth.css';
+
+  const START_OAUTH = &quot;/startOAuthFlow&quot;;
+
+  function Auth() {
+
+      function redirect() {
+          window.location.href = START_OAUTH
+      }
+
+      return (
+          &lt;div className='auth-container'&gt;
+              &lt;button className=&quot;btn&quot; onClick={redirect}&gt;
+                  Get the access token!
+              &lt;/button&gt;
+          &lt;/div&gt;
+      );
+  }
+
+  export default Auth;
+</code></pre>
+</li>
+</ul>
+<h1 id="putting-it-all-together">Putting it all together</h1>
+<p>For the example, I dockerized the client application and the resource server and then prepared a docker-compose file that also includes a Keycloak instance.
+And for everything to be able to connect I added a couple of environment variables to each docker file so everything points to the proper address.</p>
+<pre><code>version: '3.7'
+
+services:
+    frontend:
+        container_name: frontend
+        build: ./frontend
+        environment:
+        - CLIENT_ID=devflection-node-js
+        - CLIENT_SECRET=MDLMGUtpSKdZ8C9ctccKJVPl6nZBu20D
+        - SCOPE=devflectionPlayers
+        - TOKEN_ENDPOINT_URL=http://keycloak:8080/auth/realms/master/protocol/openid-connect/token
+        - AUTHORIZE_REQUEST_URL=http://localhost:8083/auth/realms/master/protocol/openid-connect/auth
+        - REDIRECT_URI=http://localhost:5000/authorizationCallback
+        - RESOURCE_SERVER_PLAYERS_ENDPOINT=http://resource-server:8080/favouritePlayers
+        ports:
+        - 5000:5000
+    resource-server:
+        container_name: resource-server
+        build: ./resource-server
+        environment:
+        - OAUTH_ISSUER_URI=http://localhost:8083/auth/realms/master
+        - OAUTH_JWK_URI=http://keycloak:8080/auth/realms/master/protocol/openid-connect/certs
+        - PORT=8080
+        ports:
+        - 8080:8080
+    keycloak:
+        image: quay.io/keycloak/keycloak:legacy
+        volumes:
+        - ./keycloak/data:/opt/jboss/keycloak/standalone/data/
+        ports:
+        - 8083:8080
+</code></pre>
+<p>The services are accessible:</p>
+<ul>
+<li>Frontend
+<ul>
+<li>locally in the browser at <em>localhost:5000</em></li>
+<li>in other containers at <em>frontend:5000</em></li>
+</ul>
+</li>
+<li>Resource server
+<ul>
+<li>locally in the browser at <em>localhost:8080</em></li>
+<li>in other containers at <em>resource-server:8080</em></li>
+</ul>
+</li>
+<li>Keycloak
+<ul>
+<li>locally in the browser at <em>localhost:8083</em></li>
+<li>in other containers at <em>keylcloak:8080</em></li>
+</ul>
+</li>
+</ul>
+<p>Once we pass those endpoints to the applications we can then execute the full flow where the user is redirected to the authorization server,
+logs in, consents and is redirected back to the app,
+where we exchange the code for the access token and can query the Spring backend for the list of players.</p>
+<p>The environment variables that we pass to the React/Express application are:</p>
+<ul>
+<li><strong>CLIENT_ID</strong>
+<ul>
+<li>This is the client id for our application that we get from Keycloak</li>
+</ul>
+</li>
+<li><strong>CLIENT_SECRET</strong>
+<ul>
+<li>This is the client secret for our application that we get from Keycloak</li>
+</ul>
+</li>
+<li><strong>SCOPE</strong>
+<ul>
+<li>This is the scope that we are requesting for our access token</li>
+</ul>
+</li>
+<li><strong>TOKEN_ENDPOINT_URL</strong>
+<ul>
+<li>This is the endpoint on Keycloak where the token exchange request should go</li>
+</ul>
+</li>
+<li><strong>AUTHORIZE_REQUEST_URL</strong>
+<ul>
+<li>This is the endpoint to where we must redirect the user at the start of the authorization code flow</li>
+</ul>
+</li>
+<li><strong>REDIRECT_URI</strong>
+<ul>
+<li>This is the callback URL to where the authorization server redirects the user after successfully logging in</li>
+</ul>
+</li>
+<li><strong>RESOURCE_SERVER_PLAYERS_ENDPOINT</strong>
+<ul>
+<li>This is the protected Spring backend endpoint</li>
+</ul>
+</li>
+</ul>
+<p>The environment variables that we pass to the Spring application are:</p>
+<ul>
+<li><strong>OAUTH_ISSUER_URI</strong>
+<ul>
+<li>This is used by Spring to validate the <em>iss</em> field of the JWT access token</li>
+</ul>
+</li>
+<li><strong>OAUTH_JWK_URI</strong>
+<ul>
+<li>This is JWKS URL and it is used by Spring to get the keys to validate the access token</li>
+</ul>
+</li>
+<li><strong>PORT</strong>
+<ul>
+<li>This is the port on which the Spring application should run and should match the container port</li>
+</ul>
+</li>
+</ul>
+<p>The final piece for the example is a Keycloak instance.
+There is a Keycloak service configured in the docker-compose file which is mounting a volume.
+The volume is a Keycloak database where everything is already configured (client, user, scope).<br>
+So you can just run</p>
+<pre><code>docker-compose up -d    
+</code></pre>
+<p>And then in your browser, open <em>http://localhost:5000</em> and you should be able to click through the application.</p>
+<p>You can browse and get the full example repository on
+<a href="https://github.com/HerickoMatija/devflection-oauth-authorization-code-flow">GitHub</a>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this post, we were looking at one of the multiple grant types of OAuth, the <strong>authorization code grant type</strong>.
+This grant type is used when there is a client application with a frontend part and a backend part.
+We went over the flow and showed an example application.</p>
+<p>Overall, OAuth 2.0 is a nice way of solving the delegated authorization problem.
+However, it might be a bit overwhelming at first, especially since there are also a lot of misleading usages of OAuth online.
+Often OAuth is used for authentication, but that is not what it was meant for.
+OAuth was designed to solve the problem of delegated authorization, where users to their resources on some resource server to some other client applications.</p>
+<p>To solve the authentication problem OpenID Connect was designed as an extra layer on top of OAuth and that can be used for authentication.
+But more on OIDC in a future post :)</p>
+<hr>
+<p><em>This is it for the Authorization code grant type of the OAuth 2.0 framework.<br>
+Thank you for reading through, I hope you found this article useful.</em></p>
+<hr>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/oauth/">oauth</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/authorization-code-grant-type/">authorization code grant type</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2022-03-26-docker-connect-two-containers/" data-toggle="tooltip" data-placement="top" title="Connect two docker containers in different docker-compose files">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:matija@devflection.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/matija-hericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.96.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

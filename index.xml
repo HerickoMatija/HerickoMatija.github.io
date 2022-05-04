@@ -8,7 +8,17 @@
     <language>en-us</language>
     <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
     <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Sat, 26 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OAuth 2.0: Authorization code grant type</title>
+      <link>https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/</link>
+      <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
+      <author>matija@devflection.com (Matija Heričko)</author>
+      <guid>https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/</guid>
+      <description>&lt;p&gt;In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
+We will have a look at how it works, when it should be used, and illustrate it with an example.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Connect two docker containers in different docker-compose files</title>
       <link>https://devflection.com/posts/2022-03-26-docker-connect-two-containers/</link>

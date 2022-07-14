@@ -60,7 +60,7 @@ In the second part, we will take a closer look at the build lifecycle and the wo
   "headline": "Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins",
   "description" : "This multi-post series is looking at Apache Maven. In the second part, we will take a closer look at the build lifecycle and the workers in Maven - Maven Plugins.\n",
   "inLanguage" : "en",
-  "wordCount":  1884 ,
+  "wordCount":  1881 ,
   "datePublished" : "2019-10-20T00:00:00",
   "dateModified" : "2019-10-20T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -254,7 +254,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;9&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1884&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1881&nbsp;words
   
   
     
@@ -369,7 +369,7 @@ To bind a plugin goal to a lifecycle phase, we have two options:</p>
 <p>Each packaging has a list of goals it binds to a specific phase by default.<br>
 For example, the default <em>jar</em> packaging binds the plugin goal <em>compiler:compile</em> to the <em>compile</em> phase,
 the <em>jar:jar</em> plugin goal to the phase <em>package</em>, and others.<br>
-You can find the full list of the default bindings in the [lifecycle-documentation] (<a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)">https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)</a>.</p>
+You can find the full list of the default bindings in the <a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference">lifecycle-documentation</a>.</p>
 </li>
 <li>
 <p><strong>Define plugins in the plugin section</strong></p>
@@ -423,7 +423,7 @@ but only after all the goals from the packaging are run.</p>
 <p>This plugin will run in the <em>clean</em> phase, and it will trigger an <em><a href="https://ant.apache.org/manual/Tasks/echo.html">ant echo</a></em> task that will print out the message.</p>
 </li>
 </ol>
-<p>We can browse the available plugins on the [<strong>Maven plugin repository</strong>] (<a href="https://mvnrepository.com/open-source/maven-plugins)">https://mvnrepository.com/open-source/maven-plugins)</a>.<br>
+<p>We can browse the available plugins on the <a href="https://mvnrepository.com/open-source/maven-plugins"><strong>Maven plugin repository</strong></a>.<br>
 All the official Maven plugins are named <em>maven-{pluginName}-plugin</em>, while the unofficial ones are named <em>{pluginName}-maven-plugin</em> or any other name.<br>
 If we do not find a plugin that fits our needs, there is always the option of creating our own plugin and we will look at how to next.</p>
 <h2 id="creating-your-own-maven-plugin">Creating your own Maven plugin</h2>
@@ -554,7 +554,7 @@ There are a lot of default plugin goals bound when we specify a packaging type f
 but we can also include more plugins by configuring them in the build section of our POM file.<br>
 If needed, we can also create our own plugin that we can deploy on the Maven plugin repository and share it with others.<br>
 All in all, we can see that Maven plugins are a very powerful and flexible tool that allows us to configure our build process exactly the way we want it to be.</p>
-<p>As always, the full project is on [GitHub] (<a href="https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example)">https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example)</a>.</p>
+<p>As always, the full project is on <a href="https://github.com/HerickoMatija/devflection-maven/tree/master/maven-plugin-example">GitHub</a>.</p>
 <hr>
 <p><em>This is it for our Maven plugins post.<br>
 Thank you for reading through, I hope you found it useful and be sure to check out the next post,

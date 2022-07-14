@@ -61,7 +61,7 @@ We will look at what they are, how they work and how we can implement our own cu
   "headline": "Classloaders in Java",
   "description" : "In this post, we will be looking at a very important part of the\nJava Runtime Environment (or JRE) - Class loaders.\nWe will look at what they are, how they work and how we can implement our own custom class loader.\n",
   "inLanguage" : "en",
-  "wordCount":  1198 ,
+  "wordCount":  1196 ,
   "datePublished" : "2019-05-16T00:00:00",
   "dateModified" : "2019-05-16T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -257,7 +257,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1198&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1196&nbsp;words
   
   
     
@@ -375,7 +375,7 @@ The URLClassLoader takes an array of URLs from where to load jars, so it is perf
 The advantage of using the URLClassLoader is that you do not have to implement all the logic that is required when loading classes.
 You just hand the classloader the URLs where the JAR files are located, and it takes care of correctly loading the classes from there.</p>
 <p>If your use case is different and the URLClassLoader does not provide the right functionality, you can also extend the class loader.<br>
-To create your own custom class loader, you need to extend the [<em>ClassLoader</em>] (<a href="https://docs.oracle.com/javase/10/docs/api/java/lang/ClassLoader.html">https://docs.oracle.com/javase/10/docs/api/java/lang/ClassLoader.html</a>) class and implement the <em>findClass</em> method with your custom logic for loading classes.</p>
+To create your own custom class loader, you need to extend the <a href="https://docs.oracle.com/javase/10/docs/api/java/lang/ClassLoader.html"><em>ClassLoader</em></a> class and implement the <em>findClass</em> method with your custom logic for loading classes.</p>
 <h2 id="example-custom-class-loader">Example custom class loader</h2>
 <p>In our example, we will write and use a class loader that will load classes from a database.<br>
 The example contains:</p>
@@ -409,7 +409,7 @@ otherwise we throw a ClassNotFoundException.</p>
 
 <p>From this, we can see that we successfully loaded the class from the DB using our custom class loader,
 while the default application class loader was unable to load the class since it is not on the application classpath.</p>
-<p>You can check out the full project on [GitHub] (<a href="https://github.com/HerickoMatija/devflection-classloaders)">https://github.com/HerickoMatija/devflection-classloaders)</a>.</p>
+<p>You can check out the full project on <a href="https://github.com/HerickoMatija/devflection-classloaders">GitHub</a>.</p>
 <hr>
 <p><em>This is it for our classloader post, I hope you found it informative.</em></p>
 <hr>

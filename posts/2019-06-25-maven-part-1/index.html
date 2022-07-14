@@ -60,7 +60,7 @@ In this first part, we will provide a high-level overview, explain some of the b
   "headline": "Apache Maven Part 1 - Introduction and basics",
   "description" : "This multi-post series will be looking at Apache Maven. In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.\n",
   "inLanguage" : "en",
-  "wordCount":  2220 ,
+  "wordCount":  2217 ,
   "datePublished" : "2019-06-25T00:00:00",
   "dateModified" : "2019-06-25T00:00:00",
   "image" : "https:\/\/devflection.com\/profile_small.jpg",
@@ -254,7 +254,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;11&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2220&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;2217&nbsp;words
   
   
     
@@ -312,7 +312,7 @@ and <em>pom.xml</em> files are where everything is defined and configured.<br>
 An important note is that every Maven version has a <strong>super POM</strong> from which every POM inherits unless it has a parent specified.
 The super POM file has a lot of defaults configured, such as the central repository, default output directory for compiled classes, the final name of the artifact, etc.<br>
 What is important to know is that everything is inherited from the super POM and can be overwritten if needed.<br>
-We can find the full content of the super POM in the [reference documentation] (<a href="https://maven.apache.org/ref/3.6.1/maven-model-builder/super-pom.html">https://maven.apache.org/ref/3.6.1/maven-model-builder/super-pom.html</a>) of Maven
+We can find the full content of the super POM in the <a href="https://maven.apache.org/ref/3.6.1/maven-model-builder/super-pom.html">reference documentation</a> of Maven
 or in our local Maven install directory inside the jar <em>lib/maven-model-builder-{version}.jar</em> in the folder <em>org/apache/maven/model</em>.</p>
 <h3 id="what-does-a-pom-file-look-like">What does a POM file look like?</h3>
 <p>Since all POM files inherit from the super POM, project POM files vary significantly from project to project, depending on the build complexity.<br>
@@ -391,7 +391,7 @@ C:\Users\&lt;User_Name&gt;\.m2
 When Maven finds a dependency it does not have in the local repository,
 it tries to find it in the specified remote repository, downloads it and caches it in the local repository.
 If there is no repository specified in the <em>repository</em> field in the POM file,
-Maven defaults to the Maven [central repository] (<a href="http://repo.maven.apache.org/maven2/)">http://repo.maven.apache.org/maven2/)</a>, which is specified in the parent super POM.</p>
+Maven defaults to the Maven <a href="http://repo.maven.apache.org/maven2/">central repository</a>, which is specified in the parent super POM.</p>
 <h1 id="identifying-artifacts">Identifying artifacts</h1>
 <p>To locate artifacts in the Maven repositories the three mandatory fields are used - <em>groupId</em>, <em>artifactId</em> and <em>version</em>.<br>
 This trio appears often in the Maven landscape,
@@ -624,7 +624,7 @@ The final build artifact name is used by joing the artifactId and version fields
 </code></pre>
 <p>These are just some of the settings in the super POM that we are relying on and there are more, so make sure to check the super POM in your Maven version to see what is defined there
 and to get a better understanding to why Maven does things a particular way.</p>
-<p>As always, the full project is on [GitHub] (<a href="https://github.com/HerickoMatija/devflection-maven/tree/master/simple-maven-example)">https://github.com/HerickoMatija/devflection-maven/tree/master/simple-maven-example)</a>.</p>
+<p>As always, the full project is on <a href="https://github.com/HerickoMatija/devflection-maven/tree/master/simple-maven-example">GitHub</a>.</p>
 <hr>
 <p><em>This is it for our Maven basics post.<br>
 Thank you for reading through, I hope you found it useful and be sure to check out the next post,

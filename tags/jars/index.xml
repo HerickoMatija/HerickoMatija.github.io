@@ -6,14 +6,12 @@
     <description>Recent content in jars on Devflection</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
-    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
     <lastBuildDate>Tue, 30 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/jars/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Java Archive file - JAR</title>
       <link>https://devflection.com/posts/2019-04-30-java-archive-file/</link>
       <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-04-30-java-archive-file/</guid>
       <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;AR&lt;/strong&gt;chive or as it is more known, the &lt;!-- raw HTML omitted --&gt;JAR&lt;!-- raw HTML omitted --&gt; file.&lt;br&gt;

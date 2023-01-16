@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Docker: Multi-node environment with a load balancer from a local Java project war - Devflection</title>
+  <meta name="description" content="In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2023-01-16-docker-compose-multi-node-local-project\/",
+          "name": "Docker multi node environment with a load balancer from a local java project war"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "Docker: Multi-node environment with a load balancer from a local Java project war",
+  "description" : "In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.\n",
+  "inLanguage" : "en",
+  "wordCount":  899 ,
+  "datePublished" : "2023-01-16T00:00:00",
+  "dateModified" : "2023-01-16T00:00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "docker, java, tomcat, docker-compose" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2023-01-16-docker-compose-multi-node-local-project\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Docker: Multi-node environment with a load balancer from a local Java project war" />
+<meta property="og:description" content="In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+
+  <meta name="twitter:title" content="Docker: Multi-node environment with a load balancer from a local Java …" />
+  <meta name="twitter:description" content="In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta name="generator" content="Hugo 0.96.0" />
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-139209146-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Docker: Multi-node environment with a load balancer from a local Java project war</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on January 16, 2023
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;899&nbsp;words
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.</p>
+<p><em>The post assumes that the reader is familiar with <strong>Docker</strong> and <strong>Docker Compose</strong></em>.</p>
+<h1 id="the-problem">The problem</h1>
+<p>Suppose you have a local Java application that builds a war file that is deployed to a Tomcat server.
+When developing locally you can easily run the project from your IDE.<br>
+But if our app runs in a highly-available setup in production,
+we would also like to sometimes test in a similar setup locally.</p>
+<p>How can we run the application locally with a load-balancer and multiple instances?</p>
+<p>One solution would be to configure multiple Tomcat servers in our IDE and run the app multiple times,
+then also start a load-balancer locally and point it to our applications.
+But that requires a lot of configuration and since we know Docker is always the best choice, let us rather use that.</p>
+<p><strong>DISCLAIMER: I am joking, you should always weigh the pros and cons and come to a sensible conclusion about which choice is the best in your case.</strong></p>
+<p>In my case, Docker and Docker Compose is the better choice because other developers on my team can use the same docker-compose file
+and have a multi-node setup by running <em>docker-compose up</em> without having to do any extra configuration.</p>
+<h1 id="the-solution">The solution</h1>
+<p>Docker Compose has options to start multiple instances of a Docker service.</p>
+<p>The first option is to use the <strong>scale</strong> configuration option.<br>
+The second option is to use the <strong>deploy.replicas</strong> configuration option.</p>
+<p>And since the <em>scale</em> option was deprecated from the docker-compose file in the <a href="https://docs.docker.com/compose/compose-file/#scale">spec</a>,
+we will go for the second option.<br>
+To deploy multiple instances of our app we can simply add the option to a docker-compose file like so:</p>
+<pre><code>deploy:
+    replicas: NUMBER_OF_DESIRED_INSTANCES
+</code></pre>
+<p>After we know how to start multiple instances, we just need to make a docker-compose service for our application.
+And since our build result is a war file this is quite simple.<br>
+We can take our desired server&rsquo; docker image and put our war file in the appropriate place in the container.<br>
+For example, the docker-compose part for a Tomcat container with our application looks like this:</p>
+<pre><code>backend:
+	image: tomcat:9.0
+	deploy:
+        replicas: 3
+	expose:
+		- &quot;8080&quot;
+	volumes:
+		- './our-project/target/our-app.war:/usr/local/tomcat/webapps/app.war'
+</code></pre>
+<p>This will create 3 instances of a Tomcat 9 container with our application war deployed under the <em>/app</em> context.</p>
+<p><em>Notice that the port 8080 is under expose and not under ports option to avoid conflicting port binds.</em></p>
+<p>On top of that, we still need a load-balancer to distribute the requests to all three instances.
+If we use nginx, the full docker-compose file would look like this:</p>
+<pre><code>version: '3.8'
+
+services:
+  nginx:
+	image: nginx:latest
+	volumes:
+	  - ./nginx.conf:/etc/nginx/nginx.conf:ro
+	depends_on:
+	  - backend
+	ports:
+	  - &quot;4000:4000&quot;
+  backend:
+	image: tomcat:9.0
+	deploy:
+      replicas: 3
+	expose:
+	  - &quot;8080&quot;
+	volumes:
+	  - './our-project/target/our-app.war:/usr/local/tomcat/webapps/app.war'
+</code></pre>
+<p>The final piece is the configuration of the nginx, which is in the <em>nginx.conf</em> file:</p>
+<pre><code>user nginx;
+
+events {
+	worker_connections   1000;
+}
+
+http {
+	server {
+		listen 4000;
+		location / {
+			proxy_pass http://backend:8080;
+		}
+	}
+}
+</code></pre>
+<p>The configuration is saying that we want nginx to listen on port 4000 and forward everything to backend services on port 8080.
+By default, nginx is using a round-robin approach to distribute the requests.</p>
+<h1 id="example-project">Example project</h1>
+<p>In our example application we will have a simple Spring Boot webapp that exposes one Hello World endpoint that also contains the application id.</p>
+<pre><code>package com.devflection.controllers;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController()
+public class HelloController {
+
+	@Value(&quot;${app.instance-id}&quot;)
+	private String applicationUuid;
+
+	@GetMapping(&quot;/hello&quot;)
+	@ResponseStatus(HttpStatus.OK)
+	@CrossOrigin(origins = &quot;*&quot;)
+	public String health() {
+		return &quot;Hello from &quot; + applicationUuid;
+	}
+
+}
+</code></pre>
+<p>The <em>applicationUuid</em> comes from the <em>application.properties</em> file and is a random UUID.</p>
+<pre><code>app.instance-id=${random.uuid}
+</code></pre>
+<p>Next, because we want to deploy our Spring Boot application to a Tomcat container we have to make sure of a couple of things</p>
+<ul>
+<li>Make sure the main application class extends the <em>SpringBootServletInitializer</em> interface</li>
+<li>Make sure the packaging is <em>war</em></li>
+<li>Make sure the spring-boot-starter-tomcat dependency scope is <em>provided</em></li>
+</ul>
+<p>Afterward, we end up with a war file in the <em>target</em> directory that is ready to be deployed to a Tomcat server.
+And when we have that, we just adjust the docker-compose file from the above.</p>
+<pre><code>version: '3.8'
+
+services:
+  nginx:
+	image: nginx:latest
+	volumes:
+	  - ./nginx.conf:/etc/nginx/nginx.conf:ro
+	depends_on:
+	  - backend
+	ports:
+	  - &quot;4000:4000&quot;
+  backend:
+	image: tomcat:9.0
+	deploy:
+      replicas: 3
+	expose:
+	  - &quot;8080&quot;
+	volumes:
+	  - './local-project/target/devflection-local-project.war:/usr/local/tomcat/webapps/app.war'
+</code></pre>
+<p>And we can use the same nginx config file since we are using the same ports and our service has the same name.</p>
+<p>Then all we need to do is</p>
+<pre><code>docker-compose up
+</code></pre>
+<p>and we end up with 3 instances of our backend, being load-balanced by nginx in a round-robin approach.</p>
+<p>If we open <em>http://localhost:4000/app/hello</em> multiple times we should get 3 different UUIDs being repeated:</p>
+<pre><code>Hello from bb7bd3eb-45de-4bca-9e1d-a360324fb382
+
+Hello from 99d8e38b-bba8-4054-a765-33a90f7ba626
+
+Hello from f27a8765-4758-4004-b7d5-244f87d4398a
+
+Hello from bb7bd3eb-45de-4bca-9e1d-a360324fb382
+
+Hello from 99d8e38b-bba8-4054-a765-33a90f7ba626
+</code></pre>
+<p>You can browse and get the full example repository on
+<a href="https://github.com/HerickoMatija/devflection-multi-node-from-local-project">GitHub</a>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this post, we looked at how we can use docker-compose to quickly spin up a multi-node environment with a load balancer from our local Java project.<br>
+The resulting docker-compose file is quite simple, which makes the whole process to start up a multi-node environment very easy.</p>
+<hr>
+<p><em>This is it for a multi-node environment setup using Docker Compose and a local Java project.<br>
+Thank you for reading through, I hope you found this article useful.</em></p>
+<hr>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/docker/">docker</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/tomcat/">tomcat</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/docker-compose/">docker-compose</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/" data-toggle="tooltip" data-placement="top" title="OAuth 2.0: Authorization code grant type">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="https://github.com/HerickoMatija" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/Devflection" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/matija-hericko" title="LinkedIn">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2023
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.96.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

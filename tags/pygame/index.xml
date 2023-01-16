@@ -6,14 +6,12 @@
     <description>Recent content in pygame on Devflection</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
-    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
     <lastBuildDate>Sun, 26 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/pygame/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learning python: My Sudoku game - Pydoku</title>
       <link>https://devflection.com/posts/2020-04-26-python-sudoku/</link>
       <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2020-04-26-python-sudoku/</guid>
       <description>&lt;p&gt;This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.&lt;/p&gt;</description>
     </item>

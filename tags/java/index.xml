@@ -6,14 +6,21 @@
     <description>Recent content in java on Devflection</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
-    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
-    <lastBuildDate>Sun, 12 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker: Multi-node environment with a load balancer from a local Java project war</title>
+      <link>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</link>
+      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</guid>
+      <description>&lt;p&gt;In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Apache Maven Part 3 - Inheritance, aggregation and multi-module projects</title>
       <link>https://devflection.com/posts/2020-04-12-maven-part-3/</link>
       <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2020-04-12-maven-part-3/</guid>
       <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.&lt;br&gt;
 In this third part, we will have a look at &lt;strong&gt;inheritance&lt;/strong&gt; and &lt;strong&gt;aggregation&lt;/strong&gt; in Maven and how everything comes together
@@ -24,7 +31,7 @@ to form multi-module Maven projects.&lt;/p&gt;</description>
       <title>Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins</title>
       <link>https://devflection.com/posts/2019-10-20-maven-part-2/</link>
       <pubDate>Sun, 20 Oct 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-10-20-maven-part-2/</guid>
       <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
 In the second part, we will take a closer look at the build lifecycle and the workers in Maven - &lt;strong&gt;Maven Plugins&lt;/strong&gt;.&lt;/p&gt;</description>
@@ -34,7 +41,7 @@ In the second part, we will take a closer look at the build lifecycle and the wo
       <title>Apache Maven Part 1 - Introduction and basics</title>
       <link>https://devflection.com/posts/2019-06-25-maven-part-1/</link>
       <pubDate>Tue, 25 Jun 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-06-25-maven-part-1/</guid>
       <description>&lt;p&gt;This multi-post series will be looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
 In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.&lt;/p&gt;</description>
@@ -44,7 +51,7 @@ In this first part, we will provide a high-level overview, explain some of the b
       <title>Classloaders in Java</title>
       <link>https://devflection.com/posts/2019-05-14-classloaders/</link>
       <pubDate>Thu, 16 May 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-05-14-classloaders/</guid>
       <description>&lt;p&gt;In this post, we will be looking at a very important part of the&lt;br&gt;
 &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;R&lt;/strong&gt;untime &lt;strong&gt;E&lt;/strong&gt;nvironment (or &lt;strong&gt;JRE&lt;/strong&gt;) - &lt;strong&gt;Class loaders.&lt;/strong&gt;&lt;/p&gt;
@@ -55,7 +62,7 @@ In this first part, we will provide a high-level overview, explain some of the b
       <title>Java Archive file - JAR</title>
       <link>https://devflection.com/posts/2019-04-30-java-archive-file/</link>
       <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-04-30-java-archive-file/</guid>
       <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
 the &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;AR&lt;/strong&gt;chive or as it is more known, the &lt;!-- raw HTML omitted --&gt;JAR&lt;!-- raw HTML omitted --&gt; file.&lt;br&gt;
@@ -66,7 +73,7 @@ We will describe what it is and how to create one.&lt;/p&gt;</description>
       <title>Reflection in Java</title>
       <link>https://devflection.com/posts/2019-04-14-reflection-in-java/</link>
       <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-04-14-reflection-in-java/</guid>
       <description>&lt;p&gt;&lt;strong&gt;Reflection&lt;/strong&gt; is the ability of an application to inspect &lt;strong&gt;and&lt;/strong&gt; modify the code in the system.&lt;/p&gt;
 &lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;

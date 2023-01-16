@@ -6,14 +6,12 @@
     <description>Recent content in reflection on Devflection</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>matija@devflection.com (Matija Heričko)</managingEditor>
-    <webMaster>matija@devflection.com (Matija Heričko)</webMaster>
     <lastBuildDate>Sun, 14 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/reflection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reflection in Java</title>
       <link>https://devflection.com/posts/2019-04-14-reflection-in-java/</link>
       <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      <author>matija@devflection.com (Matija Heričko)</author>
+      
       <guid>https://devflection.com/posts/2019-04-14-reflection-in-java/</guid>
       <description>&lt;p&gt;&lt;strong&gt;Reflection&lt;/strong&gt; is the ability of an application to inspect &lt;strong&gt;and&lt;/strong&gt; modify the code in the system.&lt;/p&gt;
 &lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;

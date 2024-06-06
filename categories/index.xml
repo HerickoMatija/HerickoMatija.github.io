@@ -4,7 +4,8 @@
     <title>Categories on Devflection</title>
     <link>https://devflection.com/categories/</link>
     <description>Recent content in Categories on Devflection</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://devflection.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="https://devflection.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

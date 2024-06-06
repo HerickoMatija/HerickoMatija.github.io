@@ -4,125 +4,107 @@
     <title>Tags on Devflection</title>
     <link>https://devflection.com/tags/</link>
     <description>Recent content in Tags on Devflection</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devflection.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>docker</title>
-      <link>https://devflection.com/tags/docker/</link>
-      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://devflection.com/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>docker-compose</title>
-      <link>https://devflection.com/tags/docker-compose/</link>
-      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://devflection.com/tags/docker-compose/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>java</title>
+      <title>Java</title>
       <link>https://devflection.com/tags/java/</link>
-      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/java/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>tomcat</title>
+      <title>Spring</title>
+      <link>https://devflection.com/tags/spring/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://devflection.com/tags/spring/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tomcat</title>
       <link>https://devflection.com/tags/tomcat/</link>
-      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/tomcat/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>authorization code grant type</title>
+      <title>Docker</title>
+      <link>https://devflection.com/tags/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://devflection.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker-Compose</title>
+      <link>https://devflection.com/tags/docker-compose/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://devflection.com/tags/docker-compose/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Authorization Code Grant Type</title>
       <link>https://devflection.com/tags/authorization-code-grant-type/</link>
-      <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/authorization-code-grant-type/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>oauth</title>
+      <title>Oauth</title>
       <link>https://devflection.com/tags/oauth/</link>
-      <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/oauth/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>docker networking</title>
+      <title>Docker Networking</title>
       <link>https://devflection.com/tags/docker-networking/</link>
-      <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/docker-networking/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>pygame</title>
+      <title>Pygame</title>
       <link>https://devflection.com/tags/pygame/</link>
-      <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/pygame/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>python</title>
+      <title>Python</title>
       <link>https://devflection.com/tags/python/</link>
-      <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/python/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>maven</title>
+      <title>Maven</title>
       <link>https://devflection.com/tags/maven/</link>
-      <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/maven/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>classloaders</title>
+      <title>Classloaders</title>
       <link>https://devflection.com/tags/classloaders/</link>
-      <pubDate>Thu, 16 May 2019 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/classloaders/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>jars</title>
+      <title>Jars</title>
       <link>https://devflection.com/tags/jars/</link>
-      <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/jars/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>reflection</title>
+      <title>Reflection</title>
       <link>https://devflection.com/tags/reflection/</link>
-      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/tags/reflection/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

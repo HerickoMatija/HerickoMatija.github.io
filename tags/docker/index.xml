@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on Devflection</title>
+    <title>Docker on Devflection</title>
     <link>https://devflection.com/tags/docker/</link>
-    <description>Recent content in docker on Devflection</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Docker on Devflection</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devflection.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker: Multi-node environment with a load balancer from a local Java project war</title>
       <link>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</link>
       <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</guid>
       <description>&lt;p&gt;In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Connect two docker containers in different docker-compose files</title>
       <link>https://devflection.com/posts/2022-03-26-docker-connect-two-containers/</link>
       <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2022-03-26-docker-connect-two-containers/</guid>
-      <description>&lt;p&gt;This post is inspired by an issue I encountered while trying to connect two docker containers located in two different docker-compose files.
-It briefly describes how this situation can happen and how to handle it.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This post is inspired by an issue I encountered while trying to connect two docker containers located in two different docker-compose files.&#xA;It briefly describes how this situation can happen and how to handle it.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

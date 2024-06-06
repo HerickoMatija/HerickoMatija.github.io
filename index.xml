@@ -4,129 +4,100 @@
     <title>Devflection</title>
     <link>https://devflection.com/</link>
     <description>Recent content on Devflection</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devflection.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>When to initialize a heavy dynamic lookup structure</title>
+      <link>https://devflection.com/posts/2024-06-06-lookup-structure/</link>
+      <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>https://devflection.com/posts/2024-06-06-lookup-structure/</guid>
+      <description>&lt;p&gt;In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.&#xA;We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Docker: Multi-node environment with a load balancer from a local Java project war</title>
       <link>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</link>
       <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</guid>
       <description>&lt;p&gt;In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>OAuth 2.0: Authorization code grant type</title>
       <link>https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/</link>
       <pubDate>Wed, 04 May 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2022-05-04-oauth-authorization-code-grant-type/</guid>
-      <description>&lt;p&gt;In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.
-We will have a look at how it works, when it should be used, and illustrate it with an example.&lt;/p&gt;</description>
+      <description>&lt;p&gt;In this post, we will take a closer look at the Authorization code grant type of the OAuth 2.0 framework.&#xA;We will have a look at how it works, when it should be used, and illustrate it with an example.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Connect two docker containers in different docker-compose files</title>
       <link>https://devflection.com/posts/2022-03-26-docker-connect-two-containers/</link>
       <pubDate>Sat, 26 Mar 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2022-03-26-docker-connect-two-containers/</guid>
-      <description>&lt;p&gt;This post is inspired by an issue I encountered while trying to connect two docker containers located in two different docker-compose files.
-It briefly describes how this situation can happen and how to handle it.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This post is inspired by an issue I encountered while trying to connect two docker containers located in two different docker-compose files.&#xA;It briefly describes how this situation can happen and how to handle it.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Learning python: My Sudoku game - Pydoku</title>
       <link>https://devflection.com/posts/2020-04-26-python-sudoku/</link>
       <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2020-04-26-python-sudoku/</guid>
       <description>&lt;p&gt;This post is an overview of the Sudoku game and Sudoku solver algorithm visualization that I implemented in Python 3.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Apache Maven Part 3 - Inheritance, aggregation and multi-module projects</title>
       <link>https://devflection.com/posts/2020-04-12-maven-part-3/</link>
       <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2020-04-12-maven-part-3/</guid>
-      <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.&lt;br&gt;
-In this third part, we will have a look at &lt;strong&gt;inheritance&lt;/strong&gt; and &lt;strong&gt;aggregation&lt;/strong&gt; in Maven and how everything comes together
-to form multi-module Maven projects.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.&lt;br&gt;&#xA;In this third part, we will have a look at &lt;strong&gt;inheritance&lt;/strong&gt; and &lt;strong&gt;aggregation&lt;/strong&gt; in Maven and how everything comes together&#xA;to form multi-module Maven projects.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Apache Maven Part 2 - Build lifecycle and Apache Maven Plugins</title>
       <link>https://devflection.com/posts/2019-10-20-maven-part-2/</link>
       <pubDate>Sun, 20 Oct 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2019-10-20-maven-part-2/</guid>
-      <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
-In the second part, we will take a closer look at the build lifecycle and the workers in Maven - &lt;strong&gt;Maven Plugins&lt;/strong&gt;.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This multi-post series is looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.&#xA;In the second part, we will take a closer look at the build lifecycle and the workers in Maven - &lt;strong&gt;Maven Plugins&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Apache Maven Part 1 - Introduction and basics</title>
       <link>https://devflection.com/posts/2019-06-25-maven-part-1/</link>
       <pubDate>Tue, 25 Jun 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2019-06-25-maven-part-1/</guid>
-      <description>&lt;p&gt;This multi-post series will be looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.
-In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.&lt;/p&gt;</description>
+      <description>&lt;p&gt;This multi-post series will be looking at &lt;strong&gt;Apache Maven&lt;/strong&gt;.&#xA;In this first part, we will provide a high-level overview, explain some of the basics and show an example of a simple Maven managed project.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Classloaders in Java</title>
       <link>https://devflection.com/posts/2019-05-14-classloaders/</link>
       <pubDate>Thu, 16 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2019-05-14-classloaders/</guid>
-      <description>&lt;p&gt;In this post, we will be looking at a very important part of the&lt;br&gt;
-&lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;R&lt;/strong&gt;untime &lt;strong&gt;E&lt;/strong&gt;nvironment (or &lt;strong&gt;JRE&lt;/strong&gt;) - &lt;strong&gt;Class loaders.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;We will look at what they are, how they work and how we can implement our own custom class loader.&lt;/p&gt;</description>
+      <description>&lt;p&gt;In this post, we will be looking at a very important part of the&lt;br&gt;&#xA;&lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;R&lt;/strong&gt;untime &lt;strong&gt;E&lt;/strong&gt;nvironment (or &lt;strong&gt;JRE&lt;/strong&gt;) - &lt;strong&gt;Class loaders.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;We will look at what they are, how they work and how we can implement our own custom class loader.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Java Archive file - JAR</title>
       <link>https://devflection.com/posts/2019-04-30-java-archive-file/</link>
       <pubDate>Tue, 30 Apr 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2019-04-30-java-archive-file/</guid>
-      <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -
-the &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;AR&lt;/strong&gt;chive or as it is more known, the &lt;!-- raw HTML omitted --&gt;JAR&lt;!-- raw HTML omitted --&gt; file.&lt;br&gt;
-We will describe what it is and how to create one.&lt;/p&gt;</description>
+      <description>&lt;p&gt;In this post, we will have a closer look at one of the basic building blocks in the Java ecosystem -&#xA;the &lt;strong&gt;J&lt;/strong&gt;ava &lt;strong&gt;AR&lt;/strong&gt;chive or as it is more known, the &lt;!-- raw HTML omitted --&gt;JAR&lt;!-- raw HTML omitted --&gt; file.&lt;br&gt;&#xA;We will describe what it is and how to create one.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Reflection in Java</title>
       <link>https://devflection.com/posts/2019-04-14-reflection-in-java/</link>
       <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/posts/2019-04-14-reflection-in-java/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Reflection&lt;/strong&gt; is the ability of an application to inspect &lt;strong&gt;and&lt;/strong&gt; modify the code in the system.&lt;/p&gt;
-&lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;
-&lt;p&gt;So for an application to be reflective it must also be able to modify its code at runtime.&lt;/p&gt;</description>
+      <description>&lt;p&gt;&lt;strong&gt;Reflection&lt;/strong&gt; is the ability of an application to inspect &lt;strong&gt;and&lt;/strong&gt; modify the code in the system.&lt;/p&gt;&#xA;&lt;p&gt;If an application can only inspect but not also modify the code then it only has the ability of introspection.&lt;/p&gt;&#xA;&lt;p&gt;So for an application to be reflective it must also be able to modify its code at runtime.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>About me</title>
       <link>https://devflection.com/page/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/page/about/</guid>
-      <description>My name is Matija Heričko, I am a 30-something year old software developer from Slovenia, currently living in Zürich in the beautiful country of Switzerland. A proud father of one very lively son, husband to a lovely wife and an enthusiastic basketball player.
-I started this blog to learn more by teaching, become a better software developer and hopefully along the way help other software developers also become better at their profession.</description>
+      <description>My name is Matija Heričko, I am a 30-something year old software developer from Slovenia, currently living in Zürich in the beautiful country of Switzerland. A proud father of one very lively son, husband to a lovely wife and an enthusiastic basketball player.&#xA;I started this blog to learn more by teaching, become a better software developer and hopefully along the way help other software developers also become better at their profession.</description>
     </item>
-    
     <item>
       <title>Book reviews</title>
       <link>https://devflection.com/page/book-reviews/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
       <guid>https://devflection.com/page/book-reviews/</guid>
-      <description>General  Code complete 2 Code complete is another book that is extremely valuable and is probably one of the classics in the field. This book is a must read for any developer that wants to improve on their craft. It offers a lot of advice on writing more robust, maintainable, readable, better architected and overall more effective and efficient code. It is one of the best books on programming that exist.</description>
+      <description>General Code complete 2 Code complete is another book that is extremely valuable and is probably one of the classics in the field. This book is a must read for any developer that wants to improve on their craft. It offers a lot of advice on writing more robust, maintainable, readable, better architected and overall more effective and efficient code. It is one of the best books on programming that exist.</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>When to initialize a heavy dynamic lookup structure - </title>
+
+  <meta name="description" content="In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.
+We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.">
+  <meta name="author" content="Matija Heričko"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Devflection",
+    
+    "url": "https:\/\/devflection.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/devflection.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/devflection.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/devflection.com\/posts\/2024-06-06-lookup-structure\/",
+          "name": "When to initialize a heavy dynamic lookup structure"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Matija Heričko"
+  },
+  "headline": "When to initialize a heavy dynamic lookup structure",
+  "description" : "In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests. We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.\n",
+  "inLanguage" : "en",
+  "wordCount":  1475 ,
+  "datePublished" : "2024-06-06T00:00:00\u002b00:00",
+  "dateModified" : "2024-06-06T00:00:00\u002b00:00",
+  "image" : "https:\/\/devflection.com\/profile_small.jpg",
+  "keywords" : [ "spring, java, tomcat" ],
+  "mainEntityOfPage" : "https:\/\/devflection.com\/posts\/2024-06-06-lookup-structure\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/devflection.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/devflection.com\/profile_small.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="When to initialize a heavy dynamic lookup structure" />
+<meta property="og:description" content="In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.
+We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.">
+<meta property="og:image" content="https://devflection.com/profile_small.jpg" />
+<meta property="og:url" content="https://devflection.com/posts/2024-06-06-lookup-structure/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Devflection" />
+
+  <meta name="twitter:title" content="When to initialize a heavy dynamic lookup structure" />
+  <meta name="twitter:description" content="In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.
+We will look at the different options, reason …">
+  <meta name="twitter:image" content="https://devflection.com/profile_small.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@Devflection" />
+  <meta name="twitter:creator" content="@Devflection" />
+  <meta name="generator" content="Hugo 0.127.0">
+  <link rel="alternate" href="https://devflection.com/index.xml" type="application/rss+xml" title="Devflection"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://devflection.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://devflection.com/css/highlight.min.css" /><link rel="stylesheet" href="https://devflection.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  
+    
+      
+    
+  
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://devflection.com/">Devflection</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/posts">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Book reviews" href="/page/book-reviews">Book reviews</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Devflection" href="https://devflection.com/">
+            <img class="avatar-img" src="https://devflection.com/profile_small.jpg" alt="Devflection" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>When to initialize a heavy dynamic lookup structure</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on June 6, 2024
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;7&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1475&nbsp;words
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Matija Heričko
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.
+We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.</p>
+<p><em>Naturally, the problem is simplified and stripped down to the bare essentials so readers can follow along.</em></p>
+<h1 id="the-problem">The problem</h1>
+<p>The problem we are facing is that in our application we have one core component that is used in almost every request to process it.
+The component needs a heavy lookup structure, but the problem is that the lookup structure is not static.
+It changes depending on some factors, like the environment of the stage, configuration the users do, etc.<br>
+In some cases, it can take minutes, and in theory, there is no upper limit on how long this can take.</p>
+<p>Now the problem is how or rather when to initialize this structure.</p>
+<p>The requirements for the problem are:</p>
+<ul>
+<li>We want to provide a good user experience meaning we want users&rsquo; requests to be completed as fast as possible.</li>
+<li>We want to keep the structure up to date, so there should be a way to reinitialize it</li>
+</ul>
+<h1 id="the-options">The options</h1>
+<p>There seem to be two fundamental options available:</p>
+<ol>
+<li>Create the lookup structure on startup</li>
+<li>Create the lookup structure on request</li>
+</ol>
+<p>Let&rsquo;s have a look at each separately.</p>
+<h2 id="create-the-lookup-structure-on-startup">Create the lookup structure on startup</h2>
+<p>With this option, we create the lookup structure when the application is starting up.
+We then store it and use it for every subsequent request coming in.</p>
+<p>Pros:</p>
+<ul>
+<li>every user request has the structure it needs and is therefore fast</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>the startup takes as long as the structure creation needs</li>
+<li>we need to restart the application when the structure changes</li>
+</ul>
+<h2 id="create-the-lookup-structure-on-request">Create the lookup structure on request</h2>
+<p>With this option, we create the lookup structure when the request comes in.
+There are a couple of levels here going from worst to best:</p>
+<ol>
+<li>We create the lookup structure on every request</li>
+<li>We create the lookup structure if it is not there</li>
+<li>We create the lookup structure if it is not there, but use synchronization to do it only once</li>
+</ol>
+<p>The first level is horrible because every request would take however long the structure creation takes plus anything we do in the request on top of that.</p>
+<p>The second level means that every request that comes in after a restart but before the structure is created goes into creating the structure.
+So all the requests coming in before the structure is initialized will take a long time, and after the requests will be fast.</p>
+<p>The third level means that every request that comes in after a restart but before the structure is created will try to create the structure,
+but will wait if another thread is already creating it. Here the first request will take a long time, and every request after will take a shorter amount of time
+because they will reuse the result from the first request. And all the requests after will be fast.</p>
+<p>Because the third level is best we will analyze the pros and cons of that:</p>
+<p>Pros:</p>
+<ul>
+<li>the startup of the application is quick</li>
+<li>we can invalidate the structure while the app is running</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>all the requests coming in before the structure is created will take a long time</li>
+</ul>
+<h1 id="solution">Solution</h1>
+<p>Now that we have looked at the options, which approach is the solution to our problem?</p>
+<p>Well&hellip; as always in software engineering - it depends :)</p>
+<p>Given our problem, neither option is perfect for everything we would like to have - fast startup, fast requests, structure reinitialization.
+So we have to make some compromises.</p>
+<p>Option 1 is great from the user experience point of view because we don&rsquo;t have periods of requests taking a long time.
+However, this comes at the cost of a slower startup time for the application. But once the application is running the requests are all processed fast.
+Another drawback is the reinitialization of the structure.
+We have a way to do it by restarting the application but it is not great.
+And on top of that, we need to monitor the lookup data source and restart when the data changes.</p>
+<p>Option 2 is better from the operational point of view, as we can code the logic to update the structure when the data changes.
+It also gives us a fast startup time, but we have periods where requests take a long time to process, which is not the greatest user experience.</p>
+<p>The final decision comes down to what is more important.</p>
+<p>In my day job, we know exactly when the structure needs to be reinitialized and the structure is so fundamental to the application that option 1 seems like the better approach for us.</p>
+<h1 id="example-project">Example project</h1>
+<p>For our example project we will look at an NBA game service, that will return all the games for the current season for a given team.
+The heavy lookup structure in this case is a map of all the games in the season per team.
+Our lookup structure will just be an example, so we will be simulating it taking a long time with our good friend <em>Thread.sleep()</em>.</p>
+<p>The application is a very simple Spring Boot web application that has one REST controller exposing a single endpoint:</p>
+<pre><code>@RestController
+public class GameScheduleController {
+
+    private final GameScheduleService gameScheduleService;
+
+    public GameScheduleController(GameScheduleService gameScheduleService) {
+        this.gameScheduleService = gameScheduleService;
+    }
+
+    @GetMapping(&quot;/getGamesForTeam&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @CrossOrigin(origins = &quot;*&quot;)
+    public List&lt;NBAGame&gt; getGamesForTeamVersion1(@RequestParam(&quot;team&quot;) String team) {
+        long startTime = System.currentTimeMillis();
+
+        NBATeam nbaTeam = NBATeam.fromString(team);
+        List&lt;NBAGame&gt; games = gameScheduleService.getRegularSeasonGamesForTeam(nbaTeam);
+
+        long endTime = System.currentTimeMillis();
+        System.out.println(
+            String.format(&quot;Request for team '%s' took '%s' milliseconds&quot;, team, endTime - startTime)
+        );
+
+        return games;
+    }
+}
+</code></pre>
+<p>The controller connects to a service, which will be the main component in our case.
+This is the component that needs the lookup structure to serve requests coming in.
+Let&rsquo;s have a look at both options:</p>
+<p>Creating the lookup structure on startup:</p>
+<pre><code>@Service
+public class GameScheduleService {
+
+    private Map&lt;NBATeam, List&lt;NBAGame&gt;&gt; gameLookupStructure;
+
+    public GameScheduleService() {
+        initializeLookup();
+    }
+
+    private void initializeLookup() {
+        List&lt;NBAGame&gt; games = parseGameScheduleFile();
+
+        Map&lt;NBATeam, List&lt;NBAGame&gt;&gt; lookupStructure = new HashMap&lt;&gt;();
+
+        for (NBAGame game : games) {
+            // add game to home team
+            lookupStructure.putIfAbsent(game.getHomeTeam(), new ArrayList&lt;&gt;());
+            lookupStructure.get(game.getHomeTeam()).add(game);
+            // add game to away team
+            lookupStructure.putIfAbsent(game.getAwayTeam(), new ArrayList&lt;&gt;());
+            lookupStructure.get(game.getAwayTeam()).add(game);
+        }
+
+        gameLookupStructure = lookupStructure;
+    }
+
+    public List&lt;NBAGame&gt; getRegularSeasonGamesForTeam(NBATeam team) {
+        return gameLookupStructure.get(team);
+    }
+
+    // Parsing method
+    ...
+}
+</code></pre>
+<p>Creating the lookup structure on request:</p>
+<pre><code>@Service
+public class GameScheduleService {
+
+    private volatile Map&lt;NBATeam, List&lt;NBAGame&gt;&gt; gameLookupStructure;
+
+    public List&lt;NBAGame&gt; getRegularSeasonGamesForTeam(NBATeam team) {
+        initLookupStructureIfNeeded();
+
+        return gameLookupStructure.get(team);
+    }
+
+    private void initLookupStructureIfNeeded() {
+        if (gameLookupStructure == null) {
+            createLookupStructure();
+        }
+    }
+
+    private synchronized void createLookupStructure() {
+        if (gameLookupStructure != null) {
+            return;
+        }
+
+        List&lt;NBAGame&gt; games = parseGameScheduleFile();
+
+        Map&lt;NBATeam, List&lt;NBAGame&gt;&gt; lookupStructure = new HashMap&lt;&gt;();
+
+        for (NBAGame game : games) {
+            // add game to home team
+            lookupStructure.putIfAbsent(game.getHomeTeam(), new ArrayList&lt;&gt;());
+            lookupStructure.get(game.getHomeTeam()).add(game);
+            // add game to away team
+            lookupStructure.putIfAbsent(game.getAwayTeam(), new ArrayList&lt;&gt;());
+            lookupStructure.get(game.getAwayTeam()).add(game);
+        }
+
+        gameLookupStructure = lookupStructure;
+    }
+
+    // Parsing method
+    ...
+}
+</code></pre>
+<p>On request service has an <em>initLookupStructureIfNeeded</em> method that gets called for every request that loads the structure if needed.
+On startup service has an <em>initializeLookupStructure</em> in the constructor, so the lookup structure gets created when the bean gets created.</p>
+<p>If we start each version and hit the application with a couple of requests we can notice the difference in behaviours.</p>
+<p>Application startup time for version 1 (on request):</p>
+<pre><code>Started LookupStructureExampleApplication in 2.013 seconds (process running for 2.382)
+</code></pre>
+<p>Application startup time for version 2 (on startup):</p>
+<pre><code>Started LookupStructureExampleApplication in 62.369 seconds (process running for 62.807)
+</code></pre>
+<p>Request times for version 1 (on request):</p>
+<pre><code>Request for team 'Lakers' took '60091' milliseconds
+Request for team 'Mavericks' took '46883' milliseconds
+Request for team 'Nuggets' took '40834' milliseconds
+Request for team 'Celtics' took '0' milliseconds
+</code></pre>
+<p>Request times for version 2 (on startup):</p>
+<pre><code>Request for team 'Lakers' took '0' milliseconds
+Request for team 'Mavericks' took '0' milliseconds
+Request for team 'Nuggets' took '0' milliseconds
+</code></pre>
+<p>So we can see the difference between the startup times and the first couple of requests.
+And remember, that usually everything is a tradeoff in software engineering, so revisit your requirements and choose the option that best fits either most of your constraints or the most important ones.</p>
+<p>You can browse and get the full example repository on
+<a href="https://github.com/HerickoMatija/devflection-lookup-structure">GitHub</a>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>In this post, we looked at a real-life problem that you might encounter.
+We looked at options on how/when to initialize a lookup structure that your application might need to serve requests and we discussed the tradeoffs.
+And we rounded things out by having a look at an implementation of the two options in an example application.</p>
+<hr>
+<p><em>This is it for the post about when to initialize a heavy lookup structure in your application.<br>
+Thank you for reading through, I hope you found this article useful.</em></p>
+<hr>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://devflection.com//tags/spring/">spring</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/java/">java</a>&nbsp;
+            
+              <a href="https://devflection.com//tags/tomcat/">tomcat</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/" data-toggle="tooltip" data-placement="top" title="Docker: Multi-node environment with a load balancer from a local Java project war">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="https://github.com/HerickoMatija" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://twitter.com/Devflection" title="Twitter">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://linkedin.com/in/matija-hericko" title="LinkedIn">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="devflection.com">Matija Heričko</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://devflection.com/">Devflection</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.127.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://devflection.com/js/main.js"></script>
+<script src="https://devflection.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://devflection.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

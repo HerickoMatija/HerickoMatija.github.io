@@ -3,12 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://devflection.com/</loc>
-    <lastmod>2023-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devflection.com/posts/</loc>
-    <lastmod>2023-01-16T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/java/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/spring/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/tags/tomcat/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devflection.com/posts/2024-06-06-lookup-structure/</loc>
+    <lastmod>2024-06-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devflection.com/tags/docker/</loc>
     <lastmod>2023-01-16T00:00:00+00:00</lastmod>
@@ -17,15 +30,6 @@
     <lastmod>2023-01-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</loc>
-    <lastmod>2023-01-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devflection.com/tags/java/</loc>
-    <lastmod>2023-01-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devflection.com/tags/</loc>
-    <lastmod>2023-01-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devflection.com/tags/tomcat/</loc>
     <lastmod>2023-01-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devflection.com/tags/authorization-code-grant-type/</loc>

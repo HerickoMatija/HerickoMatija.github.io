@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tomcat on Devflection</title>
-    <link>https://devflection.com/tags/tomcat/</link>
-    <description>Recent content in Tomcat on Devflection</description>
+    <title>Spring on Devflection</title>
+    <link>https://devflection.com/tags/spring/</link>
+    <description>Recent content in Spring on Devflection</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 06 Jun 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://devflection.com/tags/tomcat/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://devflection.com/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>When to initialize a heavy dynamic lookup structure</title>
       <link>https://devflection.com/posts/2024-06-06-lookup-structure/</link>
       <pubDate>Thu, 06 Jun 2024 00:00:00 +0000</pubDate>
       <guid>https://devflection.com/posts/2024-06-06-lookup-structure/</guid>
       <description>&lt;p&gt;In this post, I want to explore a problem I am facing at my day job - when to generate a heavy dynamic lookup structure the app needs to process requests.&#xA;We will look at the different options, reason through the pros and cons, and then also look at implementations of the different options in an example project.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Docker: Multi-node environment with a load balancer from a local Java project war</title>
-      <link>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</link>
-      <pubDate>Mon, 16 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>https://devflection.com/posts/2023-01-16-docker-compose-multi-node-local-project/</guid>
-      <description>&lt;p&gt;In this post, we will look at how a developer can quickly create a multi-node environment from his local Java project using Docker Compose.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

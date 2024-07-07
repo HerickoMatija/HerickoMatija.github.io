@@ -109,7 +109,20 @@ We will have a look at how it works, when it should be used, and illustrate it w
 
   
     
-      
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XGTT97JPQ5"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-XGTT97JPQ5');
+        }
+      </script>
     
   
 

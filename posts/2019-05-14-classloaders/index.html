@@ -112,7 +112,20 @@ We will look at what they are, how they work and how we can implement our own cu
 
   
     
-      
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XGTT97JPQ5"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-XGTT97JPQ5');
+        }
+      </script>
     
   
 
